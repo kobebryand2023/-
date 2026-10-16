@@ -1,0 +1,3516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物理必修三 · 电磁学学习平台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563EB'/%3E%3Cstop offset='1' stop-color='%230891B2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ccircle cx='26' cy='26' r='9' fill='%23fff'/%3E%3Ccircle cx='38' cy='38' r='9' fill='none' stroke='%23fff' stroke-width='4'/%3E%3Cpath d='M26 17v-6M17 26h-6M26 35v6M35 26h6' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#F3F6FC; --bg2:#EAF0FB; --ink:#17233D; --muted:#5B6B84; --line:#E2E9F5;
+  --card:#FFFFFF; --shadow:0 8px 28px rgba(23,42,80,.08);
+  --c9:#2563EB; --c10:#7C3AED; --c11:#EA580C; --c12:#059669; --c13:#0891B2;
+  --ok:#16A34A; --warn:#D97706; --bad:#DC2626;
+  --r:14px; --r-s:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC',system-ui,-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;font-size:15px;-webkit-font-smoothing:antialiased}
+::selection{background:#BFD3FE}
+:focus-visible{outline:2px solid var(--c9);outline-offset:2px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+img,canvas,svg{max-width:100%}
+.mono{font-variant-numeric:tabular-nums}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1240px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:26px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:16.5px;letter-spacing:.2px;white-space:nowrap}
+.brand svg{width:30px;height:30px;flex:none}
+.brand small{font-weight:500;color:var(--muted);font-size:11.5px;display:block;line-height:1.2}
+.nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto}
+.nav a{padding:7px 14px;border-radius:999px;font-size:14px;font-weight:500;color:#3D4C66;white-space:nowrap;transition:.18s}
+.nav a:hover{background:var(--bg2);color:var(--ink)}
+.nav a.on{background:var(--ink);color:#fff}
+.nav .n-badge{font-size:10px;padding:1px 6px;border-radius:99px;background:var(--c9);color:#fff;margin-left:4px;vertical-align:2px}
+
+/* ===== 视图容器 ===== */
+.view{display:none}
+.view.on{display:block}
+.wrap{max-width:1240px;margin:0 auto;padding:22px 20px 60px}
+
+/* ===== 首页 ===== */
+.hero{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#0F1E4D 0%,#1E3A8A 42%,#0E7490 100%);color:#fff;min-height:430px;display:flex;align-items:center;padding:38px 44px;box-shadow:0 20px 50px rgba(15,30,77,.35)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.hero-in{position:relative;z-index:2;max-width:640px}
+.hero .kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:999px;font-size:12.5px;letter-spacing:.6px;margin-bottom:18px}
+.hero h1{font-size:clamp(30px,4.4vw,46px);font-weight:900;line-height:1.22;letter-spacing:.5px}
+.hero h1 .grad{background:linear-gradient(90deg,#7DD3FC,#C4B5FD,#6EE7B7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{margin-top:14px;font-size:15px;color:rgba(255,255,255,.82);max-width:560px}
+.hero-cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:12px;font-weight:600;font-size:14px;border:1px solid transparent;transition:.18s}
+.btn svg{width:16px;height:16px}
+.btn-primary{background:#fff;color:#0F1E4D}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,255,255,.25)}
+.btn-ghost{border-color:rgba(255,255,255,.4);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+.btn-solid{background:var(--c9);color:#fff}
+.btn-solid:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-soft{background:var(--bg2);color:var(--ink)}
+.btn-soft:hover{background:#DCE7F8}
+.hero-stats{position:absolute;right:40px;bottom:34px;z-index:2;display:flex;gap:26px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);padding:16px 24px;border-radius:16px;backdrop-filter:blur(6px)}
+.hero-stats .n{font-size:24px;font-weight:900;line-height:1.1}
+.hero-stats .l{font-size:11.5px;color:rgba(255,255,255,.75)}
+
+.section-title{display:flex;align-items:center;gap:12px;margin:42px 0 18px}
+.section-title .bar{width:5px;height:26px;border-radius:3px;background:var(--c9)}
+.section-title h2{font-size:22px;font-weight:800;letter-spacing:.3px}
+.section-title .more{margin-left:auto;font-size:13px;color:var(--muted);font-weight:500}
+
+/* 章节卡片 */
+.ch-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.ch-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 16px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.ch-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.ch-card .ch-num{font-size:11px;font-weight:700;letter-spacing:1px;opacity:.75}
+.ch-card h3{font-size:15.5px;font-weight:800;margin:6px 0 4px;line-height:1.35}
+.ch-card .secs{font-size:12px;color:var(--muted);line-height:1.6}
+.ch-card .ch-ico{position:absolute;right:-14px;bottom:-14px;width:86px;height:86px;opacity:.12}
+.ch-card .go{position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;color:#fff}
+.ch-card:hover .go{opacity:1}
+.ch-card .go svg{width:14px;height:14px}
+@media(max-width:1080px){.ch-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.ch-grid{grid-template-columns:1fr 1fr}}
+
+/* 模块入口卡 */
+.mod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mod-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;gap:16px;transition:.2s;cursor:pointer}
+.mod-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.mod-ico{width:52px;height:52px;flex:none;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff}
+.mod-ico svg{width:26px;height:26px}
+.mod-card h4{font-size:16px;font-weight:800;margin-bottom:4px}
+.mod-card p{font-size:12.8px;color:var(--muted);line-height:1.6}
+@media(max-width:900px){.mod-grid{grid-template-columns:1fr}}
+
+/* 知识图谱 */
+.graph-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.graph-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.graph-toolbar .t-tip{font-size:12.5px;color:var(--muted)}
+.g-switch{display:inline-flex;background:var(--bg2);border-radius:999px;padding:3px;gap:2px}
+.g-switch button{border:none;background:transparent;padding:5px 14px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.g-switch button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(23,42,80,.12)}
+.g-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.g-legend .lg{display:inline-flex;align-items:center;gap:6px}
+.g-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.graph-box{position:relative;width:100%;height:600px;border:1px solid var(--line);border-radius:14px;background:
+  radial-gradient(circle at 20% 30%,#EAF1FD 0,transparent 45%),
+  radial-gradient(circle at 80% 70%,#EDE7FB 0,transparent 45%),
+  radial-gradient(circle at 65% 20%,#E7F7F1 0,transparent 40%),
+  #FBFCFE;
+  overflow:hidden}
+.graph-box svg{width:100%;height:100%;display:block}
+.graph-box .g-hint{position:absolute;right:14px;top:10px;font-size:11.5px;color:var(--muted);background:rgba(255,255,255,.85);padding:4px 10px;border-radius:99px;border:1px solid var(--line);pointer-events:none}
+.g-node{cursor:pointer}
+.g-node .chip{fill:#fff;stroke:#D7E2F5;stroke-width:1.2}
+.g-node text{font-family:inherit;font-weight:600;pointer-events:none}
+.g-node.root .chip{fill:url(#ggrad);stroke:none}
+.g-node:hover .chip{stroke-width:2.4;filter:drop-shadow(0 4px 10px rgba(23,42,80,.22))}
+.g-edge{fill:none;stroke:#C3CFE3;stroke-width:1.4}
+.g-edge.prereq{stroke:#94A3B8;stroke-width:1.4;stroke-dasharray:5 4}
+.g-edge.prereq:hover{stroke:var(--warn)}
+.edge-label{font-size:10px;fill:#7C8AA0}
+.g-node .nname{font-size:12.5px;fill:var(--ink);text-anchor:middle}
+.g-node .nsub{font-size:9.5px;fill:#8A97AD;text-anchor:middle}
+.g-node.concept .chip{fill:#F5F7FB;stroke:#C9D6EC}
+.g-node.concept .nname{font-size:11px}
+.g-path{position:absolute;left:16px;bottom:12px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:12px;color:var(--muted);max-width:60%;box-shadow:0 4px 14px rgba(23,42,80,.08)}
+.g-path b{color:var(--ink)}
+
+/* ===== 章节学习页 ===== */
+.learn-head{border-radius:18px;padding:26px 28px;color:#fff;position:relative;overflow:hidden;margin-bottom:18px}
+.learn-head .crumb{font-size:12.5px;opacity:.85;margin-bottom:6px}
+.learn-head h2{font-size:26px;font-weight:900;letter-spacing:.5px}
+.learn-head .tagline{font-size:13.5px;opacity:.9;margin-top:4px}
+.learn-head .ln{position:absolute;right:26px;top:20px;font-size:60px;font-weight:900;opacity:.16;line-height:1}
+.learn-grid{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
+@media(max-width:960px){.learn-grid{grid-template-columns:1fr}}
+.learn-main{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px 26px}
+.learn-side{position:sticky;top:76px;display:flex;flex-direction:column;gap:14px}
+.goal-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.goal-card h4{font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:10px;color:var(--c9)}
+.goal-card ol{margin-left:18px;font-size:13.2px;color:#3A4A66;line-height:1.9}
+.side-nav{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.side-nav h4{font-size:13px;font-weight:800;margin-bottom:8px;color:var(--muted)}
+.side-nav a{display:flex;align-items:center;gap:8px;font-size:13px;padding:6px 10px;border-radius:8px;color:#3D4C66;font-weight:500}
+.side-nav a:hover{background:var(--bg2)}
+.side-nav a.on{background:var(--bg2);color:var(--c9);font-weight:700}
+.side-nav a .dot{width:7px;height:7px;border-radius:50%;flex:none}
+
+.mod-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;margin:26px 0 12px;padding-top:6px;letter-spacing:.3px}
+.mod-title:first-child{margin-top:0}
+.mod-title .idx{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex:none}
+.learn-main p{margin:8px 0;font-size:14.5px;color:#26344E}
+.learn-main p.li{padding-left:18px;position:relative;margin:5px 0}
+.learn-main p.li::before{content:"";position:absolute;left:4px;top:11px;width:7px;height:7px;border-radius:2px;background:var(--c9)}
+.formula{background:linear-gradient(90deg,#F2F6FE,#F8F5FE);border:1px solid #DCE7FA;border-radius:12px;padding:14px 18px;margin:12px 0;font-family:'Noto Serif SC','Times New Roman',serif;font-size:16.5px;text-align:center;color:#14264D;letter-spacing:.5px;overflow-x:auto}
+.formula .tag{display:block;font-size:11px;color:#8A97AD;font-family:'Noto Sans SC',sans-serif;margin-bottom:4px;letter-spacing:.5px}
+.note{background:#FFFBEB;border:1px solid #FDE9C4;border-left:4px solid var(--warn);border-radius:10px;padding:12px 16px;margin:12px 0;font-size:13.5px;color:#7A5200}
+.note b{color:#92400E}
+.klist{margin:6px 0}
+i.m{font-style:normal;font-family:'Noto Serif SC','Times New Roman',serif;background:#EFF4FE;border:1px solid #D8E4FA;border-radius:5px;padding:0 6px;font-size:.95em;color:#1D3A6E}
+.ex-title{background:var(--c9);color:#fff;display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:9px 9px 0 0;font-size:13.5px;font-weight:700;margin-top:18px}
+.ex-solve{background:#F0F6FF;border:1px solid #D6E6FF;border-radius:0 10px 10px 10px;padding:14px 18px;margin-bottom:6px;font-size:13.8px;color:#1D3A6E}
+.ex-solve .step{color:var(--c9);font-weight:700}
+.demo-embed{background:#0E1728;border-radius:14px;margin:14px 0;overflow:hidden;border:1px solid #1E2B45}
+.demo-embed .demo-head{display:flex;align-items:center;gap:10px;padding:12px 16px;color:#DCE6F7;font-size:13.5px;font-weight:700;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08)}
+.demo-embed .demo-head svg{width:18px;height:18px;color:#7DD3FC}
+.demo-embed canvas{display:block;width:100%;height:auto;background:#0E1728}
+.demo-ctrl{display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;background:#111D33;align-items:center}
+.demo-ctrl label{display:flex;align-items:center;gap:7px;font-size:12.3px;color:#B9C7E0}
+.demo-ctrl input[type=range]{width:130px;accent-color:#7DD3FC}
+.demo-ctrl .val{min-width:52px;text-align:right;color:#7DD3FC;font-weight:700;font-variant-numeric:tabular-nums}
+.demo-ctrl select{background:#1B2A48;color:#DCE6F7;border:1px solid #33466E;border-radius:8px;padding:4px 10px;font-size:12.5px}
+.demo-ctrl .btn-mini{border:1px solid #33466E;background:#1B2A48;color:#DCE6F7;border-radius:8px;padding:4px 14px;font-size:12.5px;font-weight:600}
+.demo-ctrl .btn-mini:hover{background:#24365C}
+.demo-ctrl .btn-mini.act{background:#0EA5E9;border-color:#0EA5E9;color:#fff}
+.demo-stat{display:flex;gap:16px;flex-wrap:wrap;padding:10px 16px;background:#0B1424;font-size:12.3px;color:#93A7C8;border-top:1px solid rgba(255,255,255,.06)}
+.demo-stat b{color:#7DD3FC;font-weight:700}
+
+/* ===== 动画实验室 ===== */
+.sim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:1100px){.sim-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.sim-grid{grid-template-columns:1fr}}
+.sim-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:.2s;cursor:pointer}
+.sim-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.sim-card .sim-thumb{height:150px;background:#0E1728;position:relative}
+.sim-card .sim-thumb canvas{width:100%;height:100%;opacity:.85}
+.sim-card .sim-body{padding:14px 16px}
+.sim-card .sim-tag{font-size:10.5px;font-weight:700;letter-spacing:.8px;color:#fff;padding:2px 9px;border-radius:99px}
+.sim-card h4{font-size:14.5px;font-weight:800;margin:8px 0 4px}
+.sim-card p{font-size:12.3px;color:var(--muted);line-height:1.55}
+.sim-detail{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.sim-detail h3{font-size:18px;font-weight:800;display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.sim-detail .sim-desc{font-size:13px;color:var(--muted);margin-bottom:14px}
+
+/* ===== 题库 ===== */
+.quiz-toolbar{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;box-shadow:var(--shadow)}
+.quiz-toolbar .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0}
+.quiz-toolbar .lbl{font-size:13px;font-weight:700;color:var(--muted);width:52px}
+.q-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:#3D4C66;transition:.15s;cursor:pointer}
+.q-chip:hover{border-color:var(--c9);color:var(--c9)}
+.q-chip.on{color:#fff}
+.q-chip.on.ch9{background:var(--c9);border-color:var(--c9)}
+.q-chip.on.ch10{background:var(--c10);border-color:var(--c10)}
+.q-chip.on.ch11{background:var(--c11);border-color:var(--c11)}
+.q-chip.on.ch12{background:var(--c12);border-color:var(--c12)}
+.q-chip.on.ch13{background:var(--c13);border-color:var(--c13)}
+.q-count{font-size:13px;color:var(--muted);margin-left:auto}
+.q-item{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin-bottom:12px;transition:.15s}
+.q-item:hover{border-color:#B9CCE8}
+.q-item .q-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;font-size:11.5px}
+.q-tag{padding:2px 10px;border-radius:99px;color:#fff;font-weight:700;letter-spacing:.4px}
+.q-type{color:var(--muted);font-weight:500}
+.q-qnum{color:#94A3B8;font-weight:600}
+.q-item .q-stem{font-size:14.5px;color:#1F2D47;margin:6px 0 4px;line-height:1.85}
+.q-opts{margin:6px 0 2px 4px;font-size:13.8px;color:#33425E}
+.q-opts div{padding:2px 0}
+.q-item .q-note{font-size:12px;color:#8A97AD;margin-top:4px}
+.q-ans-btn{display:inline-flex;align-items:center;gap:6px;margin-top:10px;border:1px solid var(--line);background:var(--bg);color:#3D4C66;padding:5px 14px;border-radius:99px;font-size:12.5px;font-weight:600}
+.q-ans-btn:hover{border-color:var(--c9);color:var(--c9)}
+.q-ans{display:none;margin-top:10px;background:#F4F8FE;border:1px solid #D6E6FF;border-radius:10px;padding:12px 16px;font-size:13.5px}
+.q-ans.show{display:block}
+.q-ans .ans-lbl{color:var(--c9);font-weight:800;margin-right:6px}
+.q-empty{text-align:center;color:var(--muted);padding:60px 0;font-size:14px}
+.q-shuffle{display:inline-flex;align-items:center;gap:6px}
+
+/* ===== 学生学情 ===== */
+.stu-grid{display:grid;grid-template-columns:340px 1fr;gap:16px;align-items:start}
+@media(max-width:1000px){.stu-grid{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.panel h3{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.panel h3 svg{width:19px;height:19px;color:var(--c9)}
+.drop-zone{border:2px dashed #C3D3EC;border-radius:12px;padding:22px 16px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;transition:.18s;background:#FAFCFF}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--c9);background:#EFF5FF;color:var(--c9)}
+.drop-zone svg{width:30px;height:30px;margin-bottom:8px;color:#9DB4DD}
+.tpl{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 14px;font-size:12.3px;color:var(--muted);margin-top:12px;line-height:1.9;overflow-x:auto}
+.tpl code{background:#E3EAF7;padding:1px 6px;border-radius:5px;font-size:11.5px}
+.stu-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+table.tbl{width:100%;border-collapse:collapse;font-size:13.2px;margin-top:6px}
+table.tbl th{text-align:left;padding:8px 10px;background:var(--bg2);color:#33425E;font-weight:700;font-size:12.3px;border-bottom:2px solid var(--line);white-space:nowrap}
+table.tbl td{padding:8px 10px;border-bottom:1px solid #EDF1F9;vertical-align:middle}
+table.tbl tr:hover td{background:#F8FAFE}
+.stu-pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:11.5px;font-weight:700;color:#fff}
+.master-bar{width:88px;height:8px;border-radius:99px;background:#E6EBF5;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:6px}
+.master-bar i{display:block;height:100%;border-radius:99px}
+.master-txt{font-size:12px;color:var(--muted);font-weight:600}
+.stu-heat{display:flex;gap:2px;align-items:flex-end;height:26px}
+.stu-heat i{width:100%;border-radius:2px;min-width:2px}
+.stu-card{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;border:1px solid var(--line);cursor:pointer;transition:.15s;margin-bottom:8px}
+.stu-card:hover{border-color:var(--c9);background:#F7FAFF}
+.stu-card.on{border-color:var(--c9);background:#EFF5FF}
+.stu-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;flex:none}
+.stu-card .nm{font-size:13.8px;font-weight:700}
+.stu-card .sub{font-size:11.5px;color:var(--muted)}
+.master-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px}
+@media(max-width:900px){.master-grid{grid-template-columns:repeat(2,1fr)}}
+.m-cell{border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:center}
+.m-cell .m-ch{font-size:11px;font-weight:700;letter-spacing:.5px}
+.m-cell .m-val{font-size:19px;font-weight:900;margin:4px 0}
+.m-cell .m-bar{height:6px;border-radius:99px;background:#E6EBF5;overflow:hidden}
+.m-cell .m-bar i{display:block;height:100%;border-radius:99px}
+.m-cell .m-note{font-size:10.5px;color:var(--muted);margin-top:4px}
+.wrong-list{margin-top:12px}
+.wrong-item{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:9px;background:#FEF6F6;border:1px solid #FADADA;margin-bottom:6px;font-size:12.8px}
+.wrong-item .w-del{border:none;background:transparent;color:#DC2626;font-size:14px;line-height:1;margin-left:auto;padding:2px 6px;border-radius:6px}
+.wrong-item .w-del:hover{background:#FCE4E4}
+.empty-tip{color:var(--muted);font-size:12.8px;text-align:center;padding:18px 0}
+
+/* 通用 */
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:600;margin-bottom:14px}
+.back-link:hover{color:var(--c9)}
+.back-link svg{width:15px;height:15px}
+.tag-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);background:var(--bg2);padding:4px 12px;border-radius:99px;font-weight:600}
+footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;color:#94A3B8;font-size:12.5px;background:#fff}
+footer b{color:#64748B}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 22px;border-radius:99px;font-size:13px;opacity:0;transition:.25s;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.25);pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:720px){
+  .topbar-in{gap:12px;padding:0 12px}
+  .nav a{padding:6px 10px;font-size:13px}
+  .hero{padding:30px 24px;min-height:380px}
+  .hero-stats{display:none}
+  .learn-main{padding:18px 16px}
+  .graph-box{height:460px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="topbar-in">
+      <a class="brand" href="#/home">
+        <svg viewBox="0 0 64 64"><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0891B2"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#bg1)"/><circle cx="26" cy="26" r="9" fill="#fff"/><circle cx="38" cy="38" r="9" fill="none" stroke="#fff" stroke-width="4"/><path d="M26 17v-6M17 26h-6M26 35v6M35 26h6" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+        <span>物理必修三<small>电磁学 · 知识学习平台</small></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#/home" data-nav="home">知识图谱</a>
+        <a href="#/learn" data-nav="learn">章节学习</a>
+        <a href="#/sim" data-nav="sim">动画实验室<span class="n-badge">23</span></a>
+        <a href="#/quiz" data-nav="quiz">题库</a>
+        <a href="#/students" data-nav="students">学生学情</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="view-home" class="view wrap"></main>
+  <main id="view-learn" class="view wrap"></main>
+  <main id="view-sim" class="view wrap"></main>
+  <main id="view-quiz" class="view wrap"></main>
+  <main id="view-students" class="view wrap"></main>
+
+  <footer>物理必修第三册 · 电磁学学习平台 &nbsp;|&nbsp; 数据依据：人教版《普通高中教科书 物理 必修 第三册》 &nbsp;|&nbsp; 学生数据仅保存在本地浏览器</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ================= 数据：章节 ================= */
+const CH = {
+  ch9:{id:'ch9',num:'第九章',name:'静电场及其应用',color:'#2563EB',tagline:'从摩擦起电到静电屏蔽，建立"场"的概念',icon:'charge',demos:['demo-induction','demo-coulomb','demo-field','demo-shield']},
+  ch10:{id:'ch10',num:'第十章',name:'静电场中的能量',color:'#7C3AED',tagline:'用能量观点重新认识电场：电势、电势差、电容',icon:'energy',demos:['demo-ep','demo-eq','demo-ued','demo-capacitor','demo-deflect']},
+  ch11:{id:'ch11',num:'第十一章',name:'电路及其应用',color:'#EA580C',tagline:'从电流微观本质到串并联电路与电表改装',icon:'circuit',demos:['demo-current','demo-resistance','demo-vernier','demo-circuit','demo-multimeter']},
+  ch12:{id:'ch12',num:'第十二章',name:'电能 能量守恒定律',color:'#059669',tagline:'电路中的能量转化与闭合电路欧姆定律',icon:'power',demos:['demo-joule','demo-ohm','demo-battery','demo-energy']},
+  ch13:{id:'ch13',num:'第十三章',name:'电磁感应与电磁波初步',color:'#0891B2',tagline:'从奥斯特到麦克斯韦，电磁波与量子化',icon:'wave',demos:['demo-bfield','demo-flux','demo-induction2','demo-emwave','demo-quantum']}
+};
+const CH_ORDER=['ch9','ch10','ch11','ch12','ch13'];
+
+/* ================= 数据：23节授课内容（内容DSL） =================
+   ## 小标题 | > 提示 | $$ 公式 | 例 例题 | 答 解答 | - 列表 | !demo:id | !quiz:过滤 |
+*/
+const SECTIONS = {
+'s9-1':{
+  ch:'ch9', title:'电荷', slug:'9.1',
+  goals:['知道自然界只有正、负两种电荷，理解电荷量的概念','理解摩擦起电、接触起电、感应起电的微观本质','掌握电荷守恒定律，会用其分析起电现象','知道元电荷，理解电荷量量子化的特点'],
+  blocks:[
+    '## 问题引入',
+    '公元前 600 年，泰勒斯发现摩擦过的琥珀能吸引轻小物体；我国《论衡》中也有"顿牟掇芥"的记载。摩擦过的琥珀为什么能吸引羽毛？为什么有的物体容易带电，有的物体却很难带电？',
+    '## 电荷与电荷量',
+    '美国科学家富兰克林通过实验发现，雷电的性质与摩擦产生的电完全相同，并命名了**正电荷**与**负电荷**。迄今为止，人们没有发现对这两种电荷都排斥或都吸引的电荷——自然界只有两种电荷。',
+    '电荷的多少叫作**电荷量**，用 Q（或 q）表示，单位是库仑（C）。正电荷的电荷量为正值，负电荷的电荷量为负值。',
+    '- 同种电荷相互排斥，异种电荷相互吸引',
+    '- 1 C 的定义：1 A 恒定电流在 1 s 内传送的电荷量为 1 C',
+    '## 起电的三种方式',
+    '> 起电的本质：电荷的转移或重新分布，电荷本身不会凭空产生。',
+    '**摩擦起电**：两种物质摩擦时，束缚较弱的电子转移到另一个物体上。得到电子的物体带负电，失去电子的物体带正电。',
+    '**接触起电**：一个带电体与另一个不带电的导体接触，电荷发生重新分配。',
+    '**感应起电**：带电体靠近导体时，导体中的自由电荷发生定向移动，使导体靠近带电体的一端带异种电荷、远离的一端带同种电荷。这种现象叫**静电感应**，利用静电感应使导体带电的过程叫感应起电。',
+    '> 金属导体的微观模型：外层电子脱离原子核束缚成为**自由电子**；失去自由电子的原子成为带正电的**离子**，在平衡位置附近振动。绝缘体中几乎不存在能自由移动的电荷。',
+    '## 电荷守恒定律',
+    '大量实验事实表明：电荷既不会创生，也不会消灭，它只能从一个物体转移到另一个物体，或者从物体的一部分转移到另一部分；在转移过程中，电荷的总量保持不变。这就是**电荷守恒定律**。',
+    '$$ 电荷守恒定律：一个与外界没有电荷交换的系统，电荷的代数和保持不变',
+    '## 元电荷',
+    '迄今为止实验发现的最小电荷量是电子所带的电荷量，称为**元电荷** e。所有带电体的电荷量都是 e 的整数倍——电荷量是不能连续变化的物理量。',
+    '$$ e = 1.60 × 10⁻¹⁹ C（计算取值）',
+    '$$ 电子的比荷 = e / mₑ = 1.76 × 10¹¹ C/kg',
+    '> 元电荷 e 的数值最早由美国物理学家**密立根**通过油滴实验测得，他因此获得诺贝尔物理学奖。',
+    '## 典型例题',
+    '例 在图 9.1-3 所示的静电感应实验中，导体分开后，A 带上了 -1.0×10⁻⁸ C 的电荷。实验过程中，是电子由 A 转移到 B，还是由 B 转移到 A？A、B 得到或失去的电子数各是多少？',
+    '答 分析：带正电的 C 靠近时，B 端（远端）带正电，A 端（近端）带负电。分开后 A 带负电，说明 A **得到**了电子，即电子由 B 转移到 A。',
+    '答 电子数：n = |Q| / e = 1.0×10⁻⁸ / 1.6×10⁻¹⁹ = 6.25×10¹⁰ 个。即 A 得到 6.25×10¹⁰ 个电子，B 失去 6.25×10¹⁰ 个电子。',
+    '## 动画演示',
+    '!demo:demo-induction',
+    '## 本节小结',
+    '- 两种电荷：正电荷、负电荷；同号相斥、异号相吸',
+    '- 起电方式：摩擦起电、接触起电、感应起电（本质：电荷转移与重新分布）',
+    '- 电荷守恒定律：电荷的代数和保持不变',
+    '- 元电荷：e = 1.60×10⁻¹⁹ C，一切电荷量都是 e 的整数倍',
+    '!quiz:ch9'
+  ]
+},
+'s9-2':{
+  ch:'ch9', title:'库仑定律', slug:'9.2',
+  goals:['理解点电荷这一理想化模型','掌握库仑定律的内容、公式及适用条件','会应用库仑定律计算静电力','理解多个点电荷作用力的叠加原理'],
+  blocks:[
+    '## 问题引入',
+    '电荷之间的作用力随电荷量的增大而增大，随距离的增大而减小。它会不会与万有引力具有相似的形式——与电荷量乘积成正比、与距离的二次方成反比？',
+    '## 点电荷',
+    '当带电体之间的距离比它们自身的大小大得多，以致带电体的形状、大小及电荷分布对作用力的影响可以忽略时，这样的带电体可以看作带电的点，叫作**点电荷**。',
+    '> 点电荷与力学中的质点类似，是一种理想化模型。',
+    '## 库仑定律',
+    '法国科学家**库仑**设计了精妙的**扭秤实验**，确认了如下规律：',
+    '$$ 库仑定律：F = k · q₁q₂ / r²',
+    '真空中两个静止点电荷之间的相互作用力，与它们的电荷量的乘积成正比，与它们距离的二次方成反比，作用力的方向在它们的连线上。这种力叫**静电力**（库仑力）。',
+    '$$ 静电力常量：k = 9.0 × 10⁹ N·m²/C²',
+    '- 同种电荷：斥力；异种电荷：引力',
+    '- 适用条件：真空中（空气中近似适用）、静止、点电荷',
+    '- 两个点电荷之间的作用力不因第三个点电荷的存在而改变',
+    '## 静电力叠加',
+    '两个或两个以上点电荷对某一点电荷的作用力，等于各点电荷单独对它作用力的**矢量和**（按平行四边形定则合成）。',
+    '$$ F = F₁ + F₂ + …（矢量求和）',
+    '## 典型例题',
+    '例 1 在氢原子内，氢原子核与电子之间的最短距离为 5.3×10⁻¹¹ m。试比较氢原子核与电子之间的静电力和万有引力。',
+    '答 静电力：F库 = k·q₁q₂/r² = 9.0×10⁹ × (1.6×10⁻¹⁹)² / (5.3×10⁻¹¹)² ≈ 8.2×10⁻⁸ N',
+    '答 万有引力：F引 = G·m₁m₂/r² ≈ 3.6×10⁻⁴⁷ N。F库/F引 ≈ 2.3×10³⁹',
+    '答 结论：微观粒子间的万有引力远小于库仑力，研究微观带电粒子相互作用时万有引力可以忽略。',
+    '例 2 真空中三个带正电的点电荷固定在边长为 50 cm 的等边三角形顶点上，每个电荷量都是 2.0×10⁻⁶ C，求它们各自所受的静电力。',
+    '答 每个点电荷受另外两个电荷的斥力：F₁ = F₂ = kq²/r² = 9.0×10⁹ × (2.0×10⁻⁶)² / 0.5² = 0.144 N',
+    '答 合力：F = 2F₁cos30° = 0.25 N，方向沿另外两个点电荷连线的垂直平分线向外。三个点电荷受力大小相等，均为 0.25 N。',
+    '## 动画演示',
+    '!demo:demo-coulomb',
+    '## 本节小结',
+    '- 点电荷：理想化模型，距离远大于自身尺寸',
+    '- 库仑定律：F = kq₁q₂/r²，方向在连线上，同号相斥异号相吸',
+    '- 静电力叠加：矢量求和，不因第三电荷而改变',
+    '!quiz:ch9'
+  ]
+},
+'s9-3':{
+  ch:'ch9', title:'电场 电场强度', slug:'9.3',
+  goals:['知道电场是客观存在的物质','理解电场强度的定义式 E=F/q','掌握点电荷电场 E=kQ/r² 与电场强度的叠加','理解电场线的特点，认识匀强电场'],
+  blocks:[
+    '## 问题引入',
+    '通过起电机使人体带电，人的头发会竖起散开。为什么会出现这样的现象？',
+    '## 电场',
+    '19 世纪 30 年代，英国科学家**法拉第**提出：在电荷的周围存在着由它产生的**电场**。电荷 A 对电荷 B 的作用力，就是电荷 A 的电场对电荷 B 的作用。',
+    '电场以及磁场已被证明是一种客观存在。场像分子、原子等实物粒子一样具有能量，因而**场也是物质存在的一种形式**。静止电荷产生的电场叫静电场。',
+    '## 电场强度',
+    '要研究电场的性质，可以在电场中放入一个电荷量和体积都很小的**试探电荷**，从它所受的静电力入手。激发电场的带电体叫**场源电荷**（源电荷）。',
+    '实验表明：试探电荷在电场中某点受到的静电力 F 与它的电荷量 q 之比是一个常量，与试探电荷无关，它反映了电场在该点的性质，叫作**电场强度**。',
+    '$$ 定义式：E = F / q（比值定义法，适用于一切电场）',
+    '- 单位：牛每库（N/C）',
+    '- 电场强度是矢量，方向与正电荷在该点所受静电力的方向相同',
+    '- 负电荷在电场中某点所受静电力的方向与该点电场强度方向相反',
+    '> 科学方法：用物理量之比定义新物理量（如密度 ρ=m/V、速度 v=l/t、电场强度 E=F/q），同时确定了新物理量与原有物理量的关系。',
+    '## 点电荷的电场 电场强度的叠加',
+    '$$ 点电荷电场：E = kQ / r²',
+    '以点电荷 Q 为中心作球面，球面上各点电场强度大小相等。Q 为正电荷时，E 方向沿半径向外；Q 为负电荷时，E 方向沿半径向内。',
+    '电场中某点的电场强度等于各个点电荷单独在该点产生的电场强度的**矢量和**：E = E₁ + E₂ + …',
+    '一个半径为 R 的均匀带电球体（或球壳）在球外产生的电场，与位于球心、电荷量相等的点电荷在同一点产生的电场相同。',
+    '## 电场线',
+    '电场线是画在电场中的一条条有方向的曲线，曲线上每点的**切线方向**表示该点的电场强度方向。同一幅图中，电场线越密的地方电场强度越大。',
+    '- 电场线从正电荷或无限远出发，终止于无限远或负电荷',
+    '- 电场线在电场中不相交（电场中任意一点的电场强度不可能有两个方向）',
+    '- 电场线不是实际存在的线，而是为形象描述电场而假想的线',
+    '## 匀强电场',
+    '如果电场中各点的电场强度大小相等、方向相同，这个电场就叫**匀强电场**。匀强电场的电场线是间隔相等的平行线。相距很近的一对带等量异种电荷的平行金属板之间的电场（除边缘外）可以看作匀强电场。',
+    '## 动画演示',
+    '!demo:demo-field',
+    '## 本节小结',
+    '- 电场：电荷周围客观存在的特殊物质',
+    '- 电场强度：E = F/q（比值定义、矢量、与试探电荷无关）',
+    '- 点电荷电场：E = kQ/r²；叠加遵循矢量合成',
+    '- 电场线：切线表方向、疏密表强弱、不相交',
+    '- 匀强电场：E 处处大小相等方向相同，电场线为等距平行线',
+    '!quiz:ch9'
+  ]
+},
+'s9-4':{
+  ch:'ch9', title:'静电的防止与利用', slug:'9.4',
+  goals:['理解静电平衡状态及导体的电荷分布特点','理解尖端放电现象及避雷针原理','理解静电屏蔽及其应用','了解静电除尘、喷漆、复印等静电吸附应用'],
+  blocks:[
+    '## 问题引入',
+    '在加油站给车加油前，为什么要触摸一下静电释放器？自然界到处都有静电，怎样防止它的危害，又怎样利用它？',
+    '## 静电平衡',
+    '把不带电的金属导体放入电场中，由于静电感应，导体两端出现等量异种电荷，在导体内部产生与外电场方向相反的附加电场。当叠加后导体内部电场强度处处为 0，自由电子不再定向移动时，导体达到**静电平衡**状态。',
+    '- 处于静电平衡状态的导体，内部电场强度处处为 0',
+    '- 导体内部没有净剩电荷，电荷只分布在导体的外表面',
+    '- 导体外表面越尖锐的位置，电荷密度越大，周围电场强度越大',
+    '## 尖端放电',
+    '导体尖端周围的强电场足以使空气中的带电粒子剧烈运动并碰撞空气分子，使空气分子中的正负电荷分离——这叫**空气的电离**。异号电荷被吸引奔向尖端，与尖端电荷中和，相当于导体从尖端失去电荷，这就是**尖端放电**。',
+    '- 避雷针：顶端尖锐金属棒，通过尖端放电不断中和雷雨云感应出的电荷，避免雷击',
+    '- 高压设备中的导体表面尽量光滑，减少尖端放电造成的电能损失（夜间高压线周围的"电晕"就是微弱放电）',
+    '## 静电屏蔽',
+    '处于静电平衡状态的空腔导体，内表面没有电荷，导体壳内空腔里的电场强度处处为 0。无论导体外部电场如何，导体内部都不会有电场——金属壳的这种作用叫**静电屏蔽**。',
+    '- 实现静电屏蔽不一定要密封金属容器，**金属网**也能起到屏蔽作用',
+    '- 应用：野外高压输电线上方的两条接地导线（屏蔽雷电）、话筒线内的金属屏蔽层等',
+    '## 静电吸附',
+    '在电场中，带电粒子受到静电力的作用，向着电极运动，最后被吸附在电极上。',
+    '- **静电除尘**：高压下电离空气，电子使粉尘带负电，被吸附到正极收集',
+    '- **静电喷漆**：带负电的油漆微粒被吸附到作为正极的工件表面',
+    '- **静电复印**：利用有机光导体（OPC）光照导电的特性，完成充电、曝光、显影、转印、放电',
+    '## 动画演示',
+    '!demo:demo-shield',
+    '## 本节小结',
+    '- 静电平衡：内部 E=0，电荷分布在外表面，尖端电荷密度大',
+    '- 尖端放电 → 避雷针；静电屏蔽 → 金属壳/金属网',
+    '- 静电吸附应用：除尘、喷漆、复印',
+    '!quiz:ch9'
+  ]
+},
+'s10-1':{
+  ch:'ch10', title:'电势能和电势', slug:'10.1',
+  goals:['理解静电力做功与路径无关的特点','理解电势能的概念及其变化与静电力做功的关系','掌握电势的定义 φ=Ep/q','知道沿电场线方向电势逐渐降低'],
+  blocks:[
+    '## 问题引入',
+    '一个正电荷在电场中只受静电力作用，由 A 点运动到 B 点时静电力做了正功，动能增加。从能量转化的角度，有另外一种形式的能量减少了——这是一种什么形式的能量？',
+    '## 静电力做功的特点',
+    '在匀强电场中，无论电荷沿直线、折线还是任意曲线从 A 点移动到 B 点，静电力做的功都是 W = qE·AM（AM 为沿电场方向的距离）。',
+    '$$ 静电力做功：W = qEd（d 为沿电场方向的位移）',
+    '静电力做功与重力做功一样：**与路径无关**，只与电荷的始、末位置有关（该结论对非匀强电场同样适用）。',
+    '## 电势能',
+    '电荷在电场中也具有势能，叫**电势能**，用 Ep 表示。静电力做的功等于电势能的减少量：',
+    '$$ WAB = EpA − EpB',
+    '- 静电力做正功 → 电势能减少',
+    '- 静电力做负功 → 电势能增加',
+    '只有先把电场中某点的电势能规定为 0，才能确定其他点的电势能。通常规定电荷在离场源电荷**无限远处**的电势能为 0，或把电荷在大地表面的电势能为 0。',
+    '> 电势能是相互作用的电荷（或电荷及对它作用的电场）所共有的，说"某个电荷的电势能"只是简略说法。',
+    '## 电势',
+    '电荷在电场中某一点的电势能与它的电荷量之比，叫作电场在这一点的**电势**。',
+    '$$ 电势：φ = Ep / q',
+    '- 单位：伏特（V），1 V = 1 J/C',
+    '- 电势是标量，只有大小没有方向，可正可负',
+    '- 电势由电场中该点的性质决定，与试探电荷无关',
+    '- 沿电场线方向电势逐渐降低',
+    '- 确定某点电势前必须先规定零电势点（理论上取无限远，实际上常取大地）',
+    '## 典型例题',
+    '例 电荷量 q₁=4×10⁻⁹ C 的试探电荷放在电场中的 A 点，具有 6×10⁻⁸ J 的电势能。A 点的电势是多少？若把 q₂=-2×10⁻¹⁰ C 的试探电荷放在 A 点，q₂ 所具有的电势能是多少？',
+    '答 φA = EpA/q₁ = 6×10⁻⁸ / 4×10⁻⁹ = 15 V',
+    '答 Ep₂ = q₂·φA = -2×10⁻¹⁰ × 15 = -3×10⁻⁹ J（负电荷在正电势点的电势能为负值）',
+    '## 动画演示',
+    '!demo:demo-ep',
+    '## 本节小结',
+    '- 静电力做功与路径无关，W = qEd',
+    '- 电势能：WAB = EpA − EpB，静电力做正功电势能减少',
+    '- 电势：φ = Ep/q，标量，沿电场线方向降低',
+    '!quiz:ch10'
+  ]
+},
+'s10-2':{
+  ch:'ch10', title:'电势差', slug:'10.2',
+  goals:['掌握电势差的定义 UAB=φA−φB','掌握静电力做功与电势差的关系 WAB=qUAB','理解等势面的概念及其与电场线的关系'],
+  blocks:[
+    '## 问题引入',
+    '从 6 楼走到 8 楼，影响做功多少的因素是两层楼的高度差而不是楼的高度。电荷从 A 点移动到 B 点，影响静电力做功的因素是电势值还是电势的差值？',
+    '## 电势差',
+    '在电场中，两点之间电势的差值叫作**电势差**，也叫**电压**。',
+    '$$ UAB = φA − φB',
+    '- UAB = −UBA',
+    '- 电势差可以是正值，也可以是负值',
+    '- 选择不同的零电势点，各点电势值会改变，但两点间的电势差保持不变',
+    '## 静电力做功与电势差',
+    '由 WAB = EpA − EpB 与 Ep = qφ，可得：',
+    '$$ WAB = qUAB，即 UAB = WAB / q',
+    '知道了电场中两点的电势差，就可以方便地计算在这两点间移动电荷时静电力做的功，而不必考虑静电力和电荷移动的路径。',
+    '## 等势面',
+    '电场中电势相同的各点构成的面叫**等势面**，用来形象地描绘电场。',
+    '- 在同一等势面上移动电荷时，静电力不做功',
+    '- 等势面一定跟电场线垂直（即跟电场强度方向垂直）',
+    '- 电场线由电势高的等势面指向电势低的等势面',
+    '- 相邻等势面间电势差相等时，等势面越密的地方电场强度越大',
+    '- 常见等势面：点电荷电场中为同心球面；匀强电场中为平行平面',
+    '## 动画演示',
+    '!demo:demo-eq',
+    '## 本节小结',
+    '- 电势差：UAB = φA − φB = −UBA',
+    '- 静电力做功：WAB = qUAB',
+    '- 等势面：与电场线垂直，同一等势面上移动电荷不做功',
+    '!quiz:ch10'
+  ]
+},
+'s10-3':{
+  ch:'ch10', title:'电势差与电场强度的关系', slug:'10.3',
+  goals:['掌握匀强电场中 U=Ed 的关系','理解 E=U/d 的物理意义及单位 V/m 与 N/C 的等价','能综合运用电势差与电场强度分析问题'],
+  blocks:[
+    '## 问题引入',
+    '电场线密的地方等势线也密，电场线稀疏的地方等势线也稀疏。这是为什么？',
+    '## 电势差与电场强度的关系',
+    '以匀强电场为例：电荷 q 从 A 点移动到 B 点，静电力做功 W = qUAB，同时 W = Fd = qEd，比较可得：',
+    '$$ 匀强电场中：UAB = Ed',
+    '（d 为两点沿电场方向的距离）',
+    '上式也可以写作：',
+    '$$ E = UAB / d',
+    '其意义是：在匀强电场中，电场强度的大小等于两点之间的电势差与两点沿电场强度方向的距离之比——电场强度在数值上等于**沿电场方向单位距离上降低的电势**。',
+    '$$ 单位关系：1 V/m = 1 N/C',
+    '## 重要推论与应用',
+    '- 两相邻等势线之间的电势差 U 相同时，E 越大的地方，等势线间距 d 越小——这就是电场线密处等势线也密的原因',
+    '- 带电粒子仅在静电力作用下被电场加速：qU = ½mv²，只要加速电压 U 一定，粒子加速后获得的动能就是一定的（与距离无关）',
+    '## 典型例题',
+    '例 真空中平行金属板 M、N 距离 0.04 m，带电粒子（m=2×10⁻¹⁵ kg，q=8×10⁻¹⁵ C）位于 M 板旁，两板加 200 V 电压。（1）求粒子所受静电力；（2）求粒子从静止开始到达 N 板时的速度。',
+    '答 （1）E = U/d = 200/0.04 = 5000 V/m；F = Eq = 5000×8×10⁻¹⁵ = 4×10⁻¹¹ N',
+    '答 （2）由 qU = ½mv²：v = √(2qU/m) = √(2×8×10⁻¹⁵×200/2×10⁻¹⁵) = 40 m/s',
+    '答 （3）若两板距离增大为原来的 2 倍，静电力减半，但粒子到达 N 板速度仍为 40 m/s（动能只由加速电压决定）。',
+    '## 动画演示',
+    '!demo:demo-ued',
+    '## 本节小结',
+    '- U = Ed（匀强电场，d 为沿场强方向距离）',
+    '- E = U/d：场强数值上等于沿电场方向单位距离降低的电势',
+    '- 1 V/m = 1 N/C；qU = ½mv² 是分析带电粒子加速的利器',
+    '!quiz:ch10'
+  ]
+},
+'s10-4':{
+  ch:'ch10', title:'电容器的电容', slug:'10.4',
+  goals:['了解电容器的构造与充放电过程','掌握电容的定义 C=Q/U 及其单位','掌握平行板电容器电容的决定因素','了解常用电容器与额定电压、击穿电压'],
+  blocks:[
+    '## 问题引入',
+    '水可以用容器储存起来，电荷也可以用一个"容器"储存起来——电容器。它内部的构造是怎样的？它是怎样"装进"和"倒出"电荷的呢？',
+    '## 电容器',
+    '在两个相距很近的平行金属板中间夹上一层绝缘物质（电介质），就组成最简单的**平行板电容器**。实际上，任何两个彼此绝缘又相距很近的导体都可以看成一个电容器。',
+    '**充电**：把电容器两极板分别接电源正、负极，两极板带上等量异种电荷，两极板间有电势差。即使断开电源，电荷由于相互吸引仍被保存在电容器中。',
+    '**放电**：用导线把两极板接通，正负电荷中和，两极板的电荷量、电势差以及放电电流都逐渐减小到 0。',
+    '## 电容',
+    '精确实验表明：一个电容器所带的电荷量 Q 与两极板之间的电势差 U 之比是不变的。',
+    '$$ 电容：C = Q / U',
+    '- 电容在数值上等于使两极板间电势差为 1 V 时电容器需要带的电荷量',
+    '- 电容表征电容器储存电荷的本领，与 Q、U 无关',
+    '- 单位：法拉（F）；1 μF = 10⁻⁶ F；1 pF = 10⁻¹² F',
+    '## 平行板电容器的电容',
+    '平行板电容器的电容由正对面积 S、板间距离 d 与电介质决定：',
+    '$$ C = εr·S / (4πkd)',
+    '- 正对面积 S 增大 → 电容增大',
+    '- 两极板间距离 d 增大 → 电容减小',
+    '- 插入电介质 → 电容变为真空时的 εr 倍（εr 为相对介电常数）',
+    '> 电容器外壳上标的是工作电压（额定电压），比击穿电压低。加在两极板上的电压不能超过击穿电压，否则电介质被击穿、电容器损坏。',
+    '## 常用电容器',
+    '- 固定电容器：聚苯乙烯电容器、电解电容器（氧化膜很薄，电容较大）',
+    '- 可变电容器：转动动片改变正对面积，电容随之改变',
+    '- 超级电容器：充电时间短、储存电能多、放电功率大、寿命长',
+    '## 动画演示',
+    '!demo:demo-capacitor',
+    '## 本节小结',
+    '- 电容器：储存电荷的元件；充电、放电过程能量转化',
+    '- 电容：C = Q/U，单位法拉 F',
+    '- 平行板电容器：C = εrS/(4πkd)，S 大 C 大、d 大 C 小、插介质 C 大',
+    '!quiz:ch10'
+  ]
+},
+'s10-5':{
+  ch:'ch10', title:'带电粒子在电场中的运动', slug:'10.5',
+  goals:['掌握带电粒子在电场中加速的分析方法','掌握带电粒子在电场中偏转的类平抛分析方法','了解示波管的原理'],
+  blocks:[
+    '## 问题引入',
+    '医用电子直线加速器中，电子是受到什么力的作用而加速的？现代科学实验和技术设备中，常常利用电场来改变或控制带电粒子的运动。',
+    '## 带电粒子在电场中的加速',
+    '带电粒子的速度方向与电场强度方向相同或相反时，电场使粒子加速。有两种分析思路：',
+    '- 牛顿第二定律 + 匀变速直线运动公式（适用于匀强电场、涉及时间等过程量）',
+    '- 静电力做功 + 动能定理（涉及位移、速率，适用于匀强和非匀强电场）',
+    '$$ 动能定理：qU = ½mv²',
+    '只要加速电压 U 一定，带电粒子加速后获得的动能就是一定的。',
+    '## 带电粒子在电场中的偏转',
+    '带电粒子的初速度方向跟电场方向垂直时，静电力方向跟速度方向不在同一直线上，运动轨迹发生偏转——在匀强电场中轨迹是一条抛物线，类似平抛运动。',
+    '（设板长 l、板距 d、电压 U、初速度 v₀、粒子比荷 q/m）',
+    '$$ 加速度：a = qE/m = qU/(md)',
+    '$$ 飞行时间：t = l / v₀',
+    '$$ 偏移量：y = ½at² = qUl² / (2mdv₀²)',
+    '$$ 偏转角：tanθ = v⊥/v₀ = qUl / (mdv₀²)',
+    '## 示波管',
+    '示波器核心部件是示波管，由**电子枪**、**偏转电极**和**荧光屏**组成。YY′ 电极加待测信号电压，XX′ 电极加周期相同的**扫描电压**（锯齿形），就能在荧光屏上得到信号在一个周期内随时间变化的稳定图像。',
+    '## 动画演示',
+    '!demo:demo-deflect',
+    '## 本节小结',
+    '- 加速：qU = ½mv²，动能由加速电压决定',
+    '- 偏转：类平抛，y = qUl²/(2mdv₀²)，tanθ = qUl/(mdv₀²)',
+    '- 示波管：电子枪 + 偏转电极 + 荧光屏',
+    '!quiz:ch10'
+  ]
+},
+'s11-1':{
+  ch:'ch11', title:'电源和电流', slug:'11.1',
+  goals:['理解电源在电路中维持持续电流的作用','理解恒定电流的概念，掌握电流的定义式','掌握电流的微观表达式 I=neSv'],
+  blocks:[
+    '## 问题引入',
+    '电闪雷鸣时，强大的电流只能存在于一瞬间，而手电筒中的小灯泡却能持续发光，这是为什么？',
+    '## 电源',
+    '两个分别带正、负电荷的导体用导线相连，自由电子在静电力作用下定向移动，A、B 之间电势差很快消失，电流只是瞬时的。',
+    '如果在 A、B 之间连接一个装置 P，它能不断地把电子从 A 搬运到 B，使 A、B 始终带一定数量的正、负电荷，A、B 之间始终存在电势差，导线中就会存在持续电流。能搬运电荷的装置就是**电源**，A、B 是电源的两个电极。',
+    '> 电源的作用：把电子从正极搬运到负极（相当于把正电荷从负极搬运到正极），维持两极间的电势差。',
+    '## 恒定电流',
+    '由电源、导线等电路元件积累的电荷产生的、分布稳定不随时间变化的电场，叫**恒定电场**。恒定电场的基本性质与静电场相同，电势、电势差及其与电场强度的关系同样适用。',
+    '大小、方向都不随时间变化的电流叫**恒定电流**。',
+    '$$ 电流：I = q / t',
+    '- 单位：安培（A）；1 C = 1 A·s；1 mA = 10⁻³ A；1 μA = 10⁻⁶ A',
+    '- 方向：正电荷定向移动的方向（电子定向移动方向与电流方向相反）',
+    '## 电流的微观解释',
+    '设导体横截面积为 S，自由电子数密度为 n，定向移动平均速率为 v，时间 t 内通过横截面的电荷量 q = neSvt：',
+    '$$ 微观表达式：I = neSv',
+    '> 自由电子无规则热运动速率约 10⁵ m/s，定向移动平均速率约 10⁻⁴ m/s。但闭合开关的瞬间，电场以光速建立，电路中各处的自由电子几乎同时开始定向移动，整个电路几乎同时形成电流。',
+    '## 动画演示',
+    '!demo:demo-current',
+    '## 本节小结',
+    '- 电源：搬运电荷、维持电势差，是持续电流的"动力"',
+    '- 恒定电流：I = q/t，大小方向均不变',
+    '- 微观解释：I = neSv',
+    '!quiz:ch11'
+  ]
+},
+'s11-2':{
+  ch:'ch11', title:'导体的电阻', slug:'11.2',
+  goals:['理解电阻的定义 R=U/I','掌握电阻定律 R=ρl/S','理解电阻率的物理意义','了解伏安特性曲线与线性、非线性元件'],
+  blocks:[
+    '## 问题引入',
+    '为了减小输电线上电能的损耗，人们尽量把输电线做得粗一点。导体的电阻与长度、横截面积、材料有什么关系？定量关系是怎样的？',
+    '## 电阻',
+    '同一个金属导体的 U-I 图像是一条过原点的直线，电压跟电流之比是一个常量：',
+    '$$ 电阻：R = U / I',
+    '- 电阻反映导体对电流的阻碍作用，只跟导体本身性质有关，与电流、电压无关',
+    '- 单位：欧姆（Ω）',
+    '- 在 U-I 图像中，斜率反映导体电阻的大小',
+    '## 电阻定律',
+    '实验表明：同种材料的导体，电阻 R 与它的长度 l 成正比，与它的横截面积 S 成反比，还与构成它的材料有关：',
+    '$$ 电阻定律：R = ρ·l / S',
+    '实验方法：控制变量法。a、b、c、d 四段导体分别只改变长度、横截面积、材料，串联接入电路，各段电压与电阻成正比，把测电阻之比转化为电压之比。',
+    '## 电阻率',
+    'ρ 表征了导体材料的导电特性，叫**电阻率**，单位是 Ω·m。',
+    '- 纯金属的电阻率较小（银 1.6×10⁻⁸、铜 1.7×10⁻⁸ Ω·m），合金的电阻率较大',
+    '- 金属的电阻率随温度升高而增大（电阻温度计）',
+    '- 锰铜合金、镍铜合金电阻率几乎不受温度影响，用来制作标准电阻',
+    '- 超导现象：温度降到很低时电阻可以降到 0（1911 年发现；1987 年钇钡铜氧系材料临界温度提高到 90 K）',
+    '## 伏安特性曲线',
+    '以电压 U 为横坐标、电流 I 为纵坐标的 I-U 图像叫导体的**伏安特性曲线**。',
+    '- 金属导体：温度不变时电阻几乎不变，伏安特性曲线是过原点的直线——**线性元件**',
+    '- 气态导体、半导体元件（如二极管）：电流与电压不成正比——**非线性元件**，欧姆定律不适用',
+    '## 动画演示',
+    '!demo:demo-resistance',
+    '## 本节小结',
+    '- 电阻：R = U/I（比值定义）',
+    '- 电阻定律：R = ρl/S',
+    '- 电阻率：材料特性，金属随温度升高而增大，超导时降为 0',
+    '- 伏安特性：线性元件为过原点直线',
+    '!quiz:ch11'
+  ]
+},
+'s11-3':{
+  ch:'ch11', title:'实验：导体电阻率的测量', slug:'11.3',
+  goals:['会使用游标卡尺与螺旋测微器测量长度','掌握伏安法测电阻的基本方法','会由 R、l、d 计算电阻率'],
+  blocks:[
+    '## 实验思路',
+    '由电阻定律 R = ρl/S，只要测出金属丝的电阻 R、长度 l 和直径 d，就可以算出电阻率：',
+    '$$ ρ = R·S / l = πd²R / (4l)',
+    '## 长度测量：游标卡尺',
+    '游标卡尺利用主尺单位刻度（1 mm）与游标尺单位刻度之间的微量差值来提高精度。常用 10 分度、20 分度、50 分度三种，精度分别为 0.1 mm、0.05 mm、0.02 mm。',
+    '读数 = 主尺读数（游标尺零刻度线左侧主尺读数）+ 游标尺读数（与主尺刻度对齐的游标刻度 × 精度）',
+    '> 例：10 分度卡尺，主尺读 23 mm，游标第七条刻度线与主尺刻度对齐 → 23 + 7×0.1 = 23.7 mm',
+    '## 长度测量：螺旋测微器',
+    '螺旋测微器（千分尺）的固定刻度螺距为 0.5 mm，可动刻度有 50 格，每旋转一格螺杆前进 0.01 mm。',
+    '读数 = 固定刻度读数（含是否露出半毫米刻度）+ 可动刻度读数 × 0.01 mm',
+    '> 使用时先使测砧与螺杆接触，听到"喀喀"声后读数。可准确到 0.01 mm，需估读到 0.001 mm。',
+    '## 物理量的测量',
+    '- **电阻的测量**：伏安法（电压表并联、电流表串联），改变滑动变阻器得到多组 U、I，用 U-I 图像求电阻',
+    '- **长度 l 的测量**：刻度尺测量接入电路的**有效长度**，多次测量取平均',
+    '- **直径 d 的测量**：累积法（电阻丝紧密缠绕后测总宽除以圈数）、游标卡尺或螺旋测微器在不同位置测 3 次取平均',
+    '## 动画演示',
+    '!demo:demo-vernier',
+    '## 本节小结',
+    '- 游标卡尺：精度 0.1 / 0.05 / 0.02 mm，读数 = 主尺 + 游标×精度',
+    '- 螺旋测微器：精度 0.01 mm，读数 = 固定刻度 + 可动刻度×0.01',
+    '- ρ = πd²R/(4l)，用伏安法 + U-I 图像测 R',
+    '!quiz:ch11'
+  ]
+},
+'s11-4':{
+  ch:'ch11', title:'串联电路和并联电路', slug:'11.4',
+  goals:['掌握串、并联电路的电流和电压规律','掌握串、并联电路的等效电阻计算','理解表头改装成电压表和电流表的原理'],
+  blocks:[
+    '## 问题引入',
+    '如果把两个电阻 R₁、R₂ 串联或并联后看成一个电阻，这个电阻跟 R₁、R₂ 应该是怎样的关系？',
+    '## 串联电路',
+    '- 恒定电流电路中各处电荷分布稳定，相同时间内通过各点的电荷量必然相等 → **串联电路电流处处相等**',
+    '- 串联电路两端总电压等于各部分电路电压之和：U = U₁ + U₂ + …',
+    '- 等效电阻等于各部分电阻之和：R = R₁ + R₂ + … + Rn',
+    '- 电压分配：U₁ : U₂ = R₁ : R₂（串联分压，电阻越大分压越多）',
+    '## 并联电路',
+    '- 只有在相同时间内流过干路的电荷量等于进入各支路电荷量之和，才能保证电荷分布不变 → **并联电路总电流等于各支路电流之和**',
+    '- 不考虑导线电阻时各节点电势相同 → **并联电路总电压与各支路电压相等**',
+    '- 等效电阻的倒数等于各支路电阻倒数之和：1/R = 1/R₁ + 1/R₂ + … + 1/Rn',
+    '- 电流分配：I₁ : I₂ = R₂ : R₁（并联分流，电阻越小电流越大）',
+    '## 电压表和电流表（表头改装）',
+    '常用的电压表和电流表都由小量程的电流表（**表头**）改装而成。表头参数：内阻 Rg、满偏电流 Ig、满偏电压 Ug = IgRg。',
+    '**改装成电压表**：串联一个分压电阻 R，承担大部分电压。',
+    '$$ R = (U − Ug) / Ig',
+    '**改装成大量程电流表**：并联一个分流电阻 R，分去大部分电流。',
+    '$$ R = Ug / (I − Ig)',
+    '> 例：表头 Rg = 30 Ω、Ig = 1 mA，改装成量程 0.6 A 电流表：分流电阻 R = 0.4/0.599 ≈ 5×10⁻² Ω，改装后内阻约 5×10⁻² Ω。',
+    '## 动画演示',
+    '!demo:demo-circuit',
+    '## 本节小结',
+    '- 串联：I 相等，U 相加，R = R₁+R₂+…',
+    '- 并联：U 相等，I 相加，1/R = 1/R₁+1/R₂+…',
+    '- 改装电压表串大电阻分压；改装电流表并小电阻分流',
+    '!quiz:ch11'
+  ]
+},
+'s11-5':{
+  ch:'ch11', title:'实验：练习使用多用电表', slug:'11.5',
+  goals:['认识多用电表的表盘与选择开关','会正确测量直流电压、直流电流和电阻','知道欧姆挡的使用规范与读数方法'],
+  blocks:[
+    '## 认识多用电表',
+    '多用电表是一种多功能仪表，可测量直流电流、直流电压、交变电压以及电阻。',
+    '- 表盘：直流电流/电压刻度线、交变电压刻度线、电阻刻度线（右小左大、不均匀）',
+    '- 选择开关：旋转到相应功能区域和量程',
+    '- 指针定位螺丝、欧姆调零旋钮、表笔（红表笔接"+"、黑表笔接"−"）',
+    '- 选择开关旋转到不同挡位时，表内接通相应的电流表、电压表或欧姆表电路',
+    '## 测量直流电压',
+    '将多用电表选择开关旋至直流电压挡，选合适量程；两表笔**并联**在待测电路两端，红表笔接触点的电势应比黑表笔高。',
+    '## 测量直流电流',
+    '将选择开关旋至直流电流挡，选合适量程；把多用电表**串联**接入电路，电流从红表笔流入。',
+    '## 测量电阻',
+    '使用欧姆挡测电阻时，指针偏转过大或过小误差都大，应选择适当倍率使指针落在刻度盘**中间区域**。',
+    '- 测量前先**欧姆调零**：两表笔短接，调节欧姆调零旋钮使指针指向"0"；改变倍率后必须重新调零',
+    '- 电阻值 = 表盘读数 × 倍率',
+    '- 不能测量待测电阻在电路中的电阻（需断开电源、从电路取下）',
+    '- 使用完毕，将选择开关旋转到 OFF 位置',
+    '> 数字式多用电表以数字形式直接显示测量值，使用方便。',
+    '## 动画演示',
+    '!demo:demo-multimeter',
+    '## 本节小结',
+    '- 测电压：并联、红表笔接高电势',
+    '- 测电流：串联、电流从红表笔流入',
+    '- 测电阻：欧姆调零、选倍率使指针落中间、读数×倍率、换挡重新调零、用完旋到 OFF',
+    '!quiz:ch11'
+  ]
+},
+'s12-1':{
+  ch:'ch12', title:'电路中的能量转化', slug:'12.1',
+  goals:['掌握电功与电功率的计算','掌握焦耳定律及其应用','会分析含电动机等非纯电阻电路的能量转化'],
+  blocks:[
+    '## 问题引入',
+    '电灯、电视、电热水壶、电动汽车……你知道这些用电器中的能量是怎样转化的吗？电能转化为其他形式的能，是通过电流做功来实现的。',
+    '## 电功和电功率',
+    '电流做功的实质是导体中的恒定电场对自由电荷的静电力做功。电荷经过一段电路用时 t，通过截面的电荷量 q = It，静电力做的功为：',
+    '$$ 电功：W = UIt',
+    '$$ 电功率：P = W / t = UI',
+    '- 电功单位：焦耳（J）；电功率单位：瓦特（W）',
+    '- 1 度电 = 1 kW·h = 3.6×10⁶ J',
+    '## 焦耳定律',
+    '电流通过导体产生的热量跟电流的二次方成正比，跟导体的电阻及通电时间成正比：',
+    '$$ 焦耳定律：Q = I²Rt',
+    '纯电阻电路（如电热器）：电能全部转化为内能，W = Q，此时 P = UI = I²R = U²/R',
+    '$$ 发热功率：P热 = I²R',
+    '## 电路中的能量转化：电动机',
+    '电动机从电源获得能量，一部分转化为机械能，还有一部分（线圈电阻）转化为内能。',
+    '$$ P电 = P机 + P热，其中 P电 = UI，P热 = I²R',
+    '> 注意：电动机是非纯电阻电路，U ≠ IR，不能直接使用 U²/R 计算电功率。',
+    '## 典型例题',
+    '例 一台电动机，线圈电阻 0.4 Ω，两端电压 220 V，通过电流 5 A。求发热功率与对外做功的功率。',
+    '答 P热 = I²R = 5²×0.4 = 10 W；P电 = UI = 220×5 = 1100 W',
+    '答 P机 = P电 − P热 = 1100 − 10 = 1090 W',
+    '## 动画演示',
+    '!demo:demo-joule',
+    '## 本节小结',
+    '- 电功：W = UIt；电功率：P = UI',
+    '- 焦耳定律：Q = I²Rt，纯电阻电路 W = Q',
+    '- 电动机：P电 = P机 + P热，非纯电阻电路 U ≠ IR',
+    '!quiz:ch12'
+  ]
+},
+'s12-2':{
+  ch:'ch12', title:'闭合电路的欧姆定律', slug:'12.2',
+  goals:['理解电动势的物理意义','掌握闭合电路欧姆定律 I=E/(R+r)','掌握路端电压与负载的关系 U=E−Ir'],
+  blocks:[
+    '## 问题引入',
+    '多个并联的小灯泡的亮度明显比单独一个小灯泡暗。如何解释这一现象？',
+    '## 电动势',
+    '电源内部存在由正极指向负极的电场，静电力阻碍正电荷向正极移动。要使正电荷向正极移动，必须有与静电力方向相反的力——**非静电力**。',
+    '电源是通过非静电力做功把其他形式的能转化为电势能的装置。非静电力所做的功与所移动的电荷量之比叫**电动势**：',
+    '$$ 电动势：E = W / q',
+    '- 单位：伏特（V）',
+    '- 电动势在数值上等于非静电力把 1 C 的正电荷在电源内从负极移送到正极所做的功',
+    '- 电动势由电源中非静电力的特性决定，跟外电路无关',
+    '## 闭合电路欧姆定律',
+    '用电器和导线组成外电路，电源内部是内电路（有内阻 r）。由能量守恒：非静电力做的功 = 内、外电路转化的内能之和。',
+    '$$ EIt = I²Rt + I²rt → E = IR + Ir',
+    '$$ 闭合电路欧姆定律：I = E / (R + r)',
+    '也可以写成：E = U外 + U内（电源电动势等于内、外电路电势降落之和）。',
+    '## 路端电压与负载的关系',
+    '$$ 路端电压：U = E − Ir',
+    '- 外电阻 R 增大 → 电流 I 减小 → 内电压 Ir 减小 → 路端电压 U 增大',
+    '- 外电阻 R 减小 → 路端电压 U 减小（并联灯泡越多越暗的原因）',
+    '- **断路**：I = 0，U = E（常用此方法测电源电动势）',
+    '- **短路**：R = 0，I = E/r，电流很大，会烧坏电源甚至引起火灾——绝对不允许将电源两端用导线直接连接',
+    '## U-I 图像',
+    '由 U = −rI + E，U-I 图像是一条直线：纵截距 = 电动势 E，斜率绝对值 = 内阻 r。',
+    '> 欧姆表原理（拓展）：表内电源与表头串联，被测电阻与电流一一对应，但刻度不均匀。',
+    '## 动画演示',
+    '!demo:demo-ohm',
+    '## 本节小结',
+    '- 电动势 E = W/q：非静电力做功本领，与外电路无关',
+    '- 闭合电路欧姆定律：I = E/(R+r)，E = U外 + U内',
+    '- 路端电压：U = E − Ir；断路 U = E，短路 I = E/r（危险）',
+    '- U-I 图像：截距 = E，斜率绝对值 = r',
+    '!quiz:ch12'
+  ]
+},
+'s12-3':{
+  ch:'ch12', title:'实验：电池电动势和内阻的测量', slug:'12.3',
+  goals:['掌握用电压表、电流表测电动势和内阻的方法','会用 U-I 图像处理数据求出 E 和 r','了解用电流表（或电压表）配合电阻箱的测量方案'],
+  blocks:[
+    '## 实验思路',
+    '根据闭合电路欧姆定律：',
+    '$$ E = U + Ir',
+    '如果能测出 U、I 的两组数据，就可以列出两个关于 E、r 的方程解出结果。用电压表、电流表加上滑动变阻器 R，即可测定电源的电动势 E 和内阻 r。',
+    '## 物理量的测量',
+    '只测两组数据误差较大，应使用滑动变阻器改变外电路的电阻，进行**多次测量**。',
+    '## 数据分析：U-I 图像法',
+    '把 E = U + Ir 改写成 U = −Ir + E，以 U 为纵坐标、I 为横坐标描点画直线：',
+    '- 直线与 U 轴交点的值 = 断路时的路端电压 = 电动势 E',
+    '- 直线斜率的绝对值 = 内阻 r = |ΔU/ΔI|',
+    '- 也可由短路电流 I短 = E/r 求出内阻',
+    '> 注意事项：由于干电池内阻较小，电压 U 随电流变化较小，作图时电压轴起点一般不从 0 开始，根据数据选择合适起点以放大测量精度。旧干电池内阻大，更易测量。',
+    '> 参考案例 2：水果电池（铜片、锌片插在水果中）内阻较大，易测量，但内阻会随时间明显改变，测量应尽量迅速。',
+    '## 动画演示',
+    '!demo:demo-battery',
+    '## 本节小结',
+    '- 原理：E = U + Ir，多组数据减小误差',
+    '- U-I 图像：纵截距 = E，斜率绝对值 = r',
+    '- 电压轴起点可不从 0 开始；可用电阻箱替代滑动变阻器',
+    '!quiz:ch12'
+  ]
+},
+'s12-4':{
+  ch:'ch12', title:'能源与可持续发展', slug:'12.4',
+  goals:['理解能量守恒定律','理解能量耗散与能量转化方向性','了解能源分类及可持续发展的意义'],
+  blocks:[
+    '## 问题引入',
+    '既然能量是守恒的、不会凭空消失，为什么我们还要节约能源呢？',
+    '## 能量守恒定律',
+    '能量既不会凭空产生，也不会凭空消失，它只能从一种形式转化为其他形式，或者从一个物体转移到别的物体，在转化或转移的过程中，能量的总量保持不变。这就是**能量守恒定律**。',
+    '## 能量转化与转移的方向性',
+    '一切与热现象有关的宏观自然过程都是不可逆的。例如，燃料燃烧时一旦把热量释放出去，就不会再次自动聚集起来供人类重新利用。',
+    '电池中的化学能→电能→内能和光能，热和光被周围物质吸收变成环境的内能，我们很难把这些内能收集起来重新利用。这种现象叫**能量的耗散**。',
+    '能量的耗散表明：在能源利用过程中，能量在数量上虽未减少，但在可利用的品质上降低了。这是能源危机的深层次含义，也是**能量虽然守恒仍要节约能源**的根本原因。',
+    '## 能源的分类与应用',
+    '- **不可再生能源**（化石能源）：煤炭、石油、天然气，无法在短时间内再生',
+    '- **可再生能源**：水能、风能（归根结底来源于太阳能）、太阳能',
+    '- 核能：可控核裂变（核电站，如华龙一号）、核聚变（产能效率更高、核废料少）',
+    '## 能源与社会发展',
+    '人类对能源的利用大致经历三个时期：柴薪时期 → 煤炭时期 → 石油时期，正向多能源结构时期过渡。',
+    '过度使用化石能源带来环境问题：温室效应（CO₂）、酸雨（SO₂）、光化学烟雾（氮氧化物、碳氢化合物）等。',
+    '可持续发展的核心：既满足当代人的需求，又不损害子孙后代的需求。需要树立新的能源安全观：大力节能 + 发展可再生能源和清洁能源。',
+    '## 动画演示',
+    '!demo:demo-energy',
+    '## 本节小结',
+    '- 能量守恒定律：总量不变',
+    '- 能量耗散：品质降低、方向性 → 必须节约能源',
+    '- 能源分类：不可再生（化石）与可再生（水、风、太阳）',
+    '- 可持续发展：节能 + 清洁能源',
+    '!quiz:ch12'
+  ]
+},
+'s13-1':{
+  ch:'ch13', title:'磁场 磁感线', slug:'13.1',
+  goals:['了解电流的磁效应（奥斯特实验）','理解磁场是客观存在的物质','掌握磁感线的特点与安培定则','了解安培分子电流假说'],
+  blocks:[
+    '## 问题引入',
+    '凡是用到电的地方，几乎都有磁现象相伴随。你知道电和磁有怎样的联系吗？',
+    '## 电流的磁效应',
+    '1820 年，丹麦物理学家**奥斯特**在一次讲课中偶然把导线放在指南针上方，通电时磁针转动了——发现了**电流的磁效应**，首次揭示了电与磁的联系。',
+    '## 磁场',
+    '磁体与磁体之间、磁体与通电导体之间、通电导体与通电导体之间的相互作用，都是通过**磁场**发生的。',
+    '磁场与电场类似，是不依赖于我们的感觉而客观存在的物质，在跟别的物体发生相互作用时表现出自己的特性。',
+    '## 磁感线',
+    '小磁针静止时 **N 极所指的方向**规定为该点磁场的方向。沿磁场画出一些曲线，使曲线上每点的切线方向都跟该点磁场方向一致，这样的曲线叫**磁感线**。',
+    '- 磁感线的疏密表示磁场的强弱（两极处磁感线最密，磁场最强）',
+    '- 磁感线是闭合曲线（与电场线不同），在磁体外部从 N 极出发回到 S 极，内部从 S 极到 N 极',
+    '## 安培定则（右手螺旋定则）',
+    '**直线电流**：用右手握住导线，让伸直的拇指所指方向与电流方向一致，弯曲的四指所指方向就是磁感线环绕的方向。直线电流的磁感线是导线周围的同心圆。',
+    '**环形电流 / 通电螺线管**：让右手弯曲的四指与环形（或螺线管）电流方向一致，伸直的拇指所指方向就是环形导线（或螺线管）轴线上磁场的方向。',
+    '> 通电螺线管外部的磁场与条形磁体的磁场十分相似，电磁起重机、电动机、发电机、电磁继电器等广泛应用电流磁场。',
+    '## 安培分子电流假说',
+    '安培认为物质内部存在环形电流——分子电流，使每个物质微粒都成为微小磁体。铁棒未磁化时分子电流取向杂乱、磁场互相抵消；受外磁场作用后取向一致，铁棒被磁化。高温或猛烈撞击会使分子电流取向重新杂乱，磁体失去磁性。',
+    '## 动画演示',
+    '!demo:demo-bfield',
+    '## 本节小结',
+    '- 奥斯特实验：电流的磁效应，揭示电与磁的联系',
+    '- 磁场：客观存在的物质，磁体间相互作用通过磁场发生',
+    '- 磁感线：切线表方向、疏密表强弱、闭合曲线',
+    '- 安培定则：直线电流拇指指电流；环形电流四指指电流、拇指指磁场',
+    '!quiz:ch13'
+  ]
+},
+'s13-2':{
+  ch:'ch13', title:'磁感应强度 磁通量', slug:'13.2',
+  goals:['理解磁感应强度的定义 B=F/IL','理解匀强磁场','掌握磁通量的概念与计算 Φ=BScosθ'],
+  blocks:[
+    '## 问题引入',
+    '巨大的电磁铁能吸起成吨的钢铁，小磁体却只能吸起几枚铁钉。磁场有强弱之分，怎样定量地描述磁场的强弱呢？',
+    '## 磁感应强度',
+    '把很短一段通电导线中的电流 I 与导线长度 l 的乘积 Il 叫作**电流元**。实验表明，通电导线与磁场方向垂直时，它受力的大小既与导线长度 l 成正比，又与导线中的电流 I 成正比：',
+    '$$ F = IlB',
+    '$$ 磁感应强度：B = F / (Il)',
+    '- 单位：特斯拉（T），1 T = 1 N/(A·m)',
+    '- B 是表征磁场强弱的物理量，与导线长度、电流大小无关',
+    '- 磁感应强度是矢量，方向就是该处小磁针静止时 N 极所指的方向',
+    '> 常见磁场的数量级：地磁场约 5×10⁻⁵ T；电动机或变压器铁芯中 0.8~1.7 T；中子星表面可达 10⁶~10⁸ T。',
+    '## 匀强磁场',
+    '如果磁场中各点的磁感应强度大小相等、方向相同，这个磁场叫**匀强磁场**，磁感线用间隔相等的平行直线表示。',
+    '- 距离很近的两个平行异名磁极之间的磁场（除边缘部分外）',
+    '- 两个平行放置较近的通电线圈之间区域的磁场',
+    '## 磁通量',
+    '设在磁感应强度为 B 的匀强磁场中，有一个与磁场方向垂直的平面，面积为 S，则 B 与 S 的乘积叫穿过这个面积的**磁通量**：',
+    '$$ Φ = BS（B ⊥ S）',
+    '如果平面与 B 不垂直，取平面在垂直于 B 方向的投影面积 S′ = S·cosθ：',
+    '$$ Φ = BS·cosθ',
+    '- 单位：韦伯（Wb），1 Wb = 1 T·m²',
+    '- 由 Φ = BS 可得 B = Φ/S：磁感应强度的大小等于穿过垂直磁场方向的单位面积的磁通量',
+    '## 动画演示',
+    '!demo:demo-flux',
+    '## 本节小结',
+    '- 磁感应强度：B = F/IL，矢量，方向为小磁针 N 极指向',
+    '- 匀强磁场：B 大小相等方向相同',
+    '- 磁通量：Φ = BScosθ，单位韦伯 Wb',
+    '!quiz:ch13'
+  ]
+},
+'s13-3':{
+  ch:'ch13', title:'电磁感应现象及应用', slug:'13.3',
+  goals:['了解法拉第发现电磁感应现象的过程','掌握产生感应电流的条件：磁通量发生变化','了解电磁感应在发电机等设备中的应用'],
+  blocks:[
+    '## 问题引入',
+    '闭合电路的一部分导体在磁场中做切割磁感线的运动时，导体中会产生感应电流。切割磁感线是产生感应电流的唯一方法吗？还有其他方法吗？这些方法有什么内在联系？',
+    '## 划时代的发现',
+    '奥斯特发现电流的磁效应后，人们从对称性角度思考：既然电流能引起磁针运动，为什么不能用磁体使导线中产生电流？',
+    '**法拉第**进行了长达 10 年的探索。1831 年，他把两个线圈绕在一个铁环上，给一个线圈通电或断电的瞬间，在另一个线圈上出现了电流。法拉第把这些现象定名为**电磁感应**，产生的电流叫**感应电流**。',
+    '电磁感应的发现宣告了电磁学作为一门统一学科的诞生。',
+    '## 产生感应电流的条件',
+    '无论导体切割磁感线（电路面积变化）、线圈中磁场强弱变化，还是线圈转动（夹角变化），共同点都是——**穿过闭合导体回路的磁通量发生了变化**。',
+    '$$ 产生感应电流的条件：穿过闭合导体回路的磁通量发生变化',
+    '- 回路必须闭合',
+    '- 磁通量必须发生变化（B 变、S 变、夹角变，三选一即可）',
+    '## 电磁感应现象的应用',
+    '- **发电机**：法拉第圆盘发电机是最早的发电机，现代发电机是其"巨人"后代',
+    '- **变压器**、**电磁炉**等也都根据电磁感应制造',
+    '## 动画演示',
+    '!demo:demo-induction2',
+    '## 本节小结',
+    '- 法拉第 1831 年发现电磁感应，历时 10 年探索',
+    '- 产生感应电流的条件：穿过闭合回路的磁通量发生变化',
+    '- 应用：发电机、变压器、电磁炉',
+    '!quiz:ch13'
+  ]
+},
+'s13-4':{
+  ch:'ch13', title:'电磁波的发现及应用', slug:'13.4',
+  goals:['了解麦克斯韦电磁场理论的两个要点','知道电磁波的特性和传播速度','了解电磁波谱及其应用'],
+  blocks:[
+    '## 问题引入',
+    '广播、电视、移动通信使古代人"顺风耳、千里眼"的梦想变成现实。电磁波是怎样发现的呢？',
+    '## 电磁场',
+    '英国物理学家**麦克斯韦**建立了经典电磁场理论：',
+    '- **变化的磁场产生电场**：法拉第发现电磁感应——即使在变化的磁场中没有闭合电路，同样会在空间产生电场',
+    '- **变化的电场产生磁场**：麦克斯韦假设，变化的电场就像导线中的电流一样会在空间产生磁场',
+    '变化的电场和磁场总是相互联系的，形成一个不可分割的统一的**电磁场**。',
+    '## 电磁波',
+    '如果在空间某区域中有周期性变化的电场，它就在空间引起周期性变化的磁场；这个变化的磁场又引起新的变化的电场——变化的电场和变化的磁场交替产生，由近及远地向周围传播，这就是**电磁波**。',
+    '- 电磁波可以在**真空**中传播（传播靠电场和磁场的相互"激发"，不需要介质）',
+    '- 麦克斯韦推算：电磁波的速度等于光速，并由此提出光的电磁理论',
+    '- 1886 年，德国科学家**赫兹**通过实验捕捉到电磁波，证实了麦克斯韦的电磁场理论',
+    '## 波速、波长与频率',
+    '$$ c = λf',
+    '$$ 电磁波在真空中的速度：c = 3 × 10⁸ m/s',
+    '## 电磁波谱',
+    '无线电波、红外线、可见光、紫外线、X 射线、γ 射线，都是电磁波，按波长或频率顺序排列就是**电磁波谱**。',
+    '- 无线电波（长波、中波、短波）：广播与信号传输；微波：卫星通信、电视信号',
+    '- 红外线：加热、理疗；可见光：看见世界、光通信',
+    '- 紫外线：消毒；X 射线：诊断病情；γ 射线：摧毁病变细胞（伽马刀）',
+    '## 电磁波的能量',
+    '微波炉利用微波加热食物（水分子热运动加剧）；电台发射的电磁波在收音机天线里感应出电流。这些都表明**电磁波具有能量，电磁波是一种物质**。',
+    '## 动画演示',
+    '!demo:demo-emwave',
+    '## 本节小结',
+    '- 电磁场理论：变化磁场产生电场、变化电场产生磁场',
+    '- 电磁波：真空中可传播，速度 c = 3×10⁸ m/s，c = λf',
+    '- 电磁波谱：无线电波→红外线→可见光→紫外线→X 射线→γ 射线',
+    '- 电磁波具有能量，是物质存在的一种形式',
+    '!quiz:ch13'
+  ]
+},
+'s13-5':{
+  ch:'ch13', title:'能量量子化', slug:'13.5',
+  goals:['了解热辐射与黑体的概念','理解能量子假说 ε=hν','了解光子与能级的概念'],
+  blocks:[
+    '## 问题引入',
+    '把铁块投进火炉中，随着温度升高，铁块依次呈现暗红、赤红、橘红直至黄白色。为什么会有这样的变化？',
+    '## 热辐射',
+    '我们周围的一切物体都在辐射电磁波，这种辐射与物体的温度有关，叫**热辐射**。温度升高时，热辐射中波长较短的成分越来越强（铁块从发热到发光、颜色不断变化）。',
+    '能够完全吸收入射的各种波长的电磁波而不发生反射的物体叫**黑体**。黑体辐射电磁波的强度按波长的分布只与它的温度有关。',
+    '## 能量子',
+    '1900 年底，德国物理学家**普朗克**作出大胆假设：振动着的带电微粒的能量只能是某一最小能量值 ε 的整数倍（ε、2ε、3ε……）。这个不可再分的最小能量值叫**能量子**：',
+    '$$ 能量子：ε = hν',
+    '$$ 普朗克常量：h = 6.626 × 10⁻³⁴ J·s',
+    '微观粒子的能量是**量子化**的（不连续、分立的），与宏观世界能量的连续变化有很大不同。',
+    '## 光子',
+    '年轻的爱因斯坦把能量子假设推广到电磁场本身：光本身就是由一个个不可分割的能量子组成的，频率为 ν 的光的能量子为 hν。这些能量子后来被叫作**光子**。',
+    '## 能级',
+    '微观世界中能量取分立值的观念也适用于原子系统，原子的能量是量子化的，这些量子化的能量值叫**能级**。',
+    '- 通常情况下原子处于能量最低的状态（最稳定）',
+    '- 原子受到高速电子撞击，可能跃迁到较高能级（不稳定），自发向低能级跃迁时放出光子',
+    '- 原子从高能态向低能态跃迁放出的光子能量等于前后两个能级之差',
+    '- 由于能级分立，放出的光子能量分立，因此原子的发射光谱只有一些分立的亮线',
+    '> 量子力学的建立使人类进入核能、计算机、激光等现代技术时代。',
+    '## 动画演示',
+    '!demo:demo-quantum',
+    '## 本节小结',
+    '- 热辐射与温度有关；黑体能完全吸收各种波长电磁波',
+    '- 能量子：ε = hν，能量量子化（不连续）',
+    '- 光子：光由能量子组成',
+    '- 能级：原子能量分立；跃迁放出光子，光子能量等于能级差',
+    '!quiz:ch13'
+  ]
+}
+};
+/* ================= 数据：知识体系有向图 ================= */
+const KG = {
+  nodes:[
+    {id:'root', name:'物理必修三', sub:'电磁学 · 知识体系', type:'root', chapter:null},
+    {id:'ch9', name:'静电场及其应用', sub:'第九章', type:'chapter', chapter:'ch9'},
+    {id:'ch10', name:'静电场中的能量', sub:'第十章', type:'chapter', chapter:'ch10'},
+    {id:'ch11', name:'电路及其应用', sub:'第十一章', type:'chapter', chapter:'ch11'},
+    {id:'ch12', name:'电能 能量守恒定律', sub:'第十二章', type:'chapter', chapter:'ch12'},
+    {id:'ch13', name:'电磁感应与电磁波初步', sub:'第十三章', type:'chapter', chapter:'ch13'},
+    {id:'s9-1', name:'电荷', sub:'9.1', type:'section', chapter:'ch9'},
+    {id:'s9-2', name:'库仑定律', sub:'9.2', type:'section', chapter:'ch9'},
+    {id:'s9-3', name:'电场 电场强度', sub:'9.3', type:'section', chapter:'ch9'},
+    {id:'s9-4', name:'静电的防止与利用', sub:'9.4', type:'section', chapter:'ch9'},
+    {id:'s10-1', name:'电势能和电势', sub:'10.1', type:'section', chapter:'ch10'},
+    {id:'s10-2', name:'电势差', sub:'10.2', type:'section', chapter:'ch10'},
+    {id:'s10-3', name:'电势差与电场强度的关系', sub:'10.3', type:'section', chapter:'ch10'},
+    {id:'s10-4', name:'电容器的电容', sub:'10.4', type:'section', chapter:'ch10'},
+    {id:'s10-5', name:'带电粒子在电场中的运动', sub:'10.5', type:'section', chapter:'ch10'},
+    {id:'s11-1', name:'电源和电流', sub:'11.1', type:'section', chapter:'ch11'},
+    {id:'s11-2', name:'导体的电阻', sub:'11.2', type:'section', chapter:'ch11'},
+    {id:'s11-3', name:'实验：导体电阻率的测量', sub:'11.3', type:'section', chapter:'ch11'},
+    {id:'s11-4', name:'串联电路和并联电路', sub:'11.4', type:'section', chapter:'ch11'},
+    {id:'s11-5', name:'实验：练习使用多用电表', sub:'11.5', type:'section', chapter:'ch11'},
+    {id:'s12-1', name:'电路中的能量转化', sub:'12.1', type:'section', chapter:'ch12'},
+    {id:'s12-2', name:'闭合电路的欧姆定律', sub:'12.2', type:'section', chapter:'ch12'},
+    {id:'s12-3', name:'实验：电池电动势和内阻的测量', sub:'12.3', type:'section', chapter:'ch12'},
+    {id:'s12-4', name:'能源与可持续发展', sub:'12.4', type:'section', chapter:'ch12'},
+    {id:'s13-1', name:'磁场 磁感线', sub:'13.1', type:'section', chapter:'ch13'},
+    {id:'s13-2', name:'磁感应强度 磁通量', sub:'13.2', type:'section', chapter:'ch13'},
+    {id:'s13-3', name:'电磁感应现象及应用', sub:'13.3', type:'section', chapter:'ch13'},
+    {id:'s13-4', name:'电磁波的发现及应用', sub:'13.4', type:'section', chapter:'ch13'},
+    {id:'s13-5', name:'能量量子化', sub:'13.5', type:'section', chapter:'ch13'},
+    /* 核心概念节点 */
+    {id:'k9-1a', name:'摩擦起电', sub:'起电方式', type:'concept', chapter:'ch9', section:'s9-1'},
+    {id:'k9-1b', name:'静电感应', sub:'感应起电', type:'concept', chapter:'ch9', section:'s9-1'},
+    {id:'k9-1c', name:'电荷守恒定律', sub:'代数和不变', type:'concept', chapter:'ch9', section:'s9-1'},
+    {id:'k9-1d', name:'元电荷', sub:'e=1.6×10⁻¹⁹C', type:'concept', chapter:'ch9', section:'s9-1'},
+    {id:'k9-2a', name:'点电荷', sub:'理想化模型', type:'concept', chapter:'ch9', section:'s9-2'},
+    {id:'k9-2b', name:'库仑定律', sub:'F=kq₁q₂/r²', type:'concept', chapter:'ch9', section:'s9-2'},
+    {id:'k9-2c', name:'静电力叠加', sub:'矢量合成', type:'concept', chapter:'ch9', section:'s9-2'},
+    {id:'k9-3a', name:'电场', sub:'客观物质', type:'concept', chapter:'ch9', section:'s9-3'},
+    {id:'k9-3b', name:'电场强度', sub:'E=F/q', type:'concept', chapter:'ch9', section:'s9-3'},
+    {id:'k9-3c', name:'电场线', sub:'切线·疏密', type:'concept', chapter:'ch9', section:'s9-3'},
+    {id:'k9-3d', name:'匀强电场', sub:'等距平行线', type:'concept', chapter:'ch9', section:'s9-3'},
+    {id:'k9-4a', name:'静电平衡', sub:'内部E=0', type:'concept', chapter:'ch9', section:'s9-4'},
+    {id:'k9-4b', name:'尖端放电', sub:'避雷针', type:'concept', chapter:'ch9', section:'s9-4'},
+    {id:'k9-4c', name:'静电屏蔽', sub:'金属壳/网', type:'concept', chapter:'ch9', section:'s9-4'},
+    {id:'k10-1a', name:'电势能', sub:'W=EpA−EpB', type:'concept', chapter:'ch10', section:'s10-1'},
+    {id:'k10-1b', name:'电势', sub:'φ=Ep/q', type:'concept', chapter:'ch10', section:'s10-1'},
+    {id:'k10-2a', name:'电势差', sub:'U=φA−φB', type:'concept', chapter:'ch10', section:'s10-2'},
+    {id:'k10-2b', name:'等势面', sub:'⊥电场线', type:'concept', chapter:'ch10', section:'s10-2'},
+    {id:'k10-3a', name:'U=Ed', sub:'匀强电场', type:'concept', chapter:'ch10', section:'s10-3'},
+    {id:'k10-4a', name:'电容器', sub:'储存电荷', type:'concept', chapter:'ch10', section:'s10-4'},
+    {id:'k10-4b', name:'电容', sub:'C=Q/U', type:'concept', chapter:'ch10', section:'s10-4'},
+    {id:'k10-4c', name:'平行板电容', sub:'C=εrS/4πkd', type:'concept', chapter:'ch10', section:'s10-4'},
+    {id:'k10-5a', name:'带电粒子加速', sub:'qU=½mv²', type:'concept', chapter:'ch10', section:'s10-5'},
+    {id:'k10-5b', name:'带电粒子偏转', sub:'类平抛', type:'concept', chapter:'ch10', section:'s10-5'},
+    {id:'k11-1a', name:'电源', sub:'非静电力', type:'concept', chapter:'ch11', section:'s11-1'},
+    {id:'k11-1b', name:'恒定电流', sub:'I=q/t', type:'concept', chapter:'ch11', section:'s11-1'},
+    {id:'k11-1c', name:'微观表达式', sub:'I=neSv', type:'concept', chapter:'ch11', section:'s11-1'},
+    {id:'k11-2a', name:'电阻', sub:'R=U/I', type:'concept', chapter:'ch11', section:'s11-2'},
+    {id:'k11-2b', name:'电阻定律', sub:'R=ρl/S', type:'concept', chapter:'ch11', section:'s11-2'},
+    {id:'k11-2c', name:'电阻率', sub:'材料特性', type:'concept', chapter:'ch11', section:'s11-2'},
+    {id:'k11-3a', name:'游标卡尺', sub:'0.02~0.1mm', type:'concept', chapter:'ch11', section:'s11-3'},
+    {id:'k11-3b', name:'螺旋测微器', sub:'0.01mm', type:'concept', chapter:'ch11', section:'s11-3'},
+    {id:'k11-4a', name:'串联电路', sub:'R=R₁+R₂', type:'concept', chapter:'ch11', section:'s11-4'},
+    {id:'k11-4b', name:'并联电路', sub:'1/R=Σ1/Rᵢ', type:'concept', chapter:'ch11', section:'s11-4'},
+    {id:'k11-4c', name:'表头改装', sub:'分压·分流', type:'concept', chapter:'ch11', section:'s11-4'},
+    {id:'k11-5a', name:'多用电表', sub:'测U/I/R', type:'concept', chapter:'ch11', section:'s11-5'},
+    {id:'k12-1a', name:'电功与电功率', sub:'W=UIt,P=UI', type:'concept', chapter:'ch12', section:'s12-1'},
+    {id:'k12-1b', name:'焦耳定律', sub:'Q=I²Rt', type:'concept', chapter:'ch12', section:'s12-1'},
+    {id:'k12-1c', name:'电动机功率', sub:'P电=P机+P热', type:'concept', chapter:'ch12', section:'s12-1'},
+    {id:'k12-2a', name:'电动势', sub:'E=W/q', type:'concept', chapter:'ch12', section:'s12-2'},
+    {id:'k12-2b', name:'闭合电路欧姆定律', sub:'I=E/(R+r)', type:'concept', chapter:'ch12', section:'s12-2'},
+    {id:'k12-2c', name:'路端电压', sub:'U=E−Ir', type:'concept', chapter:'ch12', section:'s12-2'},
+    {id:'k12-3a', name:'U-I图像法', sub:'截距E·斜率r', type:'concept', chapter:'ch12', section:'s12-3'},
+    {id:'k12-4a', name:'能量守恒', sub:'总量不变', type:'concept', chapter:'ch12', section:'s12-4'},
+    {id:'k12-4b', name:'能量耗散', sub:'品质降低', type:'concept', chapter:'ch12', section:'s12-4'},
+    {id:'k13-1a', name:'电流磁效应', sub:'奥斯特实验', type:'concept', chapter:'ch13', section:'s13-1'},
+    {id:'k13-1b', name:'磁场', sub:'客观物质', type:'concept', chapter:'ch13', section:'s13-1'},
+    {id:'k13-1c', name:'磁感线', sub:'闭合曲线', type:'concept', chapter:'ch13', section:'s13-1'},
+    {id:'k13-1d', name:'安培定则', sub:'右手螺旋', type:'concept', chapter:'ch13', section:'s13-1'},
+    {id:'k13-2a', name:'磁感应强度', sub:'B=F/IL', type:'concept', chapter:'ch13', section:'s13-2'},
+    {id:'k13-2b', name:'磁通量', sub:'Φ=BScosθ', type:'concept', chapter:'ch13', section:'s13-2'},
+    {id:'k13-3a', name:'电磁感应', sub:'法拉第发现', type:'concept', chapter:'ch13', section:'s13-3'},
+    {id:'k13-3b', name:'感应电流条件', sub:'Φ变化', type:'concept', chapter:'ch13', section:'s13-3'},
+    {id:'k13-4a', name:'电磁场', sub:'E↔B相互激发', type:'concept', chapter:'ch13', section:'s13-4'},
+    {id:'k13-4b', name:'电磁波', sub:'c=λf', type:'concept', chapter:'ch13', section:'s13-4'},
+    {id:'k13-4c', name:'电磁波谱', sub:'无线电~γ射线', type:'concept', chapter:'ch13', section:'s13-4'},
+    {id:'k13-5a', name:'能量子', sub:'ε=hν', type:'concept', chapter:'ch13', section:'s13-5'},
+    {id:'k13-5b', name:'光子', sub:'光量子', type:'concept', chapter:'ch13', section:'s13-5'},
+    {id:'k13-5c', name:'能级', sub:'分立·跃迁', type:'concept', chapter:'ch13', section:'s13-5'}
+  ],
+  /* 前置依赖有向边（from 是前置基础，to 依赖 from） */
+  prereq:[
+    ['s9-2','s9-1'],['s9-3','s9-2'],['s9-4','s9-3'],
+    ['s10-1','s9-3'],['s10-2','s10-1'],['s10-3','s10-2'],['s10-4','s10-2'],['s10-5','s10-3'],
+    ['s11-1','s9-3'],['s11-1','s10-2'],['s11-2','s11-1'],['s11-3','s11-2'],['s11-4','s11-1'],['s11-4','s11-2'],['s11-5','s11-4'],
+    ['s12-1','s11-1'],['s12-1','s11-2'],['s12-2','s11-4'],['s12-2','s12-1'],['s12-3','s12-2'],['s12-4','s12-1'],
+    ['s13-1','s9-3'],['s13-2','s13-1'],['s13-3','s13-2'],['s13-4','s13-3'],['s13-5','s13-4']
+  ]
+};
+/* 概念归属边在渲染时由 section 字段生成 */
+/* ================= 数据：题库（课后题） ================= */
+/* kp 为对应知识点节，用于学生掌握度统计 */
+const QUIZ = [
+/* ---- 第九章 ---- */
+{id:'q901', ch:'ch9', sec:'s9-1', type:'概念', stem:'用梳子梳过干燥的头发后，梳子能吸引纸屑。请用原子结构的知识解释这个现象。', ans:'梳子与头发摩擦时发生电荷转移：头发束缚电子能力较弱，电子转移到梳子上，梳子带负电；带电体吸引轻小物体（静电感应使纸屑靠近端带异种电荷），所以梳子能吸引纸屑。', ana:'摩擦起电的本质是电子转移，得电子带负电；带电体吸引轻小物体是静电感应与库仑引力共同作用的结果。'},
+{id:'q902', ch:'ch9', sec:'s9-1', type:'计算', stem:'在图 9.1-3 的静电感应实验中，导体分开后 A 带 -1.0×10⁻⁸ C 的电荷。是电子由 A 转移到 B 还是由 B 转移到 A？A、B 各得到或失去多少电子？', ans:'电子由 B 转移到 A。n = |Q|/e = 1.0×10⁻⁸ / 1.6×10⁻¹⁹ = 6.25×10¹⁰ 个。A 得到 6.25×10¹⁰ 个电子，B 失去 6.25×10¹⁰ 个电子。', ana:'靠近正电荷 C 的 A 端感应出负电，说明 A 端获得电子；电子数与电荷量、元电荷的关系 n=Q/e。'},
+{id:'q903', ch:'ch9', sec:'s9-2', type:'计算', stem:'A、B 两个相同的金属小球分别带有等量异种电荷 ±Q，相距 r 时静电力为 F。用不带电的小球 C 先后与 A、B 接触，再将 A、B 间距离增大为原来的 2 倍，求此时 A、B 间的静电力。', ans:'接触后：A 带 Q/2，B 带 -Q/4（C 先带 +Q/2 与 B 的 -Q 中和后平分得 -Q/4）。F′ = k(Q/2)(Q/4)/(2r)² = kQ²/(32r²) = F/32。', ana:'C 与 A 接触：A、C 各带 Q/2；C 再与 B 接触：(Q/2−Q)/2 = −Q/4；距离增大 2 倍使力减小到 1/4。'},
+{id:'q904', ch:'ch9', sec:'s9-2', type:'计算', stem:'两个质量均为 0.6 g 的带电小球用 13 cm 长的绝缘细线悬挂于同一点，平衡时两球相距 10 cm。求每个小球所带电荷量（g 取 10 m/s²）。', ans:'几何关系：h=√(13²−5²)=12 cm，tanθ=5/12。F=mg·tanθ=0.6×10⁻³×10×(5/12)=2.5×10⁻³ N。由 F=kq²/r²：q=√(Fr²/k)=√(2.5×10⁻³×0.1²/9×10⁹)≈5.3×10⁻⁸ C。', ana:'平衡条件：三力平衡（重力、拉力、静电力），用悬挂几何求出 tanθ；电荷量 q=√(Fr²/k)。'},
+{id:'q905', ch:'ch9', sec:'s9-3', type:'计算', stem:'质量为 1.0×10⁻³ kg、电荷量 2.0×10⁻⁸ C 的带电小球用绝缘细线悬挂在水平向右的匀强电场中，静止时细线与竖直方向成 30° 角。求电场强度 E。', ans:'三力平衡：qE = mg·tan30°。E = mg·tan30°/q = 1.0×10⁻³×10×(1/√3)/(2.0×10⁻⁸) ≈ 2.9×10⁵ N/C。', ana:'电场力水平方向与重力、拉力平衡；tanθ=qE/mg。'},
+{id:'q906', ch:'ch9', sec:'s9-3', type:'概念', stem:'电场中某点放入电荷量 q 的试探电荷，测得电场力为 F。若把试探电荷取走，该点的电场强度 E 变为多少？', ans:'仍为 E = F/q 所对应的值，与试探电荷是否存在无关。电场强度由电场本身（场源电荷）决定。', ana:'比值定义法：E 是电场本身的性质，与试探电荷的有无、大小、正负无关。'},
+{id:'q907', ch:'ch9', sec:'s9-3', type:'选择', stem:'关于电场线，下列说法正确的是（　）A. 电场线是电荷运动的轨迹　B. 电场线从负电荷出发到正电荷终止　C. 电场线越密的地方电场强度越大　D. 电场线可以相交', opts:['A','B','C','D'], ans:'C', ana:'电场线是假想的曲线，切线方向表示场强方向、疏密表示强弱；从正电荷或无限远出发，终止于无限远或负电荷；不相交。'},
+{id:'q908', ch:'ch9', sec:'s9-4', type:'概念', stem:'处于静电平衡状态的导体，其内部电场强度有什么特点？净电荷分布在哪里？', ans:'内部电场强度处处为 0（外电场与感应电荷的附加电场完全抵消）；净电荷只分布在导体的外表面，且越尖锐的位置电荷密度越大。', ana:'静电平衡条件：导体内部合场强为 0，自由电子不再定向移动。'},
+{id:'q909', ch:'ch9', sec:'s9-4', type:'概念', stem:'为什么高压设备中的导体表面要尽量光滑？避雷针为什么能防雷击？', ans:'表面越光滑，越不易发生尖端放电（电晕），减少电能损失。避雷针顶端尖锐，通过尖端放电不断中和雷雨云感应出的电荷，使雷电流沿接地引下线入地，避免被雷电击中。', ana:'尖端电荷密度大、周围电场强、易电离空气形成尖端放电。'},
+{id:'q910', ch:'ch9', sec:'s9-4', type:'概念', stem:'通信电缆外面常包一层金属网（屏蔽层），它的作用是什么？', ans:'金属网（外导体）构成静电屏蔽，使内部导体不受外界电场干扰，保证信号传输质量。', ana:'静电屏蔽：金属壳/网内部电场强度处处为 0。'},
+
+/* ---- 第十章 ---- */
+{id:'q1001', ch:'ch10', sec:'s10-1', type:'计算', stem:'匀强电场中 E=60 N/C，A、B 沿电场方向相距 5 cm，B、C 相距 12 cm 且 BC 与电场方向成 60°。电荷量 4×10⁻⁸ C 的正电荷从 A 经 B 到 C，求静电力做的功 WAB、WBC 和 WAC。', ans:'WAB = qEd₁ = 4×10⁻⁸×60×0.05 = 1.2×10⁻⁷ J；WBC = qEd₂cos60° = 4×10⁻⁸×60×0.12×0.5 = 1.44×10⁻⁷ J；WAC = WAB+WBC = 2.64×10⁻⁷ J。', ana:'静电力做功与路径无关，只取决于沿电场方向的位移：W=qEd。'},
+{id:'q1002', ch:'ch10', sec:'s10-1', type:'计算', stem:'电场中 A 点电势为 15 V，电荷量 4×10⁻⁹ C 的正试探电荷在 A 点具有的电势能为多少？若换成 -2×10⁻¹⁰ C 的电荷，电势能又为多少？', ans:'Ep₁ = q₁φA = 4×10⁻⁹×15 = 6×10⁻⁸ J；Ep₂ = q₂φA = -2×10⁻¹⁰×15 = -3×10⁻⁹ J。', ana:'φ=Ep/q，负电荷在正电势点的电势能为负值。'},
+{id:'q1003', ch:'ch10', sec:'s10-2', type:'计算', stem:'电场中 A、B 两点电势差 UAB = 20 V，将电荷量 -2×10⁻⁹ C 的电荷从 A 移到 B，静电力做功多少？电势能如何变化？', ans:'W = qUAB = -2×10⁻⁹×20 = -4×10⁻⁸ J（做负功）。电势能增加 4×10⁻⁸ J。', ana:'WAB=qUAB；静电力做负功，电势能增加。'},
+{id:'q1004', ch:'ch10', sec:'s10-2', type:'概念', stem:'质子（电荷量 e）经 2 V 电压加速，获得的动能是多少焦耳？', ans:'W = qU = e×2 = 2 eV = 2×1.6×10⁻¹⁹ = 3.2×10⁻¹⁹ J。', ana:'1 eV 是电荷量为 e 的电荷在 1 V 电势差间移动时静电力所做的功，1 eV = 1.6×10⁻¹⁹ J。'},
+{id:'q1005', ch:'ch10', sec:'s10-3', type:'计算', stem:'两块带电平行金属板相距 1.3 cm，两板间电势差为 4×10⁴ V，求两板间的电场强度。', ans:'E = U/d = 4×10⁴ / 0.013 ≈ 3.1×10⁶ V/m。', ana:'匀强电场 E=U/d，注意 d 的单位换算成米。'},
+{id:'q1006', ch:'ch10', sec:'s10-3', type:'选择', stem:'关于匀强电场中电势差与电场强度的关系 U=Ed，下列说法正确的是（　）A. 电场中任意两点间电势差都等于 Ed　B. 电势差越大，电场强度一定越大　C. 在匀强电场中两点沿电场方向距离越大，电势差越大　D. 公式 E=U/d 只适用于匀强电场，且 d 是沿电场方向的距离', opts:['A','B','C','D'], ans:'D', ana:'U=Ed 中的 d 必须是沿电场方向的距离；E=U/d 定义的是匀强电场中场强与电势降落的关系。'},
+{id:'q1007', ch:'ch10', sec:'s10-4', type:'计算', stem:'某电容器标有"10 μF，25 V"。求额定电压下它储存的电荷量。', ans:'Q = CU = 10×10⁻⁶×25 = 2.5×10⁻⁴ C。', ana:'电容 C=Q/U，注意单位换算 1 μF=10⁻⁶ F。'},
+{id:'q1008', ch:'ch10', sec:'s10-4', type:'选择', stem:'平行板电容器充电后与电源断开，仅将两极板间距离增大，则（　）A. 电容增大　B. 电荷量增大　C. 两极板间电压增大　D. 电场强度减小', opts:['A','B','C','D'], ans:'C', ana:'断开电源后 Q 不变；d 增大 → C=εrS/(4πkd) 减小 → U=Q/C 增大；E=U/d 不变（E=4πkQ/εrS）。'},
+{id:'q1009', ch:'ch10', sec:'s10-5', type:'计算', stem:'二价氧离子（q=2e）在电压 90 V 的两点间由静止加速，静电力做功多少？', ans:'W = qU = 2×1.6×10⁻¹⁹×90 = 2.88×10⁻¹⁷ J。', ana:'加速问题统一用 W=qU 求解（动能定理），与路径无关。'},
+{id:'q1010', ch:'ch10', sec:'s10-5', type:'计算', stem:'电子从静止开始经 5000 V 电压加速，求末速度（mₑ=9.1×10⁻³¹ kg）。', ans:'由 eU = ½mv²：v = √(2eU/m) = √(2×1.6×10⁻¹⁹×5000/9.1×10⁻³¹) ≈ 4.2×10⁷ m/s。', ana:'加速电压决定末动能；速度可达光速的约 14%，高速时需考虑相对论修正。'},
+{id:'q1011', ch:'ch10', sec:'s10-5', type:'概念', stem:'带电粒子垂直进入匀强电场会发生什么运动？其轨迹是什么形状？决定偏移量 y 的因素有哪些？', ans:'做类平抛运动（初速度方向匀速、电场方向匀加速），轨迹为抛物线。y = qUl²/(2mdv₀²)：与电压 U、板长 l 的平方成正比，与板距 d、初动能成反比。', ana:'y = ½at²，a=qU/(md)，t=l/v₀。'},
+
+/* ---- 第十一章 ---- */
+{id:'q1101', ch:'ch11', sec:'s11-1', type:'计算', stem:'某金属导体通电时电流为 50 μA，求 3.2 s 内通过导体横截面的电荷量及通过的电子数。', ans:'q = It = 50×10⁻⁶×3.2 = 1.6×10⁻⁴ C；n = q/e = 1.6×10⁻⁴/1.6×10⁻¹⁹ = 10¹⁵ 个。', ana:'电流定义式 I=q/t；电子数 n=q/e。'},
+{id:'q1102', ch:'ch11', sec:'s11-1', type:'概念', stem:'为什么导线中自由电子定向移动的平均速率很小（约 10⁻⁴ m/s），而开关一闭合整个电路却几乎同时有电流？', ans:'电场以光速在电路中建立，电场驱动**所有**自由电子几乎同时开始定向移动，因此整个电路几乎同时形成电流。', ana:'电流的形成依赖电场的建立而非单个电子的宏观移动速度。'},
+{id:'q1103', ch:'ch11', sec:'s11-2', type:'计算', stem:'铜的电阻率 1.7×10⁻⁸ Ω·m。输电线的横截面积为 120 mm²，鸟两爪之间的距离为 4 cm，当输电线中电流为 500 A 时，求鸟两爪之间的电压。', ans:'R = ρl/S = 1.7×10⁻⁸×0.04/(120×10⁻⁶) = 5.7×10⁻⁶ Ω；U = IR = 500×5.7×10⁻⁶ ≈ 2.8×10⁻³ V。', ana:'两爪间导线电阻极小，电压仅毫伏级，鸟不会触电（但严禁接触高压线）。'},
+{id:'q1104', ch:'ch11', sec:'s11-2', type:'计算', stem:'一根盐水柱长 30 cm，测得电阻为 R。若将其拉长到 40 cm（体积不变），电阻变为多少？', ans:'体积不变：S′ = S×(30/40) = 0.75S。R′ = ρl′/S′ = ρ×0.4/(0.75S) = (16/9)·ρ×0.3/S = 16R/9。', ana:'电阻定律 R=ρl/S：长度变为 4/3 倍、横截面积变为 3/4 倍，电阻变为 (4/3)÷(3/4)=16/9 倍。'},
+{id:'q1105', ch:'ch11', sec:'s11-3', type:'概念', stem:'20 分度的游标卡尺读数规则是什么？其精度是多少？', ans:'读数 = 主尺读数 + 游标尺与主尺对齐的刻度数 × 0.05 mm；精度为 0.05 mm。', ana:'20 分度：游标尺 20 格 = 主尺 19 mm，每格差 0.05 mm。'},
+{id:'q1106', ch:'ch11', sec:'s11-3', type:'计算', stem:'螺旋测微器固定刻度读数为 5.5 mm，可动刻度第 24 格与主尺刻度线对齐，估读值为 0.0。求最终读数。', ans:'读数 = 5.5 + 24×0.01 + 0.000 = 5.740 mm。', ana:'螺旋测微器读数 = 固定刻度（含半毫米） + 可动刻度×0.01 mm，需估读到 0.001 mm。'},
+{id:'q1107', ch:'ch11', sec:'s11-4', type:'概念', stem:'在图 11.4-7 的分压式电路中，滑动变阻器最大阻值 R₁，定值电阻 R，A、B 间电压为 U。滑动端移动过程中 R 两端电压的变化范围是多少？', ans:'0 ~ U。滑动端位于 A 端时，R 被短路，UR = 0；滑动端位于 B 端时，UR = U。', ana:'分压式接法（电位器）可从 0 开始连续调节电压，这是它相对限流式的重要优点。'},
+{id:'q1108', ch:'ch11', sec:'s11-4', type:'计算', stem:'表头内阻 Rg=500 Ω、满偏电流 Ig=1 mA，改装成量程 10 V 和 100 V 的双量程电压表，求分压电阻 R₁、R₂。', ans:'Ug = IgRg = 0.5 V。10 V 挡：R₁ = (10−0.5)/10⁻³ = 9.5 kΩ；100 V 挡：R₂ = (100−10)/10⁻³ = 90 kΩ。', ana:'串联分压：R=(U−Ug)/Ig。'},
+{id:'q1109', ch:'ch11', sec:'s11-4', type:'计算', stem:'表头 Rg=30 Ω、Ig=1 mA，改装成量程 0.6 A 的电流表，求分流电阻 R 及改装后电流表的内阻。', ans:'Ug = 1×10⁻³×30 = 0.03 V。R = Ug/(I−Ig) = 0.03/0.599 ≈ 5.0×10⁻² Ω。改装后内阻 RA = Rg·R/(Rg+R) ≈ 5.0×10⁻² Ω。', ana:'并联分流：R=Ug/(I−Ig)；并联后内阻近似等于分流电阻（很小）。'},
+{id:'q1110', ch:'ch11', sec:'s11-5', type:'概念', stem:'用多用电表欧姆挡测电阻时，为什么要先"欧姆调零"？换挡后为什么还要重新调零？', ans:'欧姆调零使表笔短接时指针指向电阻"0"刻度，消除电池电动势、内阻变化及接触电阻的影响。换挡后内部电路（倍率）改变，必须重新调零。', ana:'欧姆表内阻与挡位有关；每挡都要在短接表笔时调零。'},
+{id:'q1111', ch:'ch11', sec:'s11-5', type:'概念', stem:'用多用电表测电阻时，指针偏转过大或过小应怎么办？测量完毕后选择开关应转到什么位置？', ans:'指针偏转过小（读数过大）应增大倍率，偏转过大（读数过小）应减小倍率，使指针落在刻度盘中间区域。用毕将选择开关旋到 OFF 位置（或交流电压最高挡）。', ana:'欧姆挡刻度不均匀，中值附近读数误差最小。'},
+
+/* ---- 第十二章 ---- */
+{id:'q1201', ch:'ch12', sec:'s12-1', type:'计算', stem:'一台电动机线圈电阻 0.4 Ω，两端电压 220 V，通过电流 5 A。求发热功率与对外做功的功率。', ans:'P热 = I²R = 25×0.4 = 10 W；P电 = UI = 1100 W；P机 = P电−P热 = 1090 W。', ana:'电动机是非纯电阻电路：P电 = P机 + P热，P热=I²R，不可用 U²/R 算总功率。'},
+{id:'q1202', ch:'ch12', sec:'s12-1', type:'计算', stem:'电饭锅电路（图 12.1-4）中，S 接通时加热、断开时保温，保温功率恰为加热功率的一半。求两电阻之比 R₁:R₂。', ans:'加热：P = U²/R₂；保温：P′ = U²/(R₁+R₂)。P′ = P/2 → R₁+R₂ = 2R₂ → R₁:R₂ = 1:1。', ana:'S 接通时 R₁ 被短路，只有 R₂ 工作；断开时两电阻串联。'},
+{id:'q1203', ch:'ch12', sec:'s12-2', type:'计算', stem:'手电筒中两节干电池（每节 1.5 V）串联，灯泡正常发光时两端电压 2.2 V、电流 0.25 A。求每节电池的内阻。', ans:'总电动势 E=3 V，总内阻 r=(E−U)/I = (3−2.2)/0.25 = 3.2 Ω，每节 r₀ = 1.6 Ω。', ana:'闭合电路欧姆定律：E = U + Ir。'},
+{id:'q1204', ch:'ch12', sec:'s12-2', type:'计算', stem:'电源电动势 4.5 V，外接 4 Ω 电阻时路端电压为 4 V。（1）求电源内阻；（2）再并联一只 6 Ω 电阻后求路端电压；（3）再串联一只 6 Ω 电阻后求路端电压。', ans:'（1）I=4/4=1 A，r=(4.5−4)/1=0.5 Ω。（2）R外=4×6/10=2.4 Ω，I=4.5/2.9≈1.55 A，U=4.5−1.55×0.5≈3.72 V。（3）R外=10 Ω，I=4.5/10.5≈0.43 A，U=4.5−0.21≈4.29 V。', ana:'并联总电阻变小 → 电流变大 → 路端电压降低（灯泡并联变暗的原因）；串联总电阻变大 → 路端电压升高。'},
+{id:'q1205', ch:'ch12', sec:'s12-2', type:'选择', stem:'电源电动势 E=3 V，内阻 r=1 Ω，当外电阻 R 由很大逐渐减小到 0 的过程中（　）A. 路端电压一直增大　B. 电流一直增大，路端电压一直减小　C. 内电压先增大后减小　D. 电流先减小后增大', opts:['A','B','C','D'], ans:'B', ana:'I=E/(R+r) 随 R 减小而增大；U=E−Ir 随 I 增大而减小。'},
+{id:'q1206', ch:'ch12', sec:'s12-3', type:'概念', stem:'用伏安法测电源电动势和内阻，为什么要多次测量并作 U-I 图像？如何从图像读出 E 和 r？', ans:'两次测量偶然误差大，多次测量并作图可利用所有数据减小误差。U-I 图线为直线，与纵轴交点为电动势 E，斜率绝对值 |ΔU/ΔI| 为内阻 r。', ana:'U = −rI + E 是一次函数；为放大图像，电压轴起点通常不从 0 开始。'},
+{id:'q1207', ch:'ch12', sec:'s12-3', type:'概念', stem:'测干电池电动势和内阻实验中，为什么电压 U 随电流 I 变化不明显？怎样改进才能让图像更精确？', ans:'干电池内阻小，I 变化时 U 变化小，图像斜率小、读数误差大。改进：电压轴不从 0 开始（选择合适起点放大刻度），或使用旧电池（内阻较大）测量。', ana:'图像倾斜越明显，内阻测量越准。'},
+{id:'q1208', ch:'ch12', sec:'s12-4', type:'计算', stem:'某地平均风速 14 m/s，风的密度 1.3 kg/m³，风力发电机的受风面积 400 m²，能量转化效率 20%。求发电机的输出功率。', ans:'空气动能功率 P = ½ρSv³ = 0.5×1.3×400×14³ ≈ 7.1×10⁵ W；输出 P′ = 20%×P ≈ 1.4×10⁵ W。', ana:'单位时间通过截面的空气动能即功率：½ρSv³。'},
+{id:'q1209', ch:'ch12', sec:'s12-4', type:'计算', stem:'太阳能热水器受光面积 2 m²，太阳光平均辐射强度 7×10³ J/(m²·s)，光照 4 h 内热水器吸收太阳能 20%。求水吸收的热量。', ans:'E总 = 7×10³×2×4×3600 = 2.016×10⁸ J；Q = 20%×E总 ≈ 4.0×10⁷ J。', ana:'辐射强度 × 面积 × 时间 = 入射总能量；注意 4 h = 4×3600 s。'},
+{id:'q1210', ch:'ch12', sec:'s12-4', type:'概念', stem:'能量既然是守恒的，为什么还要节约能源？', ans:'能量在转化和转移过程中总量不变，但可利用的品质会降低（能量耗散），比如内能散失到环境中很难再被收集利用。节约能源的本质是节约高品质能源，同时减少环境污染。', ana:'能量守恒是从数量上讲；能量耗散是从品质与方向性上讲。'},
+
+/* ---- 第十三章 ---- */
+{id:'q1301', ch:'ch13', sec:'s13-1', type:'概念', stem:'奥斯特实验说明了什么？它的意义是什么？', ans:'通电导线能使小磁针偏转——电流周围存在磁场，即电流的磁效应。它首次揭示了电与磁的联系，开启了对电磁统一的研究。', ana:'1820 年奥斯特偶然发现，是电磁学的里程碑事件。'},
+{id:'q1302', ch:'ch13', sec:'s13-1', type:'选择', stem:'关于磁感线，下列说法正确的是（　）A. 磁感线是客观存在的曲线　B. 磁感线从磁体 S 极出发到 N 极终止　C. 磁感线的疏密表示磁场的强弱　D. 磁感线与电场线一样从正电荷出发', opts:['A','B','C','D'], ans:'C', ana:'磁感线是假想的闭合曲线（外部 N→S，内部 S→N），疏密表示强弱，与电场线（非闭合）不同。'},
+{id:'q1303', ch:'ch13', sec:'s13-1', type:'概念', stem:'用右手螺旋定则判断：通电直导线中电流方向竖直向上，导线右侧的磁场方向如何？', ans:'右手握住导线、拇指指向上（电流方向），四指弯曲方向即磁感线环绕方向——在导线右侧，四指指向纸面外，故磁场方向垂直纸面向外。', ana:'直线电流的磁感线是同心圆，方向用右手安培定则判断。'},
+{id:'q1304', ch:'ch13', sec:'s13-2', type:'计算', stem:'在匀强磁场中，长 40 cm、通有 20 A 电流的直导线与磁场方向垂直，受到的磁场力为 0.015 N。求磁感应强度 B。', ans:'B = F/(IL) = 0.015/(20×0.4) = 1.875×10⁻³ T。', ana:'定义式 B=F/IL，导线必须与磁场垂直。'},
+{id:'q1305', ch:'ch13', sec:'s13-2', type:'计算', stem:'匀强磁场 B=0.2 T，一个面积 0.5 m² 的平面与磁场方向成 30°。求穿过该平面的磁通量。', ans:'平面与磁场成 30°，则法线与磁场成 60°。Φ = BS·cosθ = 0.2×0.5×cos60° = 0.05 Wb。', ana:'Φ=BScosθ，θ 是平面法线与 B 的夹角；也可先取垂直投影面积。'},
+{id:'q1306', ch:'ch13', sec:'s13-3', type:'选择', stem:'下列情况中能产生感应电流的是（　）A. 闭合线圈在匀强磁场中沿磁感线方向移动　B. 闭合线圈在匀强磁场中垂直磁感线方向平移　C. 线圈在磁场中转动，使穿过线圈的磁通量变化　D. 线圈静止在匀强磁场中', opts:['A','B','C','D'], ans:'C', ana:'产生感应电流的条件：穿过闭合回路的磁通量发生变化。沿磁感线平移或垂直平移（匀强场）Φ 均不变。'},
+{id:'q1307', ch:'ch13', sec:'s13-3', type:'概念', stem:'法拉第发现电磁感应经历了怎样的过程？产生感应电流的本质条件是什么？', ans:'法拉第受奥斯特发现启发，历时 10 年探索，1831 年用铁环双线圈实验获得感应电流。本质条件：穿过闭合导体回路的磁通量发生变化（B 变、S 变或夹角变）。', ana:'切割磁感线只是 Φ 变化的一种情形。'},
+{id:'q1308', ch:'ch13', sec:'s13-4', type:'计算', stem:'微波炉的工作频率为 2450 MHz，求其电磁波的波长。', ans:'λ = c/f = 3×10⁸/(2.45×10⁹) ≈ 0.12 m。', ana:'c=λf，注意 1 MHz=10⁶ Hz。'},
+{id:'q1309', ch:'ch13', sec:'s13-4', type:'计算', stem:'"天宫一号"轨道半径约为 6740 km，地面接收站离它约 340 km。电磁波从空间站传到接收站需要多长时间？', ans:'t = s/c = 3.4×10⁵/3×10⁸ ≈ 1.1×10⁻³ s。', ana:'电磁波在真空中以光速传播。'},
+{id:'q1310', ch:'ch13', sec:'s13-4', type:'概念', stem:'按波长从长到短，电磁波谱的组成是怎样的？各举一个应用。', ans:'无线电波（广播、通信）→ 红外线（加热、理疗）→ 可见光（照明、光通信）→ 紫外线（消毒）→ X 射线（医学诊断）→ γ 射线（治疗肿瘤/伽马刀）。', ana:'不同波段波长不同、特性不同，应用各异。'},
+{id:'q1311', ch:'ch13', sec:'s13-5', type:'计算', stem:'某光子能量为 7.4×10⁻¹⁹ J，求其频率（h=6.626×10⁻³⁴ J·s）。', ans:'ν = ε/h = 7.4×10⁻¹⁹/6.626×10⁻³⁴ ≈ 1.1×10¹⁵ Hz。', ana:'能量子公式 ε=hν。'},
+{id:'q1312', ch:'ch13', sec:'s13-5', type:'计算', stem:'某激光器发出波长 632.8 nm 的激光，功率 18 mW。求每个光子的能量及每秒发射的光子数。', ans:'E = hc/λ = 6.626×10⁻³⁴×3×10⁸/(632.8×10⁻⁹) ≈ 3.1×10⁻¹⁹ J；N = P/E = 18×10⁻³/3.1×10⁻¹⁹ ≈ 5.7×10¹⁶ 个。', ana:'光子能量 E=hν=hc/λ；每秒光子数 = 功率/单光子能量。'},
+{id:'q1313', ch:'ch13', sec:'s13-5', type:'概念', stem:'为什么原子的发射光谱是一些分立的亮线，而不是连续光谱？', ans:'原子能量是量子化的（能级分立），原子从高能级向低能级跃迁时放出光子，光子能量等于两个能级之差，只能取若干分立值，因此光谱是分立的亮线。', ana:'能级分立 → 光子能量分立 → 光谱分立。'}
+];
+/* ================= 动画演示框架 ================= */
+const DEMOS = {};        // id -> meta
+const activeDemos = [];  // running instances
+let demoTick = 0;
+
+function regDemo(id, meta, setup){ DEMOS[id] = Object.assign({id}, meta, {setup}); }
+
+const ICO = {
+  play:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor" stroke="none"/></svg>',
+  quiz:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>'
+};
+
+function addSlider(ctrl, o){
+  const lab = document.createElement('label');
+  lab.innerHTML = `<span>${o.label}</span>`;
+  const inp = document.createElement('input');
+  inp.type='range'; inp.min=o.min; inp.max=o.max; inp.step=o.step; inp.value=o.val;
+  inp.style.width = o.w||'120px';
+  const val = document.createElement('span'); val.className='val'; val.textContent = (o.fmt?o.fmt(o.val):o.val) + (o.unit||'');
+  lab.appendChild(inp); lab.appendChild(val); ctrl.appendChild(lab);
+  inp.addEventListener('input', ()=>{ const v = parseFloat(inp.value); val.textContent=(o.fmt?o.fmt(v):v)+(o.unit||''); o.on(v); });
+  return {inp, val, get:()=>parseFloat(inp.value)};
+}
+function addBtn(ctrl, label, fn, opts){
+  const b = document.createElement('button'); b.className='btn-mini'+(opts&&opts.act?' act':''); b.textContent=label;
+  b.addEventListener('click', fn); ctrl.appendChild(b); return b;
+}
+function addSelect(ctrl, label, opts, fn){
+  const lab = document.createElement('label'); lab.innerHTML=`<span>${label}</span>`;
+  const sel = document.createElement('select');
+  opts.forEach(([v,t])=>{ const op=document.createElement('option'); op.value=v; op.textContent=t; sel.appendChild(op); });
+  sel.value = opts[0][0]; lab.appendChild(sel); ctrl.appendChild(lab);
+  sel.addEventListener('change', ()=>fn(sel.value)); return sel;
+}
+function setStat(api, html){ const s=api.el && api.el.querySelector? api.el.querySelector('.demo-stat'):null; if(s) s.innerHTML = html; }
+function canvasCtx(canvas, w, h){ canvas.width=w||920; canvas.height=h||380; return canvas.getContext('2d'); }
+
+function startDemos(){ if(activeDemos.length && !demoTick){ loop(); } }
+function loop(){
+  demoTick = requestAnimationFrame(loop);
+  for(let i=activeDemos.length-1;i>=0;i--){
+    const d = activeDemos[i];
+    if(!d._alive){ activeDemos.splice(i,1); continue; }
+    if(!d._paused){ try{ d.draw && d.draw(); }catch(e){} }
+  }
+}
+function renderDemo(id, host){
+  const d = DEMOS[id]; if(!d) return null;
+  const el = document.createElement('div'); el.className='demo-embed';
+  el.innerHTML = `<div class="demo-head">${ICO.play}<span>${d.title}</span></div><canvas width="920" height="380"></canvas><div class="demo-ctrl"></div><div class="demo-stat"></div>`;
+  host.appendChild(el);
+  const canvas = el.querySelector('canvas'), ctrl = el.querySelector('.demo-ctrl');
+  const api = Object.assign({el, canvas, ctrl, ctx: canvas.getContext('2d'), paused:false}, d.setup({el, canvas, ctrl}));
+  api._alive = true; api._paused = false;
+  activeDemos.push(api);
+  if(api.start) api.start();
+  api.draw && api.draw();
+  startDemos();
+  return api;
+}
+function stopAllDemos(){ activeDemos.forEach(d=>d._alive=false); activeDemos.length=0; }
+
+/* ---------- 演示 1：静电感应 ---------- */
+regDemo('demo-induction', {title:'静电感应 · 电荷的转移与重新分布', chapter:'ch9', desc:'带电体靠近导体时，自由电子定向移动，近端带异种电荷、远端带同种电荷。拖动滑块观察感应过程，点击"分开"看两导体带电情况。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  let d = 300, split = false, t = 0;
+  addSlider(ctrl, {label:'带电体距离', min:140, max:420, step:4, val:300, on:v=>d=v});
+  addBtn(ctrl, '分开两导体', ()=>{ split = true; });
+  addBtn(ctrl, '重新接触', ()=>{ split = false; });
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      t += 0.02;
+      ctx.clearRect(0,0,W,H);
+      // 背景网格
+      ctx.strokeStyle='rgba(255,255,255,.05)'; ctx.lineWidth=1;
+      for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+      for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+      // 带电棒（正电）
+      const rodX = d, rodY = H*0.5;
+      ctx.fillStyle='#F87171';
+      ctx.beginPath(); ctx.roundRect(rodX-14, rodY-120, 28, 240, 12); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 22px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('+ + +', rodX, rodY+8);
+      // 两导体（接触或分开）
+      const gap = split ? 36 : 6;
+      const b1 = {x: W*0.32, y: rodY-95, w: 120, h: 190};
+      const b2 = {x: b1.x + b1.w + gap, y: rodY-95, w: 120, h: 190};
+      // 导体金属
+      [b1,b2].forEach((b,i)=>{
+        ctx.fillStyle = '#334155'; ctx.strokeStyle='#64748B'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.roundRect(b.x,b.y,b.w,b.h,10); ctx.fill(); ctx.stroke();
+      });
+      // 电子（自由电子动画：棒靠近时向左侧集聚）
+      const n = 26; const eR = 5;
+      for(let i=0;i<n;i++){
+        const baseX = split ? (i<n/2? b1.x+15+ (i%13)*8 : b2.x+15+ (i%13)*8) : b1.x+15+(i%26)*8;
+        const baseY = b1.y+18+(i*17)%154;
+        let ex = baseX, ey = baseY;
+        const dist = Math.abs(ex-rodX);
+        if(!split && dist < 200 && ex < rodX){ // 电子受正电荷吸引向棒侧（左侧导体近棒端）
+          const pull = (1 - dist/200)*1.0;
+          ex -= pull*26;
+        }
+        ctx.fillStyle='#7DD3FC';
+        ctx.beginPath(); ctx.arc(ex, ey, eR, 0, 7); ctx.fill();
+      }
+      // 感应电荷标注
+      ctx.font='bold 15px sans-serif';
+      if(!split){
+        ctx.fillStyle='#F87171'; ctx.fillText('− − −', b1.x+30, b1.y-12); // 近端负电（聚集电子）
+        ctx.fillStyle='#86EFAC'; ctx.fillText('+ + +', b2.x+b2.w-30, b2.y-12); // 远端正电
+      }else{
+        ctx.fillStyle='#F87171'; ctx.fillText('−', b1.x+b1.w/2, b1.y-12);
+        ctx.fillStyle='#86EFAC'; ctx.fillText('+', b2.x+b2.w/2, b2.y-12);
+      }
+      ctx.fillStyle='#C7D6EE'; ctx.font='13px sans-serif';
+      ctx.fillText('带电体 C（正电）', rodX, rodY-140);
+      ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif';
+      ctx.fillText(split? '导体 A 带负电 · 导体 B 带正电':'电子向靠近 C 的一端聚集', W/2, H-16);
+      setStat(this, `<span>自由电子数 <b>26</b> 个</span><span>状态 <b>${split?'已分开':'接触中'}</b></span><span>近端电荷 <b>负</b></span><span>远端电荷 <b>正</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 2：库仑定律 ---------- */
+regDemo('demo-coulomb', {title:'库仑定律 · 静电力与 q₁、q₂、r 的关系', chapter:'ch9', desc:'调节两个点电荷的电荷量与距离，观察静电力的大小与方向变化（F = kq₁q₂/r²）。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {q1:3, q2:2, r:300, s1:1, s2:1};
+  addSlider(ctrl, {label:'q₁ (×10⁻⁹ C)', min:1, max:9, step:1, val:3, on:v=>st.q1=v});
+  addSlider(ctrl, {label:'q₂ (×10⁻⁹ C)', min:1, max:9, step:1, val:2, on:v=>st.q2=v});
+  addSlider(ctrl, {label:'距离 r (m)', min:100, max:420, step:5, val:300, on:v=>st.r=v});
+  addBtn(ctrl, 'q₁ 变负', ()=>{ st.s1*=-1; });
+  addBtn(ctrl, 'q₂ 变负', ()=>{ st.s2*=-1; });
+  const W = canvas.width, H = canvas.height, cy = H/2;
+  const k = 9.0;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      const x1 = 200, x2 = Math.min(x1 + st.r, W-80);
+      const rM = (x2-x1)/1;
+      const F = k*st.q1*st.q2/(rM*rM)*1e4; // 缩放显示
+      const drawCharge=(x, q, s, color)=>{
+        const r = 22;
+        const grad = ctx.createRadialGradient(x-6,cy-6,4,x,cy,r);
+        grad.addColorStop(0,'#fff'); grad.addColorStop(1,color);
+        ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(x,cy,r,0,7); ctx.fill();
+        ctx.strokeStyle='rgba(255,255,255,.8)'; ctx.lineWidth=2; ctx.stroke();
+        ctx.fillStyle='#0E1728'; ctx.font='bold 20px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(s>0?'+':'−', x, cy+7);
+        ctx.fillStyle='#DCE6F7'; ctx.font='13px sans-serif';
+        ctx.fillText(`q = ${s>0?'':'−'}${q}×10⁻⁹C`, x, cy+52);
+      };
+      drawCharge(x1, st.q1, st.s1, '#F87171');
+      drawCharge(x2, st.q2, st.s2, '#7DD3FC');
+      // 连线
+      ctx.strokeStyle='#475569'; ctx.setLineDash([6,6]); ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(x1,cy); ctx.lineTo(x2,cy); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif';
+      ctx.fillText(`r = ${(rM).toFixed(0)} m`, (x1+x2)/2, cy-26);
+      // 力箭头（斥力：各自远离；引力：互相靠近）
+      const rep = st.s1*st.s2>0;
+      const dir1 = rep? -1:1, dir2 = rep? 1:-1;
+      const len = Math.min(90, Math.log10(1+F*1.4)*30+10);
+      const arrow=(x,y,dir,len,color)=>{
+        ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=4;
+        ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+dir*len,y); ctx.stroke();
+        const a = dir>0?0:Math.PI, s=12;
+        ctx.beginPath(); ctx.moveTo(x+dir*len,y); ctx.lineTo(x+dir*len-s*Math.cos(a-0.4), y-s*Math.sin(a-0.4)); ctx.lineTo(x+dir*len-s*Math.cos(a+0.4), y-s*Math.sin(a+0.4)); ctx.closePath(); ctx.fill();
+        ctx.font='bold 14px sans-serif'; ctx.fillStyle='#FDE68A';
+        ctx.fillText(`F=${(F).toFixed(2)}×10⁻⁹N`, x+dir*len*0.5-30, y-16);
+      };
+      arrow(x1-30, cy, dir1, len, '#F87171');
+      arrow(x2+30, cy, dir2, len, '#7DD3FC');
+      ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(rep? '同号相斥':'异号相吸', W/2, H-18);
+      setStat(this, `<span>静电力常量 k <b>9.0×10⁹</b></span><span>F = kq₁q₂/r²</span><span>方向 <b>${rep?'互相排斥':'互相吸引'}</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 3：电场线 ---------- */
+regDemo('demo-field', {title:'电场线与电场强度 · 五种典型电场', chapter:'ch9', desc:'切换场源类型，观察电场线分布。点按画面任意位置放置试探电荷，显示该点电场强度方向与大小。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {type:'dipole', px:null, py:null};
+  const types = [['singleP','正点电荷'],['singleN','负点电荷'],['dipole','等量异种电荷'],['same','等量同种电荷'],['uniform','匀强电场']];
+  addSelect(ctrl, '场源类型', types, v=>st.type=v);
+  const W = canvas.width, H = canvas.height;
+  const charges = [
+    {x: W*0.34, y: H*0.5, q: 1, label:'+'},
+    {x: W*0.66, y: H*0.5, q: -1, label:'−'}
+  ];
+  const field = (x,y)=>{
+    let Ex=0, Ey=0;
+    if(st.type==='uniform'){ return {x: 1, y: 0}; }
+    if(st.type==='singleP'||st.type==='singleN'){
+      const c = {x: W*0.5, y: H*0.5, q: st.type==='singleP'?1:-1};
+      const dx=x-c.x, dy=y-c.y, r2=dx*dx+dy*dy+1, r=Math.sqrt(r2);
+      const s=c.q/(r2); return {x: s*dx/r, y: s*dy/r};
+    }
+    if(st.type==='same'){
+      const c1=charges[0], c2=charges[1];
+      const dx1=x-c1.x, dy1=y-c1.y, r1=Math.sqrt(dx1*dx1+dy1*dy1+1);
+      const dx2=x-c2.x, dy2=y-c2.y, r2=Math.sqrt(dx2*dx2+dy2*dy2+1);
+      return {x: dx1/(r1*r1*r1)+dx2/(r2*r2*r2), y: dy1/(r1*r1*r1)+dy2/(r2*r2*r2)};
+    }
+    const c1=charges[0], c2=charges[1];
+    const dx1=x-c1.x, dy1=y-c1.y, r1=Math.sqrt(dx1*dx1+dy1*dy1+1);
+    const dx2=x-c2.x, dy2=y-c2.y, r2=Math.sqrt(dx2*dx2+dy2*dy2+1);
+    return {x: dx1/(r1*r1*r1)-dx2/(r2*r2*r2), y: dy1/(r1*r1*r1)-dy2/(r2*r2*r2)};
+  };
+  canvas.addEventListener('click', e=>{
+    const rect = canvas.getBoundingClientRect();
+    st.px = (e.clientX-rect.left)/rect.width*W; st.py = (e.clientY-rect.top)/rect.height*H;
+  });
+  const drawChargeAt=(c, r)=>{
+    const grad=ctx.createRadialGradient(c.x-3,c.y-3,2,c.x,c.y,r);
+    grad.addColorStop(0,'#fff'); grad.addColorStop(1, c.q>0?'#F87171':'#7DD3FC');
+    ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(c.x,c.y,r,0,7); ctx.fill();
+    ctx.fillStyle='#0E1728'; ctx.font='bold 16px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(c.q>0?'+':'−', c.x, c.y+6);
+  };
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      ctx.strokeStyle='rgba(255,255,255,.05)';
+      for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+      for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+      // 电场线（流线追踪）
+      const fieldLines = [];
+      if(st.type==='uniform'){
+        for(let i=0;i<12;i++){ fieldLines.push([[0, 30+i*30],[W, 30+i*30]]); }
+      }else if(st.type==='singleP'||st.type==='singleN'){
+        const c={x:W*0.5,y:H*0.5}; const n=24;
+        for(let i=0;i<n;i++){
+          const a=i/n*Math.PI*2; const pts=[];
+          let x=c.x+Math.cos(a)*34, y=c.y+Math.sin(a)*34;
+          const dir = st.type==='singleP'?1:-1;
+          for(let s=0;s<90;s++){
+            pts.push([x,y]);
+            const f=field(x,y), m=Math.sqrt(f.x*f.x+f.y*f.y)||1;
+            x+=f.x/m*4*dir; y+=f.y/m*4*dir;
+            if(x<0||x>W||y<0||y>H) break;
+          }
+          fieldLines.push(pts);
+        }
+      }else{
+        const c1=charges[0], c2=charges[1];
+        const seeds=[]; const n=20;
+        for(let i=0;i<n;i++){ const a=i/n*Math.PI*2; seeds.push([c1.x+Math.cos(a)*30, c1.y+Math.sin(a)*30]); }
+        for(let i=0;i<n;i++){ const a=i/n*Math.PI*2; seeds.push([c2.x+Math.cos(a)*30, c2.y+Math.sin(a)*30]); }
+        seeds.forEach(([sx,sy])=>{
+          const pts=[[sx,sy]]; let x=sx,y=sy;
+          for(let s=0;s<160;s++){
+            const f=field(x,y), m=Math.sqrt(f.x*f.x+f.y*f.y)||1;
+            x+=f.x/m*3.5; y+=f.y/m*3.5;
+            if(x<0||x>W||y<0||y>H) break;
+            if(Math.sqrt((x-c1.x)**2+(y-c1.y)**2)<20||Math.sqrt((x-c2.x)**2+(y-c2.y)**2)<20) break;
+            pts.push([x,y]);
+          }
+          fieldLines.push(pts);
+        });
+      }
+      ctx.lineWidth=1.6; ctx.strokeStyle=st.type==='singleN'?'#67E8F9':'#93C5FD';
+      fieldLines.forEach(pts=>{
+        ctx.beginPath(); pts.forEach(([x,y],i)=> i?ctx.lineTo(x,y):ctx.moveTo(x,y)); ctx.stroke();
+      });
+      // 场源
+      if(st.type==='singleP') drawChargeAt({x:W*0.5,y:H*0.5,q:1},20);
+      if(st.type==='singleN') drawChargeAt({x:W*0.5,y:H*0.5,q:-1},20);
+      if(st.type==='dipole'){ drawChargeAt(charges[0],20); drawChargeAt(charges[1],20); }
+      if(st.type==='same'){ drawChargeAt({x:charges[0].x,y:charges[0].y,q:1},20); drawChargeAt({x:charges[1].x,y:charges[1].y,q:1},20); }
+      if(st.type==='uniform'){
+        ctx.fillStyle='#F87171'; ctx.beginPath(); ctx.roundRect(20,20,14,H-40,4); ctx.fill();
+        ctx.fillStyle='#67E8F9'; ctx.beginPath(); ctx.roundRect(W-34,20,14,H-40,4); ctx.fill();
+      }
+      // 试探电荷
+      if(st.px!==null){
+        const f=field(st.px,st.py), m=Math.sqrt(f.x*f.x+f.y*f.y)||1;
+        const L=46*Math.min(1,m*60);
+        ctx.strokeStyle='#FDE68A'; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.moveTo(st.px,st.py); ctx.lineTo(st.px+f.x/m*L, st.py+f.y/m*L); ctx.stroke();
+        const a=Math.atan2(f.y,f.x), s=12;
+        ctx.fillStyle='#FDE68A';
+        ctx.beginPath(); ctx.moveTo(st.px+f.x/m*L,st.py+f.y/m*L);
+        ctx.lineTo(st.px+f.x/m*L-s*Math.cos(a-0.42),st.py+f.y/m*L-s*Math.sin(a-0.42));
+        ctx.lineTo(st.px+f.x/m*L-s*Math.cos(a+0.42),st.py+f.y/m*L-s*Math.sin(a+0.42));
+        ctx.closePath(); ctx.fill();
+        ctx.fillStyle='#FDE68A'; ctx.font='12.5px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(`E 方向 (${st.type==='uniform'?'水平向右':f.x>0?'向右':'向左'})`, st.px, st.py-16);
+        setStat(this, `<span>场源 <b>${types.find(t=>t[0]===st.type)[1]}</b></span><span>场强方向 <b>${st.type==='uniform'?'水平向右':'沿电场线切线'}</b></span><span>疏密 <b>表示强弱</b></span>`);
+      }else{
+        setStat(this, `<span>场源 <b>${types.find(t=>t[0]===st.type)[1]}</b></span><span>提示 <b>点击画面放置试探电荷</b></span>`);
+      }
+    }
+  };
+});
+
+/* ---------- 演示 4：静电屏蔽 ---------- */
+regDemo('demo-shield', {title:'静电屏蔽 · 导体壳内的电场', chapter:'ch9', desc:'外电场中的导体达到静电平衡后，内部电场处处为 0；金属壳/金属网能屏蔽外电场。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  let shield = false;
+  addBtn(ctrl, '插入金属罩', ()=>{ shield = true; });
+  addBtn(ctrl, '移走金属罩', ()=>{ shield = false; });
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      const cy = H*0.5, cx = W*0.5;
+      // 匀强电场背景箭头（左侧）
+      ctx.strokeStyle='rgba(147,167,200,.55)'; ctx.lineWidth=1.8;
+      for(let y=60;y<H-40;y+=44){
+        ctx.beginPath(); ctx.moveTo(30,y); ctx.lineTo(W-30,y); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(W-38,y-6); ctx.lineTo(W-30,y); ctx.lineTo(W-38,y+6); ctx.stroke();
+      }
+      ctx.fillStyle='#93A7C8'; ctx.font='13px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('匀强外电场 E', W-90, 36);
+      if(shield){
+        // 金属罩（带空腔）
+        ctx.fillStyle='rgba(71,85,105,.35)';
+        ctx.beginPath(); ctx.roundRect(cx-110, cy-120, 220, 240, 14); ctx.fill();
+        ctx.strokeStyle='#94A3B8'; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.roundRect(cx-110, cy-120, 220, 240, 14); ctx.stroke();
+        // 空腔（无电场）
+        ctx.fillStyle='#0E1728';
+        ctx.beginPath(); ctx.roundRect(cx-72, cy-82, 144, 164, 10); ctx.fill();
+        ctx.strokeStyle='#64748B'; ctx.stroke();
+        // 外部场线绕行示意
+        ctx.strokeStyle='rgba(147,167,200,.6)'; ctx.lineWidth=1.8;
+        for(let i=0;i<5;i++){
+          const y0 = cy-120+ (i+1)*240/6;
+          ctx.beginPath();
+          ctx.moveTo(30, y0);
+          ctx.quadraticCurveTo(cx-140, y0, cx-110, y0- (i===2?40:0));
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(cx+110, y0- (i===2?40:0));
+          ctx.quadraticCurveTo(cx+140, y0, W-30, y0);
+          ctx.stroke();
+        }
+        // 感应电荷
+        ctx.fillStyle='#F87171'; ctx.font='bold 15px sans-serif';
+        ctx.fillText('−', cx-118, cy);
+        ctx.fillStyle='#86EFAC'; ctx.fillText('+', cx+122, cy);
+        ctx.fillStyle='#7DD3FC'; ctx.font='bold 22px sans-serif';
+        ctx.fillText('E=0', cx, cy+6);
+        ctx.fillStyle='#DCE6F7'; ctx.font='13px sans-serif';
+        ctx.fillText('空腔内电场强度处处为 0', cx, cy+34);
+      }else{
+        ctx.fillStyle='#93A7C8'; ctx.font='14px sans-serif';
+        ctx.fillText('未屏蔽时，电场充满整个空间', cx, cy);
+      }
+      setStat(this, `<span>状态 <b>${shield?'已屏蔽':'未屏蔽'}</b></span><span>静电平衡 <b>内部 E = 0</b></span><span>应用 <b>金属网、屏蔽线</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 5：电势能 ---------- */
+regDemo('demo-ep', {title:'电势能与电势 · 沿电场线降低', chapter:'ch10', desc:'电荷在电场中不同位置具有不同的电势能。拖动电荷位置，观察电势能随位置的变化（正电荷：电场方向电势能减小）。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  let x = 180;
+  addSlider(ctrl, {label:'电荷位置 x', min:60, max:820, step:2, val:180, on:v=>x=v});
+  const W = canvas.width, H = canvas.height;
+  const baseY = 230, amp = 120, x0 = 60, x1 = 840;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      // 坐标轴
+      ctx.strokeStyle='#475569'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(40,H-70); ctx.lineTo(W-30,H-70); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(60,40); ctx.lineTo(60,H-60); ctx.stroke();
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('x', W-28, H-58); ctx.fillText('电势能 Ep', 44, 44);
+      // Ep 曲线（正电荷 + 水平向右电场 → Ep 随 x 线性减小；点电荷则 1/x）
+      ctx.strokeStyle='#A78BFA'; ctx.lineWidth=3;
+      ctx.beginPath();
+      for(let i=0;i<=78;i++){
+        const px = x0+i/78*(x1-x0);
+        const ep = baseY - (px-x0)/(x1-x0)*amp;
+        i?ctx.lineTo(px,ep):ctx.moveTo(px,ep);
+      }
+      ctx.stroke();
+      ctx.fillStyle='#A78BFA'; ctx.font='12px sans-serif';
+      ctx.fillText('Ep(x) = qEx', x1-120, baseY-amp-14);
+      // 小球
+      const px = x, py = baseY - (x-x0)/(x1-x0)*amp;
+      const grad=ctx.createRadialGradient(px-4,py-4,3,px,py,14);
+      grad.addColorStop(0,'#fff'); grad.addColorStop(1,'#8B5CF6');
+      ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(px,py,14,0,7); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 13px sans-serif';
+      ctx.fillText('q+', px, py+5);
+      // 受力方向（指向 Ep 减小的方向 = 电场方向 →）
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(px, py+26); ctx.lineTo(px+52, py+26); ctx.stroke();
+      ctx.fillStyle='#FDE68A';
+      ctx.beginPath(); ctx.moveTo(px+60,py+26); ctx.lineTo(px+46,py+19); ctx.lineTo(px+46,py+33); ctx.closePath(); ctx.fill();
+      ctx.fillStyle='#FDE68A'; ctx.font='12.5px sans-serif';
+      ctx.fillText('静电力方向', px+20, py+48);
+      const epVal = (x-x0)/(x1-x0);
+      setStat(this, `<span>电势能 Ep = <b>${((1-epVal)*100).toFixed(0)}%</b> 满量程</span><span>静电力 <b>做正功</b></span><span>电势 <b>沿电场线降低</b></span><span>正电荷：Ep 大处 <b>φ 高</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 6：等势面 ---------- */
+regDemo('demo-eq', {title:'等势面与电场线 · 垂直相伴', chapter:'ch10', desc:'虚线为等势面（相邻等势面间电势差相同），实线为电场线。等势面与电场线垂直，且等势面越密处场强越大。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {type:'dipole'};
+  addSelect(ctrl, '场源', [['dipole','等量异种电荷'],['single','点电荷'],['uniform','匀强电场']], v=>st.type=v);
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      const cx = W/2, cy = H/2;
+      // 等势面（虚线）
+      ctx.strokeStyle='#F0ABFC'; ctx.lineWidth=1.6; ctx.setLineDash([7,6]);
+      if(st.type==='uniform'){
+        for(let i=-4;i<=4;i++){
+          ctx.beginPath(); ctx.moveTo(cx+i*72, 40); ctx.lineTo(cx+i*72, H-40); ctx.stroke();
+        }
+      }else if(st.type==='single'){
+        for(let r=1;r<=5;r++){
+          ctx.beginPath(); ctx.arc(cx,cy,r*52,0,7); ctx.stroke();
+        }
+      }else{
+        // 双曲线族近似：扫描场求解等势（简单取 r1-r2=const 近似画）
+        for(let v=-3;v<=3;v++){
+          ctx.beginPath();
+          for(let a=0;a<=Math.PI*2;a+=0.02){
+            const t=a;
+            const r=150;
+            const x=cx+Math.cos(t)*r*2.2, y=cy+Math.sin(t)*r*1.1;
+            // 用 r1 - r2 近似等势：绘制椭圆族（教材示意）
+            const ex=cx+Math.cos(t)*r*(1.05+Math.abs(v)*0.28), ey=cy+Math.sin(t)*r*(1.05+Math.abs(v)*0.28);
+            if(t===0)ctx.moveTo(ex,ey); else ctx.lineTo(ex,ey);
+          }
+          ctx.stroke();
+        }
+      }
+      ctx.setLineDash([]);
+      // 电场线（实线）
+      ctx.strokeStyle='#93C5FD'; ctx.lineWidth=2;
+      if(st.type==='uniform'){
+        for(let i=0;i<9;i++){ ctx.beginPath(); ctx.moveTo(60,60+i*40); ctx.lineTo(W-60,60+i*40); ctx.stroke(); }
+      }else if(st.type==='single'){
+        for(let i=0;i<24;i++){ const a=i/24*Math.PI*2; ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*52,cy+Math.sin(a)*52); ctx.lineTo(cx+Math.cos(a)*430,cy+Math.sin(a)*430); ctx.stroke(); }
+        const grad=ctx.createRadialGradient(cx-5,cy-5,3,cx,cy,22);
+        grad.addColorStop(0,'#fff'); grad.addColorStop(1,'#F87171');
+        ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(cx,cy,22,0,7); ctx.fill();
+        ctx.fillStyle='#0E1728'; ctx.font='bold 17px sans-serif'; ctx.textAlign='center';
+        ctx.fillText('+', cx, cy+6);
+      }else{
+        const c1={x:W*0.32,y:cy,q:1}, c2={x:W*0.68,y:cy,q:-1};
+        const field=(x,y)=>{
+          const dx1=x-c1.x,dy1=y-c1.y,r1=Math.sqrt(dx1*dx1+dy1*dy1+1);
+          const dx2=x-c2.x,dy2=y-c2.y,r2=Math.sqrt(dx2*dx2+dy2*dy2+1);
+          return {x:dx1/(r1*r1*r1)-dx2/(r2*r2*r2), y:dy1/(r1*r1*r1)-dy2/(r2*r2*r2)};
+        };
+        for(let i=0;i<16;i++){
+          const a=i/16*Math.PI*2;
+          const seeds=[[c1.x+Math.cos(a)*26,c1.y+Math.sin(a)*26],[c2.x+Math.cos(a)*26,c2.y+Math.sin(a)*26]];
+          seeds.forEach(([sx,sy])=>{
+            ctx.beginPath(); let x=sx,y=sy; ctx.moveTo(x,y);
+            for(let s=0;s<140;s++){
+              const f=field(x,y),m=Math.sqrt(f.x*f.x+f.y*f.y)||1;
+              x+=f.x/m*3.4; y+=f.y/m*3.4;
+              if(x<0||x>W||y<0||y>H)break;
+              if(Math.sqrt((x-c1.x)**2+(y-c1.y)**2)<18||Math.sqrt((x-c2.x)**2+(y-c2.y)**2)<18)break;
+              ctx.lineTo(x,y);
+            }
+            ctx.stroke();
+          });
+        }
+        const drawC=(c,label)=>{
+          const g=ctx.createRadialGradient(c.x-4,c.y-4,2,c.x,c.y,20);
+          g.addColorStop(0,'#fff'); g.addColorStop(1,label==='+'?'#F87171':'#7DD3FC');
+          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(c.x,c.y,20,0,7); ctx.fill();
+          ctx.fillStyle='#0E1728'; ctx.font='bold 16px sans-serif';
+          ctx.fillText(label, c.x, c.y+6);
+        };
+        drawC(c1,'+'); drawC(c2,'−');
+      }
+      // 图例
+      ctx.font='12.5px sans-serif';
+      ctx.strokeStyle='#F0ABFC'; ctx.setLineDash([7,6]); ctx.beginPath(); ctx.moveTo(24,26); ctx.lineTo(70,26); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#C7D6EE'; ctx.fillText('等势面（虚线）', 78, 31);
+      ctx.strokeStyle='#93C5FD'; ctx.beginPath(); ctx.moveTo(24,48); ctx.lineTo(70,48); ctx.stroke();
+      ctx.fillText('电场线（实线）', 78, 53);
+      setStat(this, `<span>等势面 <b>⊥ 电场线</b></span><span>电场线 <b>高电势 → 低电势</b></span><span>等势面疏密 <b>反映场强</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 7：U=Ed ---------- */
+regDemo('demo-ued', {title:'电势差与电场强度 · U = Ed', chapter:'ch10', desc:'调节板间距离 d 与电压 U，观察匀强电场强度 E=U/d 的变化，以及带电粒子从正极板加速到负极板的过程。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {d:0.04, U:200, t:0};
+  addSlider(ctrl, {label:'板距 d (cm)', min:2, max:8, step:0.5, val:4, unit:' cm', on:v=>st.d=v});
+  addSlider(ctrl, {label:'电压 U (V)', min:50, max:400, step:10, val:200, unit:' V', on:v=>st.U=v});
+  addBtn(ctrl, '重新发射粒子', ()=>{ st.t=0; });
+  const W = canvas.width, H = canvas.height;
+  const yTop=70, yBot=H-90, maxH = yBot-yTop;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.008;
+      // 板间距像素
+      const dpx = 60 + st.d/0.08*(W*0.62);
+      const px1 = (W-dpx)/2, px2 = px1+dpx;
+      const E = st.U/(st.d/100);
+      // 极板
+      const grad1=ctx.createLinearGradient(0,yTop,0,yBot);
+      grad1.addColorStop(0,'#F87171'); grad1.addColorStop(1,'#B91C1C');
+      ctx.fillStyle=grad1; ctx.beginPath(); ctx.roundRect(px1,yTop,10,maxH,3); ctx.fill();
+      ctx.fillStyle='#38BDF8'; ctx.beginPath(); ctx.roundRect(px2,yTop,10,maxH,3); ctx.fill();
+      ctx.fillStyle='#FCA5A5'; ctx.font='bold 14px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('+', px1+5, yTop-8);
+      ctx.fillStyle='#7DD3FC'; ctx.fillText('−', px2+5, yTop-8);
+      ctx.fillStyle='#C7D6EE'; ctx.font='13px sans-serif';
+      ctx.fillText(`φ=U (${st.U}V)`, px1+5, yBot+24);
+      ctx.fillText('φ=0', px2+5, yBot+24);
+      // 电势分布示意
+      ctx.strokeStyle='rgba(240,171,252,.55)'; ctx.lineWidth=1.4;
+      ctx.beginPath();
+      for(let i=0;i<=20;i++){
+        const px=px1+i/20*(px2-px1);
+        const py=yBot - (i/20)*(maxH-60) ;
+        i?ctx.lineTo(px,py):ctx.moveTo(px,py);
+      }
+      ctx.stroke();
+      ctx.fillStyle='#F0ABFC'; ctx.font='11.5px sans-serif';
+      ctx.fillText('电势 φ(x) 线性降落', (px1+px2)/2, yBot-70);
+      // 粒子（从正极板加速向负极板）
+      const x0=px1+16, x1=px2-16, dist=x1-x0;
+      const p = Math.min(1, st.t*0.35);
+      const x = x0+(x1-x0)*p*p; // 匀加速
+      const vy = 40+60*p;
+      const grad=ctx.createRadialGradient(x-4, H/2-4, 3, x, H/2, 13);
+      grad.addColorStop(0,'#fff'); grad.addColorStop(1,'#FDE68A');
+      ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(x,H/2,13,0,7); ctx.fill();
+      ctx.fillStyle='#0E1728'; ctx.font='bold 11px sans-serif';
+      ctx.fillText('+q', x, H/2+4);
+      // 力与加速度箭头
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(x+16, H/2-24); ctx.lineTo(x+16+60, H/2-24); ctx.stroke();
+      ctx.fillStyle='#FDE68A';
+      ctx.beginPath(); ctx.moveTo(x+84,H/2-24); ctx.lineTo(x+70,H/2-31); ctx.lineTo(x+70,H/2-17); ctx.closePath(); ctx.fill();
+      ctx.fillStyle='#FDE68A'; ctx.font='12px sans-serif';
+      ctx.fillText('a = qE/m', x+30, H/2-38);
+      const vFinal = Math.sqrt(2*st.U*1.6e-19/9.1e-31)/1e7;
+      setStat(this, `<span>E = U/d = <b>${E.toFixed(0)} V/m</b></span><span>粒子加速度 <b>a = qU/(md)</b></span><span>末动能 <b>qU（与 d 无关）</b></span><span>v ≈ <b>${vFinal.toFixed(1)}×10⁷ m/s</b></span>`);
+    }
+  };
+});
+/* ---------- 演示 8：电容器充放电 ---------- */
+regDemo('demo-capacitor', {title:'电容器的充放电 · 储存电荷的本领', chapter:'ch10', desc:'观察充电与放电过程中电流方向、电荷量与电压的变化，理解 C=Q/U。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {mode:'charge', q:0, t:0, C:10, E:12};
+  let apiRef=null;
+  addSlider(ctrl, {label:'电容 C (μF)', min:2, max:20, step:1, val:10, on:v=>st.C=v});
+  addBtn(ctrl, '充电', ()=>{ st.mode='charge'; st.q=0; st.t=0; });
+  addBtn(ctrl, '放电', ()=>{ st.mode='discharge'; st.t=0; });
+  addBtn(ctrl, '暂停/继续', ()=>{ if(apiRef) apiRef._paused=!apiRef._paused; });
+  const W = canvas.width, H = canvas.height;
+  const cy=H/2;
+  apiRef = {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.02;
+      const Qmax = st.C*st.E;
+      if(st.mode==='charge') st.q = Qmax*(1-Math.exp(-st.t*1.2));
+      else st.q = Qmax*Math.exp(-st.t*1.2);
+      const qNorm = st.q/Qmax;
+      // 电源（左侧）
+      const bx=110, by=cy-90;
+      ctx.strokeStyle='#E2E8F0'; ctx.lineWidth=2.6;
+      ctx.beginPath(); ctx.moveTo(150,cy-16); ctx.lineTo(150,cy-50); ctx.lineTo(105,cy-50); ctx.lineTo(105,cy+50); ctx.lineTo(150,cy+50); ctx.lineTo(150,cy+16); ctx.stroke();
+      ctx.fillStyle='#FCA5A5'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('+', 138, cy-6);
+      ctx.fillStyle='#7DD3FC'; ctx.fillText('−', 138, cy+18);
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif';
+      ctx.fillText('电源', 126, cy+74);
+      // 导线
+      ctx.strokeStyle='#64748B'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(150,cy-50); ctx.lineTo(300,cy-50); ctx.lineTo(300,cy-140); ctx.lineTo(W-300,cy-140); ctx.lineTo(W-300,cy-70); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(150,cy+50); ctx.lineTo(300,cy+50); ctx.lineTo(300,cy+140); ctx.lineTo(W-300,cy+140); ctx.lineTo(W-300,cy+70); ctx.stroke();
+      // 电容器（右侧）
+      const px1=W-300, px2=W-250;
+      ctx.fillStyle='#F87171';
+      ctx.beginPath(); ctx.roundRect(px1-6, cy-70, 8, 140, 2); ctx.fill();
+      ctx.fillStyle='#38BDF8';
+      ctx.beginPath(); ctx.roundRect(px2-2, cy-70, 8, 140, 2); ctx.fill();
+      // 板间电荷显示
+      const n = Math.round(qNorm*16);
+      ctx.fillStyle='rgba(248,113,113,.85)';
+      for(let i=0;i<n;i++){ ctx.beginPath(); ctx.arc(px1+4, cy-56+i*7.5, 2.6, 0, 7); ctx.fill(); }
+      ctx.fillStyle='rgba(56,189,248,.85)';
+      for(let i=0;i<n;i++){ ctx.beginPath(); ctx.arc(px2+4, cy-56+i*7.5, 2.6, 0, 7); ctx.fill(); }
+      // 电流方向箭头（充电：逆时针；放电：顺时针）
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=3;
+      ctx.setLineDash([8,6]);
+      const arc = st.mode==='charge'? -1:1;
+      ctx.beginPath(); ctx.arc(W/2, cy, 66, arc*Math.PI*0.15, arc*Math.PI*0.85, arc<0); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='#FDE68A'; ctx.font='bold 13px sans-serif';
+      ctx.fillText(st.mode==='charge'?'充电电流 I':'放电电流 I', W/2, cy-88);
+      // 统计
+      const U = st.q/st.C;
+      setStat(this, `<span>状态 <b>${st.mode==='charge'?'充电中':'放电中'}</b></span><span>Q = <b>${st.q.toFixed(1)} μC</b></span><span>U = Q/C = <b>${U.toFixed(1)} V</b></span><span>C = Q/U = <b>${st.C} μF</b></span>`);
+    }
+  };
+  return apiRef;
+});
+
+/* ---------- 演示 9：带电粒子偏转 ---------- */
+regDemo('demo-deflect', {title:'带电粒子在电场中的偏转 · 类平抛', chapter:'ch10', desc:'电子以初速度水平射入偏转电场，轨迹为抛物线。调节电压、初速度与板长观察偏移量 y 的变化。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {U:200, v0:5, l:0.08, t:0};
+  addSlider(ctrl, {label:'偏转电压 U (V)', min:50, max:500, step:10, val:200, on:v=>st.U=v});
+  addSlider(ctrl, {label:'初速度 v₀ (×10⁷m/s)', min:2, max:8, step:0.5, val:5, on:v=>st.v0=v});
+  addSlider(ctrl, {label:'板长 l (cm)', min:4, max:12, step:1, val:8, on:v=>st.l=v});
+  addBtn(ctrl, '重新发射', ()=>{ st.t=0; });
+  const W = canvas.width, H = canvas.height;
+  const yTop=70, yBot=H-70, yMid=(yTop+yBot)/2;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.012;
+      const x0=140, x1=x0+st.l/0.14*(W-260), dpx=110;
+      const yc0=yMid-30, yc1=yMid+30;
+      // 极板
+      ctx.fillStyle='rgba(248,113,113,.9)';
+      ctx.beginPath(); ctx.roundRect(x0, yc0, x1-x0, 12, 4); ctx.fill();
+      ctx.fillStyle='rgba(56,189,248,.9)';
+      ctx.beginPath(); ctx.roundRect(x0, yc1-12, x1-x0, 12, 4); ctx.fill();
+      ctx.fillStyle='#FCA5A5'; ctx.font='bold 13px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('+', (x0+x1)/2, yc0+8);
+      ctx.fillStyle='#7DD3FC'; ctx.fillText('−', (x0+x1)/2, yc1+4);
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif';
+      ctx.fillText('偏转电场 E', (x0+x1)/2, yc1+30);
+      // 理论抛物线（扫过的全轨迹）
+      const a = st.U*1.76e14/0.02; // a = qU/(md) 以电子比荷算, d固定0.02m => 需按相对单位缩放
+      const aS = st.U/(st.v0*st.v0)*0.9;
+      ctx.strokeStyle='rgba(253,230,138,.35)'; ctx.lineWidth=2; ctx.setLineDash([5,5]);
+      ctx.beginPath();
+      for(let px=x0; px<=W-60; px++){
+        const rel=(px-x0)/(x1-x0);
+        let py=yMid;
+        if(px<=x1){ py = yMid + aS*(rel*rel)*190; }
+        else { py = yMid + aS*190 + aS*2*(rel-1)*190; }
+        rel===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+      }
+      ctx.stroke(); ctx.setLineDash([]);
+      // 电子当前位置
+      const p = Math.min(st.t*0.9, 4);
+      const px = x0 + Math.min(p,1)*(x1-x0) + (p>1?(p-1)*(x1-x0)*0.8:0);
+      let py = yMid;
+      if(p<=1){ py = yMid + aS*(p*p)*190; }
+      else { py = yMid + aS*190 + aS*2*(p-1)*190; }
+      const grad=ctx.createRadialGradient(px-3,py-3,2,px,py,11);
+      grad.addColorStop(0,'#fff'); grad.addColorStop(1,'#38BDF8');
+      ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(px,py,11,0,7); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 10px sans-serif';
+      ctx.fillText('e⁻', px, py+4);
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif';
+      ctx.fillText('v₀', x0-56, yMid+5);
+      // 荧光屏
+      ctx.fillStyle='rgba(16,185,129,.25)'; ctx.beginPath(); ctx.roundRect(W-36,yTop-10,14,yBot-yTop+20,4); ctx.fill();
+      ctx.strokeStyle='#34D399'; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.fillStyle='#34D399'; ctx.font='11.5px sans-serif';
+      ctx.fillText('屏', W-31, yTop-18);
+      const ymax = aS*190;
+      setStat(this, `<span>偏移量 y ∝ <b>Ul²/v₀²</b></span><span>y 最大 ≈ <b>${(ymax/190*40).toFixed(1)} mm</b></span><span>运动性质 <b>类平抛</b></span><span>水平方向 <b>匀速</b></span><span>竖直方向 <b>匀加速</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 10：电流微观模型 ---------- */
+regDemo('demo-current', {title:'电流的微观解释 · I = neSv', chapter:'ch11', desc:'自由电子在电场驱动下定向移动形成电流。调节电子数密度 n 与定向移动速率 v，观察电流大小变化。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {n:1, v:1.6, phase:0};
+  addSlider(ctrl, {label:'电子数密度 n', min:1, max:4, step:1, val:1, on:v=>st.n=v});
+  addSlider(ctrl, {label:'定向移动速率 v', min:0.5, max:4, step:0.1, val:1.6, on:v=>st.v=v});
+  const W = canvas.width, H = canvas.height;
+  const yA=90, yB=H-90, rows=6;
+  const cols=14, spacing=(W-160)/(cols-1);
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.phase += 0.02*st.v;
+      const w = 110;
+      // 导体
+      ctx.fillStyle='rgba(51,65,85,.6)'; ctx.strokeStyle='#64748B'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.roundRect(60,yA-20,W-120,H-(yA+yB)+40,14); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('导体', 30, H/2);
+      // 电流方向
+      ctx.fillStyle='#FDE68A'; ctx.font='bold 13px sans-serif';
+      ctx.fillText('电流方向 →', W-100, 34);
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=2.4;
+      ctx.beginPath(); ctx.moveTo(W-190,26); ctx.lineTo(W-116,26); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(W-128,19); ctx.lineTo(W-116,26); ctx.lineTo(W-128,33); ctx.stroke();
+      // 电子（向左漂移）
+      const nPerRow = Math.round(4*st.n);
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<nPerRow;c++){
+          const baseX = 90 + c*(W-180)/(nPerRow-1);
+          let x = baseX - ((st.phase*(c%3+1)*18 + r*7) % (W-120));
+          x = ((x - 70) % (W-120)) + 70; if(x<70)x+=W-120;
+          const y = yA + r*(H-yA-yB)/(rows-1) + (c%2)*8;
+          ctx.fillStyle='#7DD3FC';
+          ctx.beginPath(); ctx.arc(x, y, 6, 0, 7); ctx.fill();
+          ctx.fillStyle='rgba(125,211,252,.4)';
+          ctx.beginPath(); ctx.arc(x-14, y, 4, 0, 7); ctx.fill();
+        }
+      }
+      // 横截面示意（检测面）
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=2.4; ctx.setLineDash([7,5]);
+      ctx.beginPath(); ctx.moveTo(W-190,yA-14); ctx.lineTo(W-190,yB+14); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#FDE68A'; ctx.font='12px sans-serif';
+      ctx.fillText('截面 S', W-190, yB+30);
+      const I = st.n*st.v*1.25;
+      setStat(this, `<span>电流 I = neSv ∝ <b>${I.toFixed(1)}</b></span><span>n 增大 <b>I 增大</b></span><span>v 增大 <b>I 增大</b></span><span>电子实际定向速率 <b>≈10⁻⁴ m/s</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 11：伏安特性 ---------- */
+regDemo('demo-resistance', {title:'导体的电阻 · 伏安特性曲线', chapter:'ch11', desc:'电阻 R=U/I 由伏安特性曲线的斜率反映。对比线性元件与非线性元件（二极管）的 I-U 图像。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {R:3, type:'linear', t:0};
+  addSlider(ctrl, {label:'电阻 R (Ω)', min:1, max:6, step:0.5, val:3, on:v=>st.R=v});
+  addBtn(ctrl, '线性元件', ()=>{ st.type='linear'; });
+  addBtn(ctrl, '二极管（非线性）', ()=>{ st.type='diode'; });
+  const W = canvas.width, H = canvas.height;
+  const ox=110, oy=H-70, kx=(W-160)/12, ky=170;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.015;
+      // 坐标轴
+      ctx.strokeStyle='#64748B'; ctx.lineWidth=1.6;
+      ctx.beginPath(); ctx.moveTo(ox,20); ctx.lineTo(ox,oy); ctx.lineTo(W-40,oy); ctx.stroke();
+      ctx.fillStyle='#93A7C8'; ctx.font='13px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('U/V', W-44, oy+20); ctx.fillText('I/A', 40, 26);
+      for(let u=0;u<=12;u+=2){ ctx.fillText(u, ox+u*kx, oy+20); ctx.beginPath(); ctx.moveTo(ox+u*kx,oy); ctx.lineTo(ox+u*kx,oy+4); ctx.stroke(); }
+      for(let i=0;i<=5;i++){ ctx.fillText((i*0.5).toFixed(1), ox-30, oy-i*34+4); ctx.beginPath(); ctx.moveTo(ox,oy-i*34); ctx.lineTo(ox-4,oy-i*34); ctx.stroke(); }
+      // 曲线
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=3;
+      ctx.beginPath();
+      if(st.type==='linear'){
+        for(let u=0;u<=12;u+=0.2){
+          const I = u/st.R;
+          const x=ox+u*kx, y=oy-I*68;
+          u===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        }
+      }else{
+        // 二极管 I-U（正向导通）
+        for(let u=0;u<=12;u+=0.2){
+          const I = u>0.6? Math.min(5,(u-0.6)*2.6+0.2) : (u<=0?0:u*0.12);
+          const x=ox+u*kx, y=oy-I*68;
+          u===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        }
+      }
+      ctx.stroke();
+      // 当前工作点
+      const Unow = 3+3*Math.sin(st.t*1.3);
+      let Inow = st.type==='linear'? Unow/st.R : (Unow>0.6? Math.min(5,(Unow-0.6)*2.6+0.2):Unow*0.12);
+      const xp=ox+Unow*kx, yp=oy-Inow*68;
+      ctx.fillStyle='#F87171';
+      ctx.beginPath(); ctx.arc(xp,yp,7,0,7); ctx.fill();
+      ctx.strokeStyle='rgba(248,113,113,.5)'; ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(xp,yp); ctx.lineTo(xp,oy); ctx.lineTo(ox,oy); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#FDE68A'; ctx.font='bold 12px sans-serif';
+      ctx.fillText(`U=${Unow.toFixed(1)}V, I=${Inow.toFixed(2)}A, R=U/I=${(Unow/Inow).toFixed(1)}Ω`, ox+40, 40);
+      const Rnow = Unow/Inow;
+      setStat(this, `<span>元件 <b>${st.type==='linear'?'线性（金属导体）':'非线性（二极管）'}</b></span><span>斜率 <b>${st.type==='linear'?'1/R':'不恒定'}</b></span><span>当前 R = <b>${Rnow.toFixed(1)} Ω</b></span><span>欧姆定律 <b>${st.type==='linear'?'适用':'不适用'}</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 12：游标卡尺 ---------- */
+regDemo('demo-vernier', {title:'游标卡尺读数 · 10 分度', chapter:'ch11', desc:'拖动游标尺，模拟游标卡尺读数：读数 = 主尺读数 + 游标对齐刻度 × 0.1 mm。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {pos:3, last:0};
+  addSlider(ctrl, {label:'游标位置 (mm)', min:0, max:60, step:0.1, val:23.4, on:v=>st.pos=v});
+  const W = canvas.width, H = canvas.height;
+  const mainTop=100, vernTop=190, scale=8;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      const off = st.pos*scale;
+      // 主尺
+      ctx.fillStyle='#94A3B8'; ctx.fillRect(60, mainTop, W-140, 60);
+      ctx.fillStyle='#0E1728'; ctx.fillRect(60, mainTop, W-140, 54);
+      ctx.strokeStyle='#fff'; ctx.lineWidth=2;
+      for(let mm=0;mm<=92;mm++){
+        const x=60+mm*scale;
+        ctx.beginPath(); ctx.moveTo(x,mainTop); ctx.lineTo(x,mainTop+(mm%10===0?22:14)); ctx.stroke();
+        if(mm%10===0){ ctx.fillStyle='#E2E8F0'; ctx.font='bold 12px sans-serif'; ctx.fillText((mm/10)|0, x-4, mainTop+36); }
+      }
+      // 游标尺（10分度：9mm分成10格）
+      ctx.fillStyle='#F59E0B';
+      ctx.beginPath(); ctx.roundRect(60, vernTop, 10*scale, 64, 4); ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(60,vernTop); ctx.lineTo(60,vernTop+64); ctx.stroke();
+      for(let g=0;g<=10;g++){
+        const x=60+g*scale*0.9;
+        ctx.beginPath(); ctx.moveTo(x,vernTop); ctx.lineTo(x,vernTop+18); ctx.stroke();
+      }
+      // 游标相对主尺平移：以第0刻线为准 offset
+      // 实际绘制：主尺不动，游标框整体平移 off
+      // 由于上面已画好，这里重绘主尺+游标相对位移（简化：直接用 off 平移游标）
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='#334155'; ctx.fillRect(60, mainTop, W-140, 60);
+      ctx.strokeStyle='rgba(255,255,255,.85)'; ctx.lineWidth=2;
+      for(let mm=0;mm<=92;mm++){
+        const x=60+mm*scale;
+        ctx.beginPath(); ctx.moveTo(x,mainTop); ctx.lineTo(x,mainTop+(mm%10===0?22:14)); ctx.stroke();
+        if(mm%10===0){ ctx.fillStyle='#E2E8F0'; ctx.font='bold 12px sans-serif'; ctx.fillText((mm/10)|0, x-4, mainTop+36); }
+      }
+      // 游标（平移 off）
+      const vx = 60+off;
+      ctx.fillStyle='#F59E0B';
+      ctx.beginPath(); ctx.roundRect(vx, vernTop, 10*scale, 64, 4); ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,.9)'; ctx.lineWidth=1.6;
+      ctx.beginPath(); ctx.moveTo(vx,vernTop); ctx.lineTo(vx,vernTop+64); ctx.stroke();
+      for(let g=0;g<=10;g++){
+        const x=vx+g*scale*0.9;
+        ctx.beginPath(); ctx.moveTo(x,vernTop); ctx.lineTo(x,vernTop+18); ctx.stroke();
+      }
+      // 找对齐刻度
+      let align=0, best=1e9;
+      for(let g=0;g<=10;g++){
+        const vx2 = vx+g*scale*0.9;
+        const nearest = Math.round((vx2-60)/scale);
+        const diff = Math.abs((vx2-60)-nearest*scale);
+        if(diff<best){best=diff; align=g;}
+      }
+      // 读数
+      const main = Math.floor(st.pos);
+      const reading = main + align*0.1;
+      ctx.fillStyle='#FDE68A'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(`主尺 ${main}.0 mm + 游标 ${align}×0.1 mm`, W/2, vernTop+112);
+      ctx.fillStyle='#fff'; ctx.font='bold 22px sans-serif';
+      ctx.fillText(`读数 = ${reading.toFixed(1)} mm`, W/2, vernTop+148);
+      ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif';
+      ctx.fillText('游标零刻度线', vx+5*scale*0.45, vernTop-8);
+      setStat(this, `<span>精度 <b>0.1 mm</b></span><span>对齐游标刻度 <b>第 ${align} 格</b></span><span>读数 <b>${reading.toFixed(1)} mm</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 13：串并联电路 ---------- */
+regDemo('demo-circuit', {title:'串联与并联 · 等效电阻与分配', chapter:'ch11', desc:'调节两个电阻并切换连接方式，观察等效电阻、电流与电压分配规律。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {R1:4, R2:6, mode:'series', U:12};
+  addSlider(ctrl, {label:'R₁ (Ω)', min:1, max:10, step:1, val:4, on:v=>st.R1=v});
+  addSlider(ctrl, {label:'R₂ (Ω)', min:1, max:10, step:1, val:6, on:v=>st.R2=v});
+  addBtn(ctrl, '串联', ()=>{ st.mode='series'; });
+  addBtn(ctrl, '并联', ()=>{ st.mode='parallel'; });
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      const R1=st.R1, R2=st.R2, U=st.U;
+      const Req = st.mode==='series'? R1+R2 : R1*R2/(R1+R2);
+      const I = U/Req;
+      // 电路图
+      const y1=110, y2=250;
+      ctx.strokeStyle='#E2E8F0'; ctx.lineWidth=3;
+      // 电源（左侧竖线）
+      ctx.beginPath();
+      ctx.moveTo(120,y1); ctx.lineTo(120,y2);
+      ctx.moveTo(120,y1); ctx.lineTo(W-120,y1); ctx.lineTo(W-120,y2); ctx.lineTo(120,y2);
+      ctx.stroke();
+      // 电源符号
+      ctx.strokeStyle='#FCA5A5'; ctx.lineWidth=4;
+      ctx.beginPath(); ctx.moveTo(120,y1-10); ctx.lineTo(120,y1+10); ctx.stroke();
+      ctx.strokeStyle='#7DD3FC';
+      ctx.beginPath(); ctx.moveTo(120,y1+18); ctx.lineTo(120,y1+38); ctx.stroke();
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(`U=${U} V`, 120, y1-22);
+      // 电阻
+      const drawR=(x,y,label,color)=>{
+        ctx.fillStyle=color;
+        ctx.beginPath(); ctx.roundRect(x-22,y-16,44,32,5); ctx.fill();
+        ctx.fillStyle='#fff'; ctx.font='bold 14px sans-serif';
+        ctx.fillText(label, x, y+5);
+      };
+      if(st.mode==='series'){
+        drawR(W*0.5-90, y1, `R₁=${R1}Ω`, '#F97316');
+        drawR(W*0.5+90, y1, `R₂=${R2}Ω`, '#FB923C');
+        ctx.fillStyle='#FDE68A'; ctx.font='bold 13px sans-serif';
+        ctx.fillText(`I = U/(R₁+R₂) = ${I.toFixed(2)} A`, W/2, 66);
+        ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif';
+        ctx.fillText(`U₁ = IR₁ = ${(I*R1).toFixed(1)} V`, W*0.5-90, y1+40);
+        ctx.fillText(`U₂ = IR₂ = ${(I*R2).toFixed(1)} V`, W*0.5+90, y1+40);
+      }else{
+        // 并联：上下两支路
+        ctx.strokeStyle='#E2E8F0'; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.moveTo(W*0.5-200,y1); ctx.lineTo(W*0.5-200,y1+30); ctx.lineTo(W*0.5+200,y1+30); ctx.lineTo(W*0.5+200,y1); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(W*0.5-200,y2); ctx.lineTo(W*0.5-200,y2-30); ctx.lineTo(W*0.5+200,y2-30); ctx.lineTo(W*0.5+200,y2); ctx.stroke();
+        drawR(W*0.5-100, y1+30, `R₁=${R1}Ω`, '#F97316');
+        drawR(W*0.5+100, y2-30, `R₂=${R2}Ω`, '#FB923C');
+        ctx.fillStyle='#FDE68A'; ctx.font='bold 13px sans-serif';
+        ctx.fillText(`I = U/R并 = ${I.toFixed(2)} A`, W/2, 66);
+        ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif';
+        ctx.fillText(`I₁ = U/R₁ = ${(U/R1).toFixed(2)} A`, W*0.5-100, y1+60);
+        ctx.fillText(`I₂ = U/R₂ = ${(U/R2).toFixed(2)} A`, W*0.5+100, y2-52);
+      }
+      setStat(this, `<span>连接 <b>${st.mode==='series'?'串联':'并联'}</b></span><span>等效电阻 <b>${Req.toFixed(2)} Ω</b></span><span>总电流 <b>${I.toFixed(2)} A</b></span><span>${st.mode==='series'?'电压按电阻正比分':'电流按电阻反比分'}</span>`);
+    }
+  };
+});
+
+/* ---------- 演示 14：多用电表 ---------- */
+regDemo('demo-multimeter', {title:'多用电表 · 欧姆挡读数', chapter:'ch11', desc:'欧姆挡刻度右小左大、不均匀。切换倍率，观察指针位置变化：读数 × 倍率 = 电阻值。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {R:200, mult:100, t:0};
+  addSlider(ctrl, {label:'待测电阻 R (Ω)', min:10, max:1000, step:10, val:200, on:v=>st.R=v});
+  addSelect(ctrl, '倍率', [['1','×1'],['10','×10'],['100','×100'],['1000','×1k']], v=>st.mult=parseInt(v));
+  const W = canvas.width, H = canvas.height;
+  const cx=W/2, cy=H/2, R=150;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      // 表盘
+      ctx.fillStyle='#F8FAFC'; ctx.beginPath(); ctx.arc(cx,cy,R,0,7); ctx.fill();
+      ctx.strokeStyle='#1E293B'; ctx.lineWidth=3; ctx.stroke();
+      // 欧姆刻度（右0左∞ 不均匀：r = 1/R 映射）
+      const ticks=[[0,10],[50,8],[100,6],[200,5],[300,4.3],[500,3.7],[1000,3.2],[2000,2.9],[5000,2.6],[10000,2.45]];
+      ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
+      ticks.forEach(([val,pos])=>{
+        const a = Math.PI*0.75 + (Math.PI*1.5)*(1-pos/10);
+        const x=cx+Math.cos(a)*(R-30), y=cy+Math.sin(a)*(R-30);
+        ctx.fillStyle='#1E293B';
+        ctx.fillText(val>=1000? (val/1000)+'k':val, x, y);
+        ctx.strokeStyle='#64748B';
+        ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*(R-8), cy+Math.sin(a)*(R-8)); ctx.lineTo(cx+Math.cos(a)*(R-22), cy+Math.sin(a)*(R-22)); ctx.stroke();
+      });
+      // 指针位置（按 R/倍率 映射到刻度）
+      const rRel = st.R/st.mult;
+      const pos = Math.max(0, Math.min(10, 10/(1+rRel/160)*2.2)); // 模拟刻度映射
+      const a = Math.PI*0.75 + (Math.PI*1.5)*(1-pos/10);
+      ctx.strokeStyle='#DC2626'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(a)*(R-36), cy+Math.sin(a)*(R-36)); ctx.stroke();
+      ctx.fillStyle='#DC2626';
+      ctx.beginPath(); ctx.arc(cx,cy,7,0,7); ctx.fill();
+      // 标注
+      ctx.fillStyle='#1E293B'; ctx.font='bold 13px sans-serif';
+      ctx.fillText('Ω', cx+R-70, cy-50);
+      ctx.fillStyle='#0F172A'; ctx.font='bold 18px sans-serif';
+      ctx.fillText(`R = ${st.R} Ω（表盘 ${(rRel).toFixed(0)} × ${st.mult}）`, cx, cy+R+44);
+      ctx.fillStyle='#64748B'; ctx.font='12px sans-serif';
+      ctx.fillText('欧姆挡刻度：右小左大，不均匀', cx, cy+R+66);
+      const rRead = st.R/st.mult;
+      setStat(this, `<span>倍率 <b>×${st.mult}</b></span><span>表盘读数 <b>${rRead.toFixed(0)}</b></span><span>电阻值 = 读数×倍率 = <b>${st.R} Ω</b></span><span>指针最佳区域 <b>中值附近</b></span>`);
+    }
+  };
+});
+/* ---------- 演示 15：焦耳定律 ---------- */
+regDemo('demo-joule', {title:'焦耳定律 · 电功与电热', chapter:'ch12', desc:'电流通过电阻产生热量 Q=I²Rt。调节电流与电阻，观察热功率与热量随时间的变化。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {I:2, R:3, t:0, mode:'pure'};
+  addSlider(ctrl, {label:'电流 I (A)', min:0.5, max:5, step:0.5, val:2, on:v=>st.I=v});
+  addSlider(ctrl, {label:'电阻 R (Ω)', min:1, max:8, step:1, val:3, on:v=>st.R=v});
+  addBtn(ctrl, '纯电阻（电热器）', ()=>{ st.mode='pure'; });
+  addBtn(ctrl, '电动机（非纯电阻）', ()=>{ st.mode='motor'; });
+  const W = canvas.width, H = canvas.height;
+  const cx=W/2, cy=H/2;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.02;
+      const I=st.I, R=st.R;
+      const Q = I*I*R*st.t;
+      const Pheat = I*I*R;
+      const U = st.mode==='pure'? I*R : I*R+6;
+      const P = U*I;
+      // 电阻（加热丝）
+      const zig=[]; for(let i=0;i<12;i++){ zig.push([cx-70+i*12, i%2? cy-26: cy+26]); }
+      ctx.strokeStyle='#F97316'; ctx.lineWidth=3;
+      ctx.beginPath(); zig.forEach(([x,y],i)=> i?ctx.lineTo(x,y):ctx.moveTo(x,y)); ctx.stroke();
+      ctx.fillStyle='#FDE68A'; ctx.font='bold 14px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(`R=${R} Ω`, cx, cy+56);
+      // 热量辐射效果
+      const glow = 6+4*Math.sin(st.t*4);
+      const g=ctx.createRadialGradient(cx,cy,10,cx,cy,90+glow);
+      g.addColorStop(0,'rgba(249,115,22,.35)'); g.addColorStop(1,'rgba(249,115,22,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,90+glow,0,7); ctx.fill();
+      // 电流箭头
+      ctx.strokeStyle='#7DD3FC'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(cx-170,cy-40); ctx.lineTo(cx-120,cy-40); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx+120,cy+40); ctx.lineTo(cx+170,cy+40); ctx.stroke();
+      ctx.fillStyle='#7DD3FC'; ctx.font='bold 13px sans-serif';
+      ctx.fillText(`I=${I} A`, cx-150, cy-54);
+      // 统计
+      setStat(this, `<span>发热功率 P热 = I²R = <b>${Pheat} W</b></span><span>热量 Q = I²Rt = <b>${Q.toFixed(0)} J</b></span><span>${st.mode==='pure'?'纯电阻：W = Q':'电动机：P电 = P机 + P热'}</span><span>${st.mode==='pure'?`电压 U=IR=${U}V`:`U=${U}V（U > IR）`}</span>`);
+    }
+  };
+});
+
+/* ---------- 演示 16：闭合电路欧姆定律 ---------- */
+regDemo('demo-ohm', {title:'闭合电路欧姆定律 · I = E/(R+r)', chapter:'ch12', desc:'调节外电阻 R，观察电流、内电压、路端电压的变化以及 U-I 图像上的工作点。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {R:5, E:4.5, r:1, t:0};
+  addSlider(ctrl, {label:'外电阻 R (Ω)', min:0.2, max:20, step:0.2, val:5, on:v=>st.R=v});
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      const E=st.E, r=st.r, R=st.R;
+      const I=E/(R+r), U=E-I*r, Uin=I*r;
+      // 左侧：电路示意
+      const cx=200, cy=H/2;
+      ctx.strokeStyle='#E2E8F0'; ctx.lineWidth=3;
+      ctx.beginPath();
+      ctx.moveTo(cx-90,cy-70); ctx.lineTo(cx+90,cy-70);
+      ctx.moveTo(cx+90,cy-70); ctx.lineTo(cx+90,cy+30); // R
+      ctx.lineTo(cx+90,cy+70); ctx.lineTo(cx-90,cy+70);
+      ctx.moveTo(cx-90,cy+70); ctx.lineTo(cx-90,cy+40); // 内阻
+      ctx.stroke();
+      // 电源（电池符号）
+      ctx.strokeStyle='#FCA5A5'; ctx.lineWidth=4;
+      ctx.beginPath(); ctx.moveTo(cx-90,cy-58); ctx.lineTo(cx-90,cy-42); ctx.stroke();
+      ctx.strokeStyle='#7DD3FC';
+      ctx.beginPath(); ctx.moveTo(cx-90,cy-34); ctx.lineTo(cx-90,cy-18); ctx.stroke();
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(`E=${E}V, r=${r}Ω`, cx-90, cy-86);
+      ctx.fillStyle='#F97316';
+      ctx.beginPath(); ctx.roundRect(cx+90-22, cy+18, 44, 24, 4); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 12px sans-serif';
+      ctx.fillText(`R=${R}Ω`, cx+90, cy+33);
+      // 电流
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=2.4;
+      ctx.beginPath(); ctx.moveTo(cx-66,cy-70); ctx.lineTo(cx-40,cy-70); ctx.stroke();
+      ctx.fillStyle='#FDE68A'; ctx.font='bold 13px sans-serif';
+      ctx.fillText(`I=${I.toFixed(2)}A`, cx-52, cy-84);
+      // 右侧：U-I 图像
+      const ox=W*0.55, oy=H*0.82, kx=34, ky=36;
+      ctx.strokeStyle='#64748B'; ctx.lineWidth=1.6;
+      ctx.beginPath(); ctx.moveTo(ox,oy-150); ctx.lineTo(ox,oy); ctx.lineTo(ox+160,oy); ctx.stroke();
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif';
+      ctx.fillText('I', ox+150, oy+16); ctx.fillText('U', ox-18, oy-140);
+      ctx.fillText('0', ox-14, oy+16);
+      ctx.fillStyle='#93A7C8'; ctx.font='11px sans-serif';
+      ctx.fillText('E', ox-16, oy-E*ky+4);
+      ctx.fillText('E/r', ox+E/r*kx, oy+16);
+      // U-I 直线
+      ctx.strokeStyle='#34D399'; ctx.lineWidth=3;
+      ctx.beginPath();
+      ctx.moveTo(ox, oy-E*ky);
+      ctx.lineTo(ox+E/r*kx, oy);
+      ctx.stroke();
+      // 工作点
+      const wx=ox+I*kx, wy=oy-U*ky;
+      ctx.fillStyle='#FDE68A';
+      ctx.beginPath(); ctx.arc(wx,wy,7,0,7); ctx.fill();
+      ctx.strokeStyle='rgba(253,230,138,.6)'; ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(wx,wy); ctx.lineTo(wx,oy); ctx.lineTo(ox,oy); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#FDE68A'; ctx.font='12px sans-serif';
+      ctx.fillText(`工作点 (${I.toFixed(2)}, ${U.toFixed(1)})`, wx-30, wy-14);
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif';
+      ctx.fillText('U = E − Ir', ox+16, oy-E*ky-10);
+      setStat(this, `<span>电流 I = E/(R+r) = <b>${I.toFixed(2)} A</b></span><span>路端电压 U = <b>${U.toFixed(2)} V</b></span><span>内电压 Ir = <b>${Uin.toFixed(2)} V</b></span><span>U+Ir = <b>${(U+Uin).toFixed(2)} V = E</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 17：测电动势实验 ---------- */
+regDemo('demo-battery', {title:'实验：电池电动势和内阻的测量', chapter:'ch12', desc:'点击"测量"获得一组 U、I 数据，多次测量后用 U-I 图像拟合直线：纵截距 = 电动势 E，斜率绝对值 = 内阻 r。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {E:1.5, r:0.8, pts:[], n:0};
+  addBtn(ctrl, '测量一组数据', ()=>{
+    const R = 1 + st.n*1.4;
+    const I = st.E/(R+st.r), U = st.E-I*st.r;
+    st.pts.push({I, U});
+    st.n++;
+    if(st.pts.length>8) st.pts.shift();
+  });
+  addBtn(ctrl, '清空数据', ()=>{ st.pts=[]; st.n=0; });
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      // 坐标轴（I 横、U 纵）
+      const ox=90, oy=H-70, kx=(W-160)/2.2, ky=150/1.6;
+      ctx.strokeStyle='#64748B'; ctx.lineWidth=1.6;
+      ctx.beginPath(); ctx.moveTo(ox,40); ctx.lineTo(ox,oy); ctx.lineTo(W-50,oy); ctx.stroke();
+      ctx.fillStyle='#93A7C8'; ctx.font='13px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('I/A', W-60, oy+22); ctx.fillText('U/V', 40, 34);
+      for(let i=0;i<=4;i++){ ctx.fillText((i*0.5).toFixed(1), ox+i*kx*0.5, oy+20); }
+      for(let i=0;i<=4;i++){ ctx.fillText((i*0.4).toFixed(1), ox-34, oy-i*ky*0.4+4); }
+      // 拟合直线（若有点）
+      let showLine=false, slope=0, b=0;
+      if(st.pts.length>=2){
+        const n=st.pts.length;
+        let sx=0,sy=0,sxx=0,sxy=0;
+        st.pts.forEach(p=>{sx+=p.I;sy+=p.U;sxx+=p.I*p.I;sxy+=p.I*p.U;});
+        slope=(n*sxy-sx*sy)/(n*sxx-sx*sx);
+        b=(sy-slope*sx)/n;
+        showLine=true;
+        const I1=0, I2=2.2;
+        const U1=b, U2=b+slope*I2;
+        ctx.strokeStyle='#34D399'; ctx.lineWidth=3; ctx.setLineDash([6,4]);
+        ctx.beginPath();
+        ctx.moveTo(ox+Math.max(0,Math.min(2.2,(b-U2)/slope))*kx, oy-U2*ky);
+        ctx.lineTo(ox+I1*kx, oy-b*ky);
+        ctx.stroke(); ctx.setLineDash([]);
+      }
+      // 数据点
+      st.pts.forEach((p,i)=>{
+        ctx.fillStyle = i===st.pts.length-1?'#FDE68A':'#7DD3FC';
+        ctx.beginPath(); ctx.arc(ox+p.I*kx, oy-p.U*ky, 6, 0, 7); ctx.fill();
+      });
+      // 结果显示
+      ctx.fillStyle='#FDE68A'; ctx.font='bold 14px sans-serif';
+      if(showLine){
+        const Er = b, rr = -slope;
+        ctx.fillText(`E = ${Er.toFixed(2)} V（纵截距）`, ox+20, 44);
+        ctx.fillText(`r = ${rr.toFixed(2)} Ω（斜率绝对值）`, ox+20, 70);
+      }else if(st.pts.length===1){
+        ctx.fillText('再测几组数据即可拟合直线', ox+20, 44);
+      }else{
+        ctx.fillText('点击"测量一组数据"开始实验（8 组以内）', ox+20, 44);
+      }
+      setStat(this, `<span>数据组数 <b>${st.pts.length}</b></span><span>原理 <b>E = U + Ir</b></span><span>图像 <b>U = −rI + E</b></span><span>多点拟合 <b>减小误差</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 18：能量转化 ---------- */
+regDemo('demo-energy', {title:'能源与能量转化 · 守恒与耗散', chapter:'ch12', desc:'观察能量在"太阳能→风能/水能→电能→各种用能"之间的转化流程。能量总量不变，但可利用品质降低（耗散）。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  let t = 0;
+  const W = canvas.width, H = canvas.height;
+  const nodes=[
+    {x:90, y:H/2, name:'太阳能', color:'#F59E0B', icon:'☀'},
+    {x:270, y:H*0.28, name:'风能', color:'#38BDF8', icon:'≋'},
+    {x:270, y:H*0.72, name:'水能', color:'#34D399', icon:'~'},
+    {x:460, y:H/2, name:'电能', color:'#FDE68A', icon:'⚡'},
+    {x:660, y:H*0.28, name:'热能（耗散）', color:'#F87171', icon:'♨'},
+    {x:660, y:H*0.72, name:'机械能/光能', color:'#A78BFA', icon:'◇'}
+  ];
+  const flows=[[0,1],[0,2],[1,3],[2,3],[3,4],[3,5]];
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      t += 0.02;
+      // 流向箭头（能量粒子）
+      flows.forEach(([a,b],fi)=>{
+        const A=nodes[a], B=nodes[b];
+        const pr = (fi*0.13 + t*0.22)%1;
+        const mx=A.x+(B.x-A.x)*pr, my=A.y+(B.y-A.y)*pr;
+        ctx.strokeStyle='rgba(148,163,184,.6)'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(A.x+34*(B.x>A.x?1:-1), A.y); ctx.lineTo(B.x-34*(B.x>A.x?1:-1), B.y); ctx.stroke();
+        ctx.fillStyle=B.color;
+        ctx.beginPath(); ctx.arc(mx,my,5,0,7); ctx.fill();
+      });
+      // 节点
+      nodes.forEach(n=>{
+        ctx.strokeStyle=n.color; ctx.lineWidth=3;
+        ctx.fillStyle='rgba(15,23,42,.92)';
+        ctx.beginPath(); ctx.arc(n.x,n.y,30,0,7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle=n.color; ctx.font='bold 17px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(n.icon, n.x, n.y+6);
+        ctx.fillStyle='#C7D6EE'; ctx.font='bold 13px sans-serif';
+        ctx.fillText(n.name, n.x, n.y+(n.y<H/2?52:-52));
+      });
+      ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif';
+      ctx.fillText('能量守恒：总量不变', W*0.25, H-18);
+      ctx.fillStyle='#F87171'; ctx.font='12.5px sans-serif';
+      ctx.fillText('能量耗散：品质降低（不可逆）', W*0.72, H-18);
+      setStat(this, `<span>一次能源 <b>太阳·风·水</b></span><span>二次能源 <b>电能</b></span><span>守恒 <b>数量不变</b></span><span>耗散 <b>方向性</b></span><span>对策 <b>节能 + 清洁能源</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 19：磁感线 ---------- */
+regDemo('demo-bfield', {title:'磁场与磁感线 · 安培定则', chapter:'ch13', desc:'切换不同磁场源，观察磁感线分布。直线电流的磁感线是同心圆，方向由右手安培定则判断。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {type:'bar'};
+  addSelect(ctrl, '场源', [['bar','条形磁体'],['wire','直线电流'],['loop','环形电流']], v=>st.type=v);
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      const cy=H/2;
+      ctx.strokeStyle='rgba(148,163,184,.55)'; ctx.lineWidth=1.7;
+      if(st.type==='bar'){
+        // 条形磁体
+        const bx=W/2-90, bw=180, bh=64;
+        ctx.fillStyle='#DC2626';
+        ctx.beginPath(); ctx.roundRect(bx,bh?cy-bh/2:cy-32, bw/2, bh, 6); ctx.fill();
+        ctx.fillStyle='#3B82F6';
+        ctx.beginPath(); ctx.roundRect(bx+bw/2, cy-bh/2, bw/2, bh, 6); ctx.fill();
+        ctx.fillStyle='#fff'; ctx.font='bold 18px sans-serif'; ctx.textAlign='center';
+        ctx.fillText('N', bx+bw/4, cy+6); ctx.fillText('S', bx+bw*3/4, cy+6);
+        // 磁感线（外部 N→S 闭合）
+        ctx.strokeStyle='#93C5FD'; ctx.lineWidth=2;
+        for(let i=0;i<8;i++){
+          const y0 = cy-20 + i*5.6;
+          ctx.beginPath();
+          ctx.moveTo(bx+bw+6, y0-6);
+          ctx.quadraticCurveTo(bx+bw+150, y0-70+i*18, bx+bw+190, cy-60+i*14);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(bx-6, y0-6);
+          ctx.quadraticCurveTo(bx-150, y0-70+i*18, bx-190, cy-60+i*14);
+          ctx.stroke();
+        }
+        // 内部 S→N
+        ctx.strokeStyle='#93C5FD'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(bx+bw-8, cy); ctx.lineTo(bx+8, cy); ctx.stroke();
+        ctx.fillStyle='#C7D6EE'; ctx.font='13px sans-serif';
+        ctx.fillText('外部 N→S，内部 S→N（闭合）', W/2, cy+bh/2+34);
+      }else if(st.type==='wire'){
+        // 直线电流垂直纸面向外：同心圆逆时针
+        const cx=W/2, cy=H/2;
+        ctx.fillStyle='#FDE68A'; ctx.font='bold 22px sans-serif';
+        ctx.fillText('⊙ 电流向外', cx, cy-110);
+        ctx.strokeStyle='#93C5FD'; ctx.lineWidth=2.2;
+        for(let r=40;r<=150;r+=26){
+          ctx.beginPath(); ctx.arc(cx,cy,r,0,7); ctx.stroke();
+          // 箭头（逆时针）
+          const a = t*0.5 % (Math.PI*2);
+          ctx.fillStyle='#7DD3FC';
+          ctx.beginPath();
+          ctx.moveTo(cx+Math.cos(a)*r, cy+Math.sin(a)*r);
+          ctx.lineTo(cx+Math.cos(a+0.35)*r, cy+Math.sin(a+0.35)*r);
+          ctx.lineTo(cx+Math.cos(a-0.1)*r*1.15, cy+Math.sin(a-0.1)*r*1.15);
+          ctx.closePath(); ctx.fill();
+        }
+        ctx.fillStyle='#fff'; ctx.font='bold 16px sans-serif';
+        ctx.fillText('·', cx, cy+6);
+        ctx.fillStyle='#C7D6EE'; ctx.font='13px sans-serif';
+        ctx.fillText('右手定则：拇指指电流，四指为磁感线方向（逆时针）', W/2, H-24);
+      }else{
+        // 环形电流：轴线上磁场
+        const cx=W/2, cy=H/2, r0=70;
+        ctx.strokeStyle='#FDE68A'; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.ellipse(cx,cy,r0,26,0,0,7); ctx.stroke();
+        ctx.fillStyle='#FDE68A'; ctx.font='bold 16px sans-serif';
+        ctx.fillText('I', cx, cy-38);
+        // 电流方向箭头
+        ctx.fillStyle='#FDE68A';
+        const a=t*0.4%(Math.PI*2);
+        ctx.beginPath();
+        ctx.moveTo(cx+Math.cos(a)*r0, cy+Math.sin(a)*26);
+        ctx.lineTo(cx+Math.cos(a+0.4)*r0, cy+Math.sin(a+0.4)*26);
+        ctx.lineTo(cx+Math.cos(a)*r0*1.18, cy+Math.sin(a)*26*1.18);
+        ctx.closePath(); ctx.fill();
+        // 磁感线（绕环闭合）
+        ctx.strokeStyle='#93C5FD'; ctx.lineWidth=2;
+        for(let i=0;i<3;i++){
+          ctx.beginPath(); ctx.ellipse(cx,cy,r0*2.1+i*10, 40+i*6, 0, Math.PI*0.15, Math.PI*0.85); ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(cx,cy,r0*2.1+i*10, 40+i*6, 0, Math.PI*1.15, Math.PI*1.85); ctx.stroke();
+        }
+        ctx.fillStyle='#C7D6EE'; ctx.font='13px sans-serif';
+        ctx.fillText('环形电流：四指绕电流方向，拇指指轴线磁场（向右）', W/2, H-24);
+      }
+      setStat(this, `<span>场源 <b>${st.type==='bar'?'条形磁体':'电流'}</b></span><span>磁感线 <b>闭合曲线</b></span><span>疏密 <b>表示强弱</b></span><span>方向 <b>小磁针 N 极指向</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 20：磁通量 ---------- */
+regDemo('demo-flux', {title:'磁通量 · Φ = BScosθ', chapter:'ch13', desc:'转动平面，观察穿过平面的磁感线条数（磁通量）变化：夹角 θ 越大，Φ = BS·cosθ 越小。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {theta:0, B:1, S:1, t:0};
+  addSlider(ctrl, {label:'平面法线与B的夹角 θ', min:0, max:90, step:1, val:0, unit:'°', on:v=>st.theta=v});
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.01;
+      const cx=W/2, cy=H/2;
+      const th = st.theta*Math.PI/180;
+      // 磁场线（水平向右）
+      ctx.strokeStyle='rgba(56,189,248,.5)'; ctx.lineWidth=1.6;
+      for(let y=70;y<H-60;y+=30){
+        ctx.beginPath(); ctx.moveTo(50,y); ctx.lineTo(W-50,y); ctx.stroke();
+      }
+      ctx.fillStyle='#7DD3FC'; ctx.font='bold 14px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('B', W-64, 52);
+      // 平面（法线旋转）
+      const half=86;
+      const nx=Math.sin(th), ny=Math.cos(th); // 法线方向
+      const px1=cx-half*ny, py1=cy-half*nx;
+      const px2=cx+half*ny, py2=cy+half*nx;
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=3.4;
+      ctx.beginPath(); ctx.moveTo(px1,py1); ctx.lineTo(px2,py2); ctx.stroke();
+      ctx.fillStyle='rgba(253,230,138,.18)';
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(px1,py1); ctx.lineTo(px2,py2); ctx.closePath(); ctx.fill();
+      // 法线箭头
+      const fx=cx+Math.sin(th)*110, fy=cy-Math.cos(th)*110;
+      ctx.strokeStyle='#F87171'; ctx.lineWidth=2.6;
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(fx,fy); ctx.stroke();
+      ctx.fillStyle='#F87171';
+      ctx.beginPath(); ctx.moveTo(fx,fy); ctx.lineTo(fx-8*Math.cos(th)-6*Math.sin(th), fy-8*Math.sin(th)+6*Math.cos(th));
+      ctx.lineTo(fx+6*Math.sin(th), fy-6*Math.cos(th)); ctx.lineTo(fx-8*Math.cos(th)+6*Math.sin(th), fy+8*Math.sin(th)+6*Math.cos(th));
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle='#F87171'; ctx.font='bold 14px sans-serif';
+      ctx.fillText('n（法线）', fx+12, fy-8);
+      // 角度标注
+      ctx.strokeStyle='#F87171'; ctx.lineWidth=1.4; ctx.setLineDash([3,3]);
+      ctx.beginPath(); ctx.arc(cx,cy,52, -th, 0); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#FDE68A'; ctx.font='13px sans-serif';
+      ctx.fillText(`θ=${st.theta}°`, cx+44, cy-34);
+      const flux = st.B*st.S*Math.cos(th);
+      setStat(this, `<span>Φ = BS·cosθ = <b>${flux.toFixed(2)} Wb</b></span><span>θ=0° <b>Φ最大</b></span><span>θ=90° <b>Φ=0</b></span><span>B = Φ/S：<b>磁感应强度</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 21：电磁感应 ---------- */
+regDemo('demo-induction2', {title:'电磁感应 · 磁通量变化产生感应电流', chapter:'ch13', desc:'拖动磁铁插入或拔出线圈，观察磁通量变化时电流表指针的偏转。磁通量不变时（磁铁静止）无感应电流。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {magX: 260, t:0, mode:'manual'};
+  addSlider(ctrl, {label:'磁铁位置', min:120, max:520, step:4, val:260, on:v=>st.magX=v});
+  addBtn(ctrl, '自动演示', ()=>{ st.mode='auto'; st.t=0; });
+  addBtn(ctrl, '手动模式', ()=>{ st.mode='manual'; });
+  const W = canvas.width, H = canvas.height;
+  const coilX=W*0.62, coilY=H/2;
+  const fluxOf = x => Math.exp(-Math.abs(x-coilX)/95); // 磁通量随距离近似
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.01;
+      if(st.mode==='auto') st.magX = coilX-170+Math.abs(Math.sin(st.t*1.2))*340;
+      const x = st.magX;
+      const flux = fluxOf(x);
+      const dFlux = Math.sin(st.t*1.2+Math.PI/2)*0.4; // 模拟变化率（自动）
+      const changing = st.mode==='auto' || Math.abs(x-coilX)<80 && Math.abs(x-st.prevX||x)>0;
+      // 磁铁
+      const magW=60, magH=56;
+      ctx.fillStyle='#DC2626';
+      ctx.beginPath(); ctx.roundRect(x-magW, coilY-magH/2, magW/2, magH, 6); ctx.fill();
+      ctx.fillStyle='#3B82F6';
+      ctx.beginPath(); ctx.roundRect(x-magW/2, coilY-magH/2, magW/2, magH, 6); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('N', x-magW*0.75, coilY+6); ctx.fillText('S', x-magW*0.25, coilY+6);
+      ctx.fillStyle='#C7D6EE'; ctx.font='12px sans-serif';
+      ctx.fillText('磁铁', x, coilY-magH/2-12);
+      // 磁感线（磁铁右侧到线圈）
+      ctx.strokeStyle='rgba(147,197,253,.55)'; ctx.lineWidth=1.6;
+      for(let i=-2;i<=2;i++){
+        ctx.beginPath();
+        ctx.moveTo(x+magW/2+4, coilY+i*14);
+        ctx.quadraticCurveTo(coilX-30, coilY+i*20, coilX-14, coilY+i*12);
+        ctx.stroke();
+      }
+      // 线圈
+      ctx.strokeStyle='#F59E0B'; ctx.lineWidth=4;
+      ctx.beginPath(); ctx.ellipse(coilX, coilY, 34, 58, 0, 0, 7); ctx.stroke();
+      // 电流表（右侧）
+      const gx=W-120, gy=coilY, gr=44;
+      ctx.fillStyle='#F8FAFC'; ctx.beginPath(); ctx.arc(gx,gy,gr,0,7); ctx.fill();
+      ctx.strokeStyle='#1E293B'; ctx.lineWidth=2.5; ctx.stroke();
+      const defl = changing? (st.mode==='auto'? dFlux*2 : Math.max(-1,Math.min(1,(st.magX-st.prevX||0))*0.03)) : 0;
+      const a = Math.PI*0.75 + (Math.PI*1.5)*(0.5+defl*0.16);
+      ctx.strokeStyle='#DC2626'; ctx.lineWidth=2.6;
+      ctx.beginPath(); ctx.moveTo(gx,gy); ctx.lineTo(gx+Math.cos(a)*30, gy+Math.sin(a)*30); ctx.stroke();
+      ctx.fillStyle='#1E293B'; ctx.font='bold 11px sans-serif';
+      ctx.fillText('A', gx-12, gy-10); ctx.fillText('0', gx+14, gy+12);
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif';
+      ctx.fillText('电流表', gx, gy+gr+20);
+      // 导线连接
+      ctx.strokeStyle='#64748B'; ctx.lineWidth=2.6;
+      ctx.beginPath(); ctx.moveTo(coilX-18, coilY+50); ctx.lineTo(gx-28, gy+44); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(coilX-18, coilY-50); ctx.lineTo(gx-28, gy-44); ctx.stroke();
+      // 磁通量条
+      ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(`磁通量 Φ = ${(flux*100).toFixed(0)}%`, (x+coilX)/2, coilY+92);
+      ctx.fillStyle='rgba(125,211,252,.25)';
+      ctx.beginPath(); ctx.roundRect(coilX-40, coilY+98, 80*flux, 10, 5); ctx.fill();
+      const induced = changing;
+      ctx.fillStyle=induced?'#34D399':'#64748B'; ctx.font='bold 13.5px sans-serif';
+      ctx.fillText(induced? '磁通量变化 → 产生感应电流':'磁通量不变 → 无感应电流', W/2, 42);
+      st.prevX = st.magX;
+      setStat(this, `<span>状态 <b>${induced?'有感应电流':'无感应电流'}</b></span><span>条件 <b>Φ 发生变化</b></span><span>磁通量 <b>${(flux*100).toFixed(0)}%</b></span><span>应用 <b>发电机</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 22：电磁波 ---------- */
+regDemo('demo-emwave', {title:'电磁波 · 变化的电场与磁场交替传播', chapter:'ch13', desc:'电磁波中电场 E 与磁场 B 互相垂直、同步变化，沿传播方向交替激发向前传播。调节频率观察波长变化（c=λf）。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {f:1, t:0};
+  addSlider(ctrl, {label:'频率 f（相对值）', min:0.4, max:2.4, step:0.1, val:1, on:v=>st.f=v});
+  const W = canvas.width, H = canvas.height;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.018;
+      const cyE=H*0.30, cyB=H*0.70;
+      const k = st.f*0.02;
+      const ph = st.t*2.2;
+      // 传播方向
+      ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('传播方向', W-70, 26);
+      ctx.strokeStyle='#93A7C8'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(W-220,22); ctx.lineTo(W-140,22); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(W-152,15); ctx.lineTo(W-140,22); ctx.lineTo(W-152,29); ctx.stroke();
+      // E 波（y方向，红色）
+      ctx.strokeStyle='#F87171'; ctx.lineWidth=3;
+      ctx.beginPath();
+      for(let x=0;x<W;x++){ const y=cyE+Math.sin(x*k-ph)*70; x===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }
+      ctx.stroke();
+      ctx.fillStyle='#F87171'; ctx.font='bold 15px sans-serif';
+      ctx.fillText('E（电场，竖直方向）', 70, cyE-92);
+      // B 波（z方向，蓝色）
+      ctx.strokeStyle='#38BDF8'; ctx.lineWidth=3;
+      ctx.beginPath();
+      for(let x=0;x<W;x++){ const y=cyB+Math.sin(x*k-ph)*70; x===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }
+      ctx.stroke();
+      ctx.fillStyle='#38BDF8'; ctx.font='bold 15px sans-serif';
+      ctx.fillText('B（磁场，垂直纸面）', 70, cyB+92);
+      // 波长标注
+      const lambda = 2*Math.PI/k;
+      ctx.strokeStyle='#FDE68A'; ctx.lineWidth=1.6; ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(80, cyE-120); ctx.lineTo(80+lambda, cyE-120); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#FDE68A'; ctx.font='13px sans-serif';
+      ctx.fillText(`λ = c/f`, 80+lambda/2-30, cyE-130);
+      // 同步点（E、B 同相位，垂直）
+      const xp = (ph/k)%W;
+      ctx.strokeStyle='rgba(253,230,138,.7)'; ctx.lineWidth=1.6; ctx.setLineDash([3,4]);
+      ctx.beginPath(); ctx.moveTo(xp,cyE-80); ctx.lineTo(xp,cyB+80); ctx.stroke(); ctx.setLineDash([]);
+      setStat(this, `<span>频率 f <b>${st.f.toFixed(1)}</b></span><span>波长 λ <b>${(lambda/40).toFixed(1)} 单位</b></span><span>c = λf <b>恒定 3×10⁸ m/s</b></span><span>E ⊥ B <b>同相变化</b></span><span>真空传播 <b>不需介质</b></span>`);
+    }
+  };
+});
+
+/* ---------- 演示 23：能级跃迁 ---------- */
+regDemo('demo-quantum', {title:'能量量子化 · 能级与跃迁', chapter:'ch13', desc:'原子能量是量子化的（能级分立）。电子在不同能级间跃迁时吸收或放出光子，光子能量等于能级差：hν = E高 − E低。'},
+function({el, canvas, ctrl}){
+  const ctx = canvas.getContext('2d');
+  const st = {t:0, from:3, to:1, auto:true};
+  addBtn(ctrl, '自动跃迁', ()=>{ st.auto=true; st.t=0; });
+  addBtn(ctrl, '手动：3→2', ()=>{ st.auto=false; st.jump(3,2); });
+  addBtn(ctrl, '手动：2→1', ()=>{ st.auto=false; st.jump(2,1); });
+  const W = canvas.width, H = canvas.height;
+  const levels=[{n:1,E:0,y:300},{n:2,E:5,y:230},{n:3,E:8,y:170},{n:4,E:10,y:120}];
+  let cur=3, photon=null, photons=[];
+  st.jump=(a,b)=>{ cur=a; photon={a,b,pr:0}; photons.push(photon); };
+  st.t=0;
+  return {
+    draw(){
+      ctx.clearRect(0,0,W,H);
+      st.t += 0.02;
+      if(st.auto){
+        const seq=[[3,1],[1,2],[2,3],[3,2],[2,1],[1,3]];
+        const idx = Math.floor(st.t*0.5)%seq.length;
+        const [a,b]=seq[idx];
+        if(!st._curSeq || st._curSeq[0]!==idx){ st._curSeq=[idx]; cur=a; photon={a,b,pr:0}; }
+      }
+      // 能级横线
+      levels.forEach(L=>{
+        ctx.strokeStyle = cur===L.n? '#FDE68A':'#7C8DB0'; ctx.lineWidth = cur===L.n?5:3;
+        ctx.beginPath(); ctx.moveTo(120,L.y); ctx.lineTo(W-160,L.y); ctx.stroke();
+        ctx.fillStyle='#C7D6EE'; ctx.font='bold 14px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(`n=${L.n}`, 92, L.y+5);
+        ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif';
+        ctx.fillText(`E=${L.E}（相对）`, W-150, L.y+5);
+      });
+      ctx.fillStyle='#93A7C8'; ctx.font='12px sans-serif';
+      ctx.fillText('能量', 44, 84);
+      // 电子
+      const L=levels.find(l=>l.n===cur);
+      const grad=ctx.createRadialGradient(W-260-4,L.y-4,3,W-260,L.y,13);
+      grad.addColorStop(0,'#fff'); grad.addColorStop(1,'#7DD3FC');
+      ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(W-260,L.y,13,0,7); ctx.fill();
+      // 光子（跃迁动画）
+      if(photon){
+        const a=levels.find(l=>l.n===photon.a), b=levels.find(l=>l.n===photon.b);
+        photon.pr += 0.03;
+        if(photon.pr>=1){ cur=photon.b; photon=null; }
+        else{
+          const yy = a.y+(b.y-a.y)*photon.pr;
+          const xx = W-260 + Math.sin(photon.pr*Math.PI)*160;
+          const color = b.y<a.y? '#FDE68A':'#38BDF8';
+          ctx.fillStyle=color;
+          ctx.beginPath(); ctx.arc(xx,yy,7,0,7); ctx.fill();
+          ctx.fillStyle='#C7D6EE'; ctx.font='12px sans-serif';
+          ctx.fillText(b.y<a.y? `放出光子 hν = E${photon.a}−E${photon.b}`:`吸收光子 hν = E${photon.b}−E${photon.a}`, W/2, 60);
+        }
+      }else{
+        ctx.fillStyle='#93A7C8'; ctx.font='12.5px sans-serif';
+        ctx.fillText('高能级 → 低能级：放出光子（发光）', W/2, 60);
+      }
+      setStat(this, `<span>能级 <b>分立不连续</b></span><span>能量子 ε = hν</span><span>跃迁放出 <b>hν = 能级差</b></span><span>光谱 <b>分立亮线</b></span>`);
+    }
+  };
+});
+/* ================= 工具函数 ================= */
+function $(s, r){ return (r||document).querySelector(s); }
+function $$(s, r){ return Array.from((r||document).querySelectorAll(s)); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function md(s){
+  return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`(.+?)`/g,'<i class="m">$1</i>');
+}
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2200); }
+const chColor = id => CH[id]? CH[id].color : '#64748B';
+const chNum = id => CH[id]? CH[id].num.replace('第','').replace('章','') : '';
+function secTitle(id){ return SECTIONS[id]? SECTIONS[id].title : id; }
+function demoCount(){ return Object.keys(DEMOS).length; }
+function pathSeg(id){
+  const s=SECTIONS[id]; if(!s) return '';
+  const c=CH[s.ch];
+  return `${c.num} · ${s.title}`;
+}
+
+/* ================= 路由 ================= */
+const ROUTES = { home:'home', learn:'learn', sim:'sim', quiz:'quiz', students:'students' };
+let currentRoute = null;
+function router(){
+  const h = location.hash.replace(/^#\//,'');
+  let [view, param] = h.split('/');
+  if(!ROUTES[view]) view='home';
+  if(view==='learn' && param && !SECTIONS[param]) param='';
+  stopAllDemos();
+  $$('.view').forEach(v=>v.classList.remove('on'));
+  $$('#nav a').forEach(a=>a.classList.toggle('on', a.dataset.nav===view));
+  const el = $('#view-'+view);
+  el.classList.add('on');
+  window.scrollTo({top:0, behavior:'auto'});
+  currentRoute={view,param};
+  if(view==='home') renderHome();
+  else if(view==='learn') renderLearn(param);
+  else if(view==='sim') renderSim(param);
+  else if(view==='quiz') renderQuiz(param);
+  else if(view==='students') renderStudents();
+}
+window.addEventListener('hashchange', router);
+
+/* ================= 首页 ================= */
+function renderHome(){
+  const host = $('#view-home');
+  const heroSim = () => `
+  <section class="hero">
+    <canvas id="hero-canvas" width="1240" height="430"></canvas>
+    <div class="hero-in">
+      <div class="kicker"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>人教版《普通高中教科书 物理 必修 第三册》</div>
+      <h1>电磁学 <span class="grad">知识学习平台</span></h1>
+      <p class="sub">五大章节 · ${Object.keys(SECTIONS).length} 个课时 · ${Object.keys(DEMOS).length} 个可操作动画演示 · 课后题库 · 学生学情追踪。从"电荷"到"能量量子化"，用一张有向知识图谱把必修三的整个体系串起来。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#/learn/s9-1">开始学习 · 电荷</a>
+        <a class="btn btn-ghost" href="#/sim">进入动画实验室</a>
+        <a class="btn btn-ghost" href="#/quiz">去题库闯关</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div><div class="n">5</div><div class="l">大章节</div></div>
+      <div><div class="n">${Object.keys(SECTIONS).length}</div><div class="l">个课时</div></div>
+      <div><div class="n">${demoCount()}</div><div class="l">动画演示</div></div>
+      <div><div class="n">${QUIZ.length}</div><div class="l">道课后题</div></div>
+    </div>
+  </section>`;
+  const chapters = ()=>`
+  <div class="section-title"><span class="bar" style="background:linear-gradient(180deg,#2563EB,#0891B2)"></span><h2>五章总览</h2><span class="more">点击进入章节学习</span></div>
+  <div class="ch-grid">
+    ${CH_ORDER.map(cid=>{
+      const c=CH[cid];
+      const secs=Object.keys(SECTIONS).filter(k=>SECTIONS[k].ch===cid).map(k=>({id:k, ...SECTIONS[k]}));
+      return `<div class="ch-card" data-jump="#/learn/${cid}" style="border-top:4px solid ${c.color}">
+        <span class="ch-num" style="color:${c.color}">${c.num}</span>
+        <span class="go" style="background:${c.color}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <h3>${c.name}</h3>
+        <div class="secs">${secs.map(s=>s.title).join('<br>')}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+  const modules = ()=>`
+  <div class="section-title"><span class="bar" style="background:var(--c10)"></span><h2>四大功能模块</h2></div>
+  <div class="mod-grid">
+    <div class="mod-card" data-jump="#/learn">
+      <div class="mod-ico" style="background:linear-gradient(135deg,#2563EB,#3B82F6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h10M4 19h16"/><circle cx="19" cy="12" r="2.4"/></svg></div>
+      <div><h4>章节学习</h4><p>${Object.keys(SECTIONS).length} 个课时按"学习目标 → 知识精讲 → 典型例题 → 动画演示 → 本节小结"组织，上课、自学两相宜。</p></div>
+    </div>
+    <div class="mod-card" data-jump="#/sim">
+      <div class="mod-ico" style="background:linear-gradient(135deg,#7C3AED,#A78BFA)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <div><h4>动画实验室</h4><p>电场线、库仑定律、电容器充放电、电磁感应、电磁波……全部可操作、可调节参数，直观理解物理过程。</p></div>
+    </div>
+    <div class="mod-card" data-jump="#/quiz">
+      <div class="mod-ico" style="background:linear-gradient(135deg,#EA580C,#F59E0B)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke-width="3.4"/></svg></div>
+      <div><h4>课后题库</h4><p>收录教材"练习与应用"经典题，按章多选筛选，带答案与解析，随练随改。</p></div>
+    </div>
+    <div class="mod-card" data-jump="#/students">
+      <div class="mod-ico" style="background:linear-gradient(135deg,#059669,#34D399)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.4"/><path d="M2.5 20c.8-3.4 3.4-5.2 6.5-5.2s5.7 1.8 6.5 5.2"/><circle cx="17.5" cy="9.5" r="2.6"/><path d="M16.5 14.6c2.6.3 4.4 1.9 5 4.4"/></svg></div>
+      <div><h4>学生学情</h4><p>上传学生名单，记录错题，自动换算各章知识点掌握度，形成班级学情热力图。</p></div>
+    </div>
+    <div class="mod-card" data-jump="#/home">
+      <div class="mod-ico" style="background:linear-gradient(135deg,#0891B2,#06B6D4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5M4 12h16M20 19V5"/><circle cx="8" cy="12" r="1.6"/><circle cx="14" cy="12" r="1.6"/></svg></div>
+      <div><h4>知识图谱</h4><p>用有向图呈现章节与知识点之间的前置依赖关系，点击任意节点直达对应内容。</p></div>
+    </div>
+  </div>`;
+  const graph = ()=>`
+  <div class="section-title"><span class="bar" style="background:linear-gradient(180deg,#F59E0B,#EC4899)"></span><h2>知识体系 · 有向图</h2><span class="more">拖动平移 · 滚轮缩放 · 点击节点跳转</span></div>
+  <div class="graph-card">
+    <div class="graph-toolbar">
+      <div class="g-switch" id="g-mode">
+        <button class="on" data-gmode="all">完整图谱</button>
+        <button data-gmode="sections">仅章节</button>
+      </div>
+      <div class="g-switch" id="g-edge-mode">
+        <button class="on" data-gmode2="all">显示依赖</button>
+        <button data-gmode2="tree">仅章节树</button>
+      </div>
+      <div class="g-switch" id="g-path">
+        <button data-gpath="off">学习路径</button>
+        <button data-gpath="on">标出学习路径</button>
+      </div>
+      <div class="g-legend" id="g-legend"></div>
+    </div>
+    <div class="graph-box" id="graph-box">
+      <svg id="graph-svg" viewBox="0 0 1200 640"></svg>
+      <span class="g-hint">🖱 滚轮缩放 · 拖动平移</span>
+      <div class="g-path" id="g-pathbox"></div>
+    </div>
+  </div>`;
+  host.innerHTML = heroSim()+chapters()+modules()+graph();
+  $$('.ch-card,.mod-card', host).forEach(el=>{
+    el.addEventListener('click', ()=> location.hash = el.dataset.jump);
+  });
+  heroCanvas();
+  renderGraph();
+  bindGraphControls();
+}
+
+/* ---------- hero 动画（电场线） ---------- */
+function heroCanvas(){
+  const cv=$('#hero-canvas'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width, H=cv.height;
+  const charges=[{x:W*0.82,y:H*0.62,q:1},{x:W*0.66,y:H*0.36,q:-1}];
+  const field=(x,y)=>{
+    let Ex=0,Ey=0;
+    charges.forEach(c=>{const dx=x-c.x,dy=y-c.y,r=Math.sqrt(dx*dx+dy*dy+8); Ex+=c.q*dx/(r*r*r); Ey+=c.q*dy/(r*r*r);});
+    return {x:Ex,y:Ey};
+  };
+  const particles=[];
+  for(let i=0;i<46;i++){ particles.push({x:Math.random()*W,y:Math.random()*H}); }
+  let t=0;
+  const draw=()=>{
+    t+=0.016;
+    ctx.clearRect(0,0,W,H);
+    // 电场线（静态底层，淡）
+    ctx.strokeStyle='rgba(125,211,252,.14)'; ctx.lineWidth=1.2;
+    for(let i=0;i<26;i++){
+      const a=i/26*Math.PI*2;
+      let x=charges[0].x+Math.cos(a)*6, y=charges[0].y+Math.sin(a)*6;
+      ctx.beginPath(); ctx.moveTo(x,y);
+      for(let s=0;s<40;s++){
+        const f=field(x,y),m=Math.sqrt(f.x*f.x+f.y*f.y)||1;
+        x+=f.x/m*10; y+=f.y/m*10;
+        if(x<0||x>W||y<0||y>H)break;
+        ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    }
+    // 电荷
+    charges.forEach(c=>{
+      const g=ctx.createRadialGradient(c.x-3,c.y-3,2,c.x,c.y,26);
+      g.addColorStop(0,'rgba(255,255,255,.95)'); g.addColorStop(1, c.q>0?'rgba(248,113,113,.75)':'rgba(56,189,248,.75)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(c.x,c.y,26,0,7); ctx.fill();
+      ctx.fillStyle='#0F1E4D'; ctx.font='bold 20px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(c.q>0?'+':'−', c.x, c.y+7);
+    });
+    // 粒子沿场漂移
+    particles.forEach(p=>{
+      const f=field(p.x,p.y),m=Math.sqrt(f.x*f.x+f.y*f.y)||1;
+      p.x+=f.x/m*1.4; p.y+=f.y/m*1.4;
+      if(p.x<0||p.x>W||p.y<0||p.y>H){ p.x=Math.random()*W; p.y=Math.random()*H; }
+      ctx.fillStyle='rgba(221,234,254,.5)';
+      ctx.beginPath(); ctx.arc(p.x,p.y,1.6,0,7); ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  };
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches) draw();
+  else { draw(); cancelAnimationFrame(draw); }
+}
+
+/* ---------- 知识图谱（SVG 有向图） ---------- */
+const graphState = {concepts:false, edges:'all', path:false};
+function graphLayout(){
+  const nodes = KG.nodes;
+  const W=1200;
+  const pos={};
+  const root=nodes.find(n=>n.type==='root');
+  pos.root={x:W/2,y:46};
+  const chs=CH_ORDER;
+  const colW=W/(chs.length+1);
+  chs.forEach((cid,i)=>{
+    pos[cid] = {x:colW*(i+1), y:150};
+  });
+  // 章节→小节
+  const secsByCh={};
+  nodes.filter(n=>n.type==='section').forEach(s=>{ (secsByCh[s.chapter]=secsByCh[s.chapter]||[]).push(s); });
+  Object.keys(secsByCh).forEach(cid=>{
+    const list=secsByCh[cid];
+    const ci=CH_ORDER.indexOf(cid);
+    const cx=colW*(ci+1);
+    list.forEach((s,si)=>{
+      const offset=(si-(list.length-1)/2)*64;
+      pos[s.id]={x:cx+offset, y:300+si*118};
+    });
+  });
+  // 概念
+  const concepts=nodes.filter(n=>n.type==='concept');
+  const conBySec={};
+  concepts.forEach(c=>{ (conBySec[c.section]=conBySec[c.section]||[]).push(c); });
+  Object.keys(conBySec).forEach(sid=>{
+    const list=conBySec[sid], base=pos[sid];
+    if(!base) return;
+    const rowW=Math.min(list.length*150, 460);
+    list.forEach((c,ci)=>{
+      const per=list.length>4?120:150;
+      pos[c.id]={x:base.x-(list.length-1)*per/2+ci*per, y:base.y+84};
+    });
+  });
+  return {pos, W, H: 640};
+}
+function renderGraph(){
+  const svg=$('#graph-svg'); if(!svg) return;
+  const {pos,W}=graphLayout();
+  const nodes=KG.nodes.filter(n=> graphState.concepts || n.type!=='concept');
+  const showPrereq = graphState.edges==='all';
+  const showPath = graphState.path;
+  // 拓扑顺序（教材顺序）
+  const order=['s9-1','s9-2','s9-3','s9-4','s10-1','s10-2','s10-3','s10-4','s10-5','s11-1','s11-2','s11-3','s11-4','s11-5','s12-1','s12-2','s12-3','s12-4','s13-1','s13-2','s13-3','s13-4','s13-5'];
+  const orderIdx={}; order.forEach((s,i)=>orderIdx[s]=i);
+  let maxY=150;
+  Object.values(pos).forEach(p=>maxY=Math.max(maxY,p.y));
+  const H=Math.max(640, maxY+160);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  // 图例
+  $('#g-legend').innerHTML = CH_ORDER.map(c=>`<span class="lg"><i style="background:${CH[c].color}"></i>${CH[c].num.replace('第','').replace('章','')}</span>`).join('')+
+    `<span class="lg"><i style="background:#475569"></i>前置依赖（虚线）</span>`;
+  // 学习路径框
+  const pb=$('#g-pathbox');
+  if(showPath){ pb.innerHTML = `<b>推荐学习路径：</b>`+order.map((s,i)=>`<span>${i+1}.${SECTIONS[s].title}</span>`).join(' → '); }
+  else pb.innerHTML='';
+  // 边：章节树
+  let edgesHtml='';
+  // root→chapter
+  CH_ORDER.forEach((cid,i)=>{
+    const p=pos[cid];
+    edgesHtml += `<path class="g-edge" d="M${pos.root.x},${pos.root.y+16} C${pos.root.x},${110} ${p.x},${110} ${p.x},${p.y-24}"/>`;
+  });
+  // chapter→section
+  nodes.filter(n=>n.type==='section').forEach(s=>{
+    const p=pos[s.id], c=pos[s.chapter];
+    edgesHtml += `<path class="g-edge" d="M${c.x},${c.y+26} C${c.x},${c.y+70} ${p.x},${p.y-60} ${p.x},${p.y-24}"/>`;
+  });
+  // section→concept
+  if(graphState.concepts){
+    nodes.filter(n=>n.type==='concept').forEach(c=>{
+      const p=pos[c.id], s=pos[c.section];
+      if(!p||!s) return;
+      edgesHtml += `<path class="g-edge" d="M${s.x},${s.y+14} L${p.x},${p.y-14}" stroke="#C9D6EC"/>`;
+    });
+  }
+  // 前置依赖边（有向曲线）
+  if(showPrereq){
+    KG.prereq.forEach(([a,b],i)=>{
+      const pa=pos[a], pb2=pos[b];
+      if(!pa||!pb2) return;
+      const dx=pb2.x-pa.x, dy=pb2.y-pa.y;
+      const mx=(pa.x+pb2.x)/2, my=(pa.y+pb2.y)/2;
+      const c1x=pa.x+dx*0.35, c1y=pa.y+dy*0.35+ (dx===0? -70: -36);
+      const c2x=pb2.x-dx*0.35, c2y=pb2.y-dy*0.35+ (dx===0? -70: -36);
+      edgesHtml += `<path class="g-edge prereq" d="M${pa.x},${pa.y+16} C${c1x},${c1y} ${c2x},${c2y} ${pb2.x},${pb2.y-20}"/>
+      <polygon class="g-edge" points="${pb2.x-7},${pb2.y-26} ${pb2.x+7},${pb2.y-26} ${pb2.x},${pb2.y-12}" fill="#94A3B8"/>`;
+    });
+  }
+  // 节点
+  let nodesHtml='';
+  const nodeMeta = n=>{
+    if(n.type==='root') return {w:130,h:44,r:22, fill:'#0F1E4D', stroke:'#0F1E4D', text:'#fff', fs:16};
+    if(n.type==='chapter'){ const c=CH[n.chapter]; return {w:150,h:52,r:26, fill:'#fff', stroke:c.color, text:'#17233D', fs:15, sw:2.6}; }
+    if(n.type==='section'){ const c=CH[n.chapter]; return {w:150,h:56,r:28, fill:'#fff', stroke:c.color, text:'#17233D', fs:13.5, sw:2}; }
+    const c=CH[n.chapter]; return {w:132,h:40,r:20, fill:'#F5F7FB', stroke:'#C9D6EC', text:'#3D4C66', fs:11.5, sw:1.4};
+  };
+  nodes.forEach(n=>{
+    const p=pos[n.id]; if(!p) return;
+    const m=nodeMeta(n);
+    const x=p.x-m.w/2, y=p.y-m.h/2;
+    const isPath = showPath && n.type==='section' && orderIdx[n.id]!==undefined;
+    const badge = isPath? `<circle cx="${p.x+m.w/2-14}" cy="${p.y-m.h/2+14}" r="10" fill="#F59E0B"/><text x="${p.x+m.w/2-14}" y="${p.y-m.h/2+17.5}" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">${orderIdx[n.id]+1}</text>`:'';
+    const sub = n.sub? `<text class="nsub" x="${p.x}" y="${p.y+m.h/2-7}">${esc(n.sub)}</text>`:'';
+    nodesHtml += `<g class="g-node ${n.type}" data-id="${n.id}" data-jump="${n.type==='root'?'#/home':n.type==='chapter'?'#/learn/'+n.chapter:'#/learn/'+(n.type==='section'?n.id:n.section)}" data-type="${n.type}" style="cursor:pointer">
+      <rect class="chip" x="${x}" y="${y}" width="${m.w}" height="${m.h}" rx="${m.r}" fill="${m.fill}" stroke="${m.stroke}" stroke-width="${m.sw||1.6}"/>
+      ${badge}
+      <text class="nname" x="${p.x}" y="${p.y+(sub? 2:6)}" font-size="${m.fs}" font-weight="700" fill="${m.text}">${esc(n.name)}</text>
+      ${sub}
+    </g>`;
+  });
+  svg.innerHTML = `<defs><linearGradient id="ggrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0891B2"/></linearGradient></defs>`+edgesHtml+nodesHtml;
+  // 交互
+  $$('.g-node', svg).forEach(g=>{
+    g.addEventListener('click', e=>{ e.stopPropagation(); location.hash = g.dataset.jump; });
+  });
+  // 平移缩放
+  const box=$('#graph-box');
+  let tx=0, ty=0, scale=1;
+  const apply=()=>{ svg.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`; svg.style.transformOrigin='0 0'; };
+  let drag=null;
+  svg.addEventListener('mousedown', e=>{ drag={x:e.clientX-tx,y:e.clientY-ty}; });
+  window.addEventListener('mousemove', e=>{ if(drag){ tx=e.clientX-drag.x; ty=e.clientY-drag.y; apply(); } });
+  window.addEventListener('mouseup', ()=>drag=null);
+  box.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const d = e.deltaY<0?1.1:0.9;
+    scale=Math.max(0.45, Math.min(2.4, scale*d));
+    apply();
+  }, {passive:false});
+}
+function bindGraphControls(){
+  const gm=$('#g-mode');
+  if(gm) $$('button', gm).forEach(b=>b.addEventListener('click', ()=>{
+    $$('button', gm).forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    graphState.concepts = b.dataset.gmode==='all';
+    renderGraph();
+  }));
+  const ge=$('#g-edge-mode');
+  if(ge) $$('button', ge).forEach(b=>b.addEventListener('click', ()=>{
+    $$('button', ge).forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    graphState.edges = b.dataset.gmode2;
+    renderGraph();
+  }));
+  const gp=$('#g-path');
+  if(gp) $$('button', gp).forEach(b=>b.addEventListener('click', ()=>{
+    $$('button', gp).forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    graphState.path = b.dataset.gpath==='on';
+    renderGraph();
+  }));
+}
+/* ================= 章节学习 ================= */
+function renderLearn(param){
+  const host = $('#view-learn');
+  if(param && SECTIONS[param]){ renderSection(host, param); return; }
+  // 章节列表页
+  host.innerHTML = `
+    <a class="back-link" href="#/home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>返回首页</a>
+    <div class="section-title"><span class="bar" style="background:var(--c9)"></span><h2>章节学习</h2><span class="more">共 5 章 · ${Object.keys(SECTIONS).length} 节，点击任意一节开始</span></div>
+    ${CH_ORDER.map(cid=>{
+      const c=CH[cid], secs=Object.keys(SECTIONS).filter(k=>SECTIONS[k].ch===cid).map(k=>({id:k, ...SECTIONS[k]}));
+      return `<div class="learn-head" style="background:linear-gradient(120deg, ${c.color}, ${c.color}cc)">
+        <div class="crumb">${c.num}</div><h2>${c.name}</h2><div class="tagline">${c.tagline}</div><div class="ln">${c.num.replace('第','').replace('章','')}</div>
+      </div>
+      <div class="ch-grid" style="margin-bottom:18px">
+        ${secs.map(s=>`<div class="ch-card" data-jump="#/learn/${s.id}" style="border-top:4px solid ${c.color}">
+          <span class="ch-num" style="color:${c.color}">${s.slug}</span>
+          <h3>${s.title}</h3>
+          <div class="secs">${(s.goals||[]).slice(0,2).join('；')}</div>
+          <span class="go" style="background:${c.color}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>`).join('')}
+      </div>`;
+    }).join('')}`;
+  $$('[data-jump]', host).forEach(el=>el.addEventListener('click', ()=> location.hash = el.dataset.jump));
+}
+function renderBlocks(blocks){
+  let html='', idx=0, listOpen=false;
+  const flushList=()=>{ if(listOpen){ html+='</div>'; listOpen=false; } };
+  blocks.forEach(b=>{
+    if(b.startsWith('## ')){
+      flushList(); idx++;
+      html += `<h3 class="mod-title"><span class="idx">${idx}</span>${esc(b.slice(3))}</h3>`;
+    }else if(b.startsWith('> ')){
+      flushList(); html += `<div class="note">${md(b.slice(2))}</div>`;
+    }else if(b.startsWith('$$')){
+      flushList();
+      const mm = b.match(/^\$\$\s*(.*?)：/);
+      const body = mm? b.slice(b.indexOf('：')+1) : b.slice(2);
+      html += `<div class="formula">${mm?`<span class="tag">${esc(mm[1])}</span>`:''}${md(body)}</div>`;
+    }else if(b.startsWith('例 ')){
+      flushList(); html += `<div class="ex-title">例题 ${esc(b.slice(2))}</div>`;
+    }else if(b.startsWith('答 ')){
+      flushList(); html += `<div class="ex-solve">${md(b.slice(2))}</div>`;
+    }else if(b.startsWith('!demo:')){
+      flushList(); html += `<div class="demo-slot" data-demo="${b.slice(6)}"></div>`;
+    }else if(b.startsWith('!quiz:')){
+      flushList(); html += `<button class="qlink btn btn-soft" data-quiz="${b.slice(6)}" style="margin:8px 0">${ICO.quiz}打开本章课后题库</button>`;
+    }else if(b.startsWith('- ')){
+      if(!listOpen){ html+='<div class="klist">'; listOpen=true; }
+      html += `<p class="li">${md(b.slice(2))}</p>`;
+    }else{
+      flushList(); html += `<p>${md(b)}</p>`;
+    }
+  });
+  flushList();
+  return html;
+}
+function renderSection(host, sid){
+  const s = SECTIONS[sid], c = CH[s.ch];
+  const secs = Object.keys(SECTIONS).filter(k=>SECTIONS[k].ch===s.ch).map(k=>({id:k, ...SECTIONS[k]}));
+  const curIdx = secs.findIndex(x=>x.id===sid);
+  const prev = curIdx>0? secs[curIdx-1] : null;
+  const next = curIdx<secs.length-1? secs[curIdx+1] : null;
+  host.innerHTML = `
+    <a class="back-link" href="#/learn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>返回${c.num}</a>
+    <div class="learn-head" style="background:linear-gradient(120deg, ${c.color}, ${c.color}b3)">
+      <div class="crumb">${c.num} · ${c.name}</div>
+      <h2>${s.slug} ${s.title}</h2>
+      <div class="tagline">${c.tagline}</div>
+      <div class="ln">${s.slug.split('.')[1]}</div>
+    </div>
+    <div class="learn-grid">
+      <div class="learn-main">${renderBlocks(s.blocks)}</div>
+      <div class="learn-side">
+        <div class="goal-card">
+          <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg>本节学习目标</h4>
+          <ol>${(s.goals||[]).map(g=>`<li>${esc(g)}</li>`).join('')}</ol>
+        </div>
+        <div class="side-nav">
+          <h4>${c.num} · 本节导航</h4>
+          ${secs.map(x=>`<a href="#/learn/${x.id}" class="${x.id===sid?'on':''}"><span class="dot" style="background:${x.id===sid?c.color:'#C3CFE3'}"></span>${x.slug} ${x.title}</a>`).join('')}
+        </div>
+        ${prev?`<a class="btn btn-soft" href="#/learn/${prev.id}">← 上一节：${prev.title}</a>`:''}
+        ${next?`<a class="btn btn-solid" style="background:${c.color}" href="#/learn/${next.id}">下一节：${next.title} →</a>`:''}
+      </div>
+    </div>`;
+  // 挂载演示
+  $$('.demo-slot', host).forEach(slot=>{
+    const id=slot.dataset.demo;
+    if(DEMOS[id]) renderDemo(id, slot);
+    else slot.innerHTML='';
+  });
+  $$('[data-quiz]', host).forEach(b=>b.addEventListener('click', ()=> location.hash='#/quiz/'+b.dataset.quiz));
+}
+
+/* ================= 动画实验室 ================= */
+function renderSim(param){
+  const host = $('#view-sim');
+  const list = Object.values(DEMOS);
+  const detail = param && DEMOS[param]? DEMOS[param] : null;
+  const open = detail? `
+    <div class="sim-detail">
+      <h3><span class="sim-tag" style="background:${chColor(detail.chapter)}">${chNum(detail.chapter)}</span>${detail.title}</h3>
+      <div class="sim-desc">${detail.desc}</div>
+      <div class="demo-host"></div>
+    </div>` : '';
+  host.innerHTML = `
+    <a class="back-link" href="#/home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>返回首页</a>
+    ${open}
+    <div class="section-title"><span class="bar" style="background:linear-gradient(180deg,#7C3AED,#06B6D4)"></span><h2>${detail? '全部演示' : '动画实验室'}</h2><span class="more">${list.length} 个可操作演示 · 点击进入</span></div>
+    <div class="sim-grid">
+      ${list.map(d=>`<div class="sim-card" data-jump="#/sim/${d.id}">
+        <div class="sim-thumb" data-thumb="${d.id}"></div>
+        <div class="sim-body">
+          <span class="sim-tag" style="background:${chColor(d.chapter)}">${chNum(d.chapter)}</span>
+          <h4>${d.title}</h4>
+          <p>${d.desc}</p>
+        </div>
+      </div>`).join('')}
+    </div>`;
+  $$('[data-jump]', host).forEach(el=>el.addEventListener('click', ()=> location.hash = el.dataset.jump));
+  // 缩略图（单帧静态）
+  $$('[data-thumb]', host).forEach(th=>{
+    const id=th.dataset.thumb, d=DEMOS[id]; if(!d) return;
+    const cv=document.createElement('canvas'); cv.width=460; cv.height=150; th.appendChild(cv);
+    const ctrl=document.createElement('div');
+    const api=Object.assign({el:{querySelector:()=>null}, canvas:cv, ctrl, ctx:cv.getContext('2d'), paused:false}, d.setup({el:{querySelector:()=>null}, canvas:cv, ctrl}));
+    try{ api.draw && api.draw.call(api); }catch(e){}
+  });
+  if(detail){
+    const hostEl=$('.demo-host', host);
+    renderDemo(detail.id, hostEl);
+  }
+}
+
+/* ================= 题库 ================= */
+let quizState = {chs:[], types:[], kw:'', shuffle:false, shown:new Set()};
+function renderQuiz(preFilter){
+  if(preFilter) quizState.chs = [preFilter];
+  const host = $('#view-quiz');
+  const chsActive = quizState.chs;
+  const filtered = QUIZ.filter(q=>{
+    if(chsActive.length && !chsActive.includes(q.ch)) return false;
+    if(quizState.types.length && !quizState.types.includes(q.type)) return false;
+    if(quizState.kw){ const t=q.stem+q.ans; if(!t.includes(quizState.kw)) return false; }
+    return true;
+  });
+  const shown = quizState.shuffle? [...filtered].sort(()=>Math.random()-0.5) : filtered;
+  host.innerHTML = `
+    <div class="section-title"><span class="bar" style="background:var(--c11)"></span><h2>课后题库</h2><span class="more">教材练习与应用精选 ${QUIZ.length} 题</span></div>
+    <div class="quiz-toolbar">
+      <div class="row">
+        <span class="lbl">章节</span>
+        ${CH_ORDER.map(c=>`<button class="q-chip ${chsActive.includes(c)?'on '+c:''}" data-ch="${c}" style="${chsActive.includes(c)?'border-color:'+CH[c].color:''}">${CH[c].num.replace('第','').replace('章','')} ${CH[c].name}</button>`).join('')}
+        <span class="q-count">已选 ${filtered.length} 题</span>
+      </div>
+      <div class="row">
+        <span class="lbl">题型</span>
+        ${['计算','概念','选择'].map(t=>`<button class="q-chip ${quizState.types.includes(t)?'on':''}" data-type="${t}">${t}题</button>`).join('')}
+        <input type="search" id="q-kw" placeholder="搜索关键词…" value="${esc(quizState.kw)}" style="margin-left:auto;border:1px solid var(--line);border-radius:99px;padding:6px 16px;font-size:13px;width:170px">
+        <button class="q-chip q-shuffle ${quizState.shuffle?'on':''}" id="q-shuf">随机顺序</button>
+      </div>
+    </div>
+    <div id="q-list">${shown.length? shown.map((q,i)=>quizItemHTML(q,i)).join('') : `<div class="q-empty">没有符合条件的题目，试试放宽筛选条件</div>`}</div>`;
+  // 章节筛选（多选）
+  $$('[data-ch]', host).forEach(b=>b.addEventListener('click', ()=>{
+    const c=b.dataset.ch;
+    const i=quizState.chs.indexOf(c);
+    if(i>=0) quizState.chs.splice(i,1); else quizState.chs.push(c);
+    renderQuiz();
+  }));
+  $$('[data-type]', host).forEach(b=>b.addEventListener('click', ()=>{
+    const t=b.dataset.type;
+    const i=quizState.types.indexOf(t);
+    if(i>=0) quizState.types.splice(i,1); else quizState.types.push(t);
+    renderQuiz();
+  }));
+  const kw=$('#q-kw', host); if(kw) kw.addEventListener('input', ()=>{ quizState.kw=kw.value.trim(); renderQuiz(); });
+  const sh=$('#q-shuf', host); if(sh) sh.addEventListener('click', ()=>{ quizState.shuffle=!quizState.shuffle; renderQuiz(); });
+  $$('.q-ans-btn', host).forEach(b=>b.addEventListener('click', ()=>{
+    const box=document.getElementById(b.dataset.for);
+    const show=box.classList.toggle('show');
+    b.innerHTML = show? '收起答案':'查看答案与解析';
+  }));
+  $$('[data-addwrong]', host).forEach(b=>b.addEventListener('click', ()=>{
+    addWrongGlobal(b.dataset.addwrong);
+  }));
+}
+function quizItemHTML(q, i){
+  const c=CH[q.ch];
+  const opts = q.opts? `<div class="q-opts">${q.opts.map(o=>`<div>${o}. ${esc((q['opt'+o]) || (q.optsText&&q.optsText[o]) || '')}</div>`).join('')}</div>`:'';
+  return `<div class="q-item">
+    <div class="q-meta">
+      <span class="q-tag" style="background:${c.color}">${c.num}</span>
+      <span class="q-tag" style="background:${c.color}aa">${SECTIONS[q.sec].slug} ${secTitle(q.sec)}</span>
+      <span class="q-type">${q.type}题</span>
+      <span class="q-qnum">第 ${i+1} 题</span>
+      <span style="margin-left:auto"><button class="q-chip" data-addwrong="${q.id}" style="padding:3px 10px;font-size:11.5px">标记为错题</button></span>
+    </div>
+    <div class="q-stem">${md(q.stem)}</div>
+    ${opts}
+    <button class="q-ans-btn" data-for="qans-${q.id}">查看答案与解析</button>
+    <div class="q-ans" id="qans-${q.id}">
+      <div><span class="ans-lbl">答案：</span>${md(q.ans)}</div>
+      <div style="margin-top:6px"><span class="ans-lbl" style="color:var(--warn)">解析：</span>${md(q.ana||'')}</div>
+    </div>
+  </div>`;
+}
+
+/* ================= 学生学情 ================= */
+const STORE_KEY='phy_b3_students_v1';
+function loadStudents(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY))||[]; }catch(e){ return []; } }
+function saveStudents(list){ localStorage.setItem(STORE_KEY, JSON.stringify(list)); }
+function defaultStudents(){
+  return [
+    {name:'示例：李明', wrongs:['q903','q1103','q1204','q1305'], manual:{}},
+    {name:'示例：王芳', wrongs:['q905','q1008','q1306'], manual:{}}
+  ];
+}
+let stuState = {list: loadStudents(), sel: null, filterCh: null};
+function masteryFor(stu, ch){
+  const qs=QUIZ.filter(q=>q.ch===ch);
+  if(!qs.length) return 0;
+  let wrong=0;
+  qs.forEach(q=>{ if(stu.wrongs.includes(q.id)) wrong++; });
+  let score = Math.max(0, 100 - wrong/qs.length*100);
+  const m=stu.manual&&stu.manual[ch];
+  if(m!==undefined) score = Math.round((score+m)/2);
+  return Math.round(score);
+}
+function renderStudents(){
+  const host = $('#view-students');
+  const list = stuState.list;
+  const sel = list.find(s=>s.name===stuState.sel) || list[0] || null;
+  if(!list.length){
+    host.innerHTML = `
+    <div class="section-title"><span class="bar" style="background:var(--c12)"></span><h2>学生学情 · 错题与掌握度</h2></div>
+    <div class="stu-grid">
+      <div class="panel">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5l8 4-8 4-8-4 8-4z"/><path d="M4 13l8 4 8-4"/></svg>导入学生名单</h3>
+        <div class="drop-zone" id="stu-drop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg><div>点击选择名单文件（.csv / .txt），或粘贴名单</div></div>
+        <textarea id="stu-paste" rows="4" placeholder="每行一个姓名，例如：&#10;张三&#10;李四&#10;王五&#10;&#10;也支持“姓名,学号”格式" style="width:100%;margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;font-family:inherit"></textarea>
+        <div class="stu-actions">
+          <button class="btn btn-solid" id="stu-parse">导入名单</button>
+          <button class="btn btn-soft" id="stu-sample">载入示例数据</button>
+        </div>
+        <div class="tpl">格式说明：<br><code>张三</code> 或 <code>张三,2025001</code><br>一行一名学生，也可含学号</div>
+      </div>
+      <div class="panel">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.4"/><path d="M2.5 20c.8-3.4 3.4-5.2 6.5-5.2s5.7 1.8 6.5 5.2"/></svg>名单为空</h3>
+        <div class="empty-tip">导入学生名单后，可在此记录每位同学的错题，并自动统计各章知识点掌握程度。</div>
+      </div>
+    </div>`;
+    bindStudentActions(host);
+    return;
+  }
+  host.innerHTML = `
+    <div class="section-title"><span class="bar" style="background:var(--c12)"></span><h2>学生学情 · 错题与掌握度</h2><span class="more">数据仅保存在本机浏览器</span></div>
+    <div class="stu-grid">
+      <div class="panel">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>学生名单（${list.length}人）</h3>
+        <div class="stu-actions" style="margin-bottom:12px">
+          <button class="btn btn-soft" id="stu-addmore">添加/导入更多</button>
+          <button class="btn btn-soft" id="stu-clear">清空名单</button>
+        </div>
+        <div id="stu-list">${list.map(s=>`
+          <div class="stu-card ${s.name===sel.name?'on':''}" data-stu="${esc(s.name)}">
+            <div class="stu-avatar" style="background:${chColor(list.indexOf(s)%5===0?'ch9':list.indexOf(s)%5===1?'ch10':list.indexOf(s)%5===2?'ch11':list.indexOf(s)%5===3?'ch12':'ch13')}">${esc(s.name.charAt(0))}</div>
+            <div><div class="nm">${esc(s.name)}</div><div class="sub">错题 ${s.wrongs.length} 题 · 平均掌握度 ${Math.round(CH_ORDER.reduce((a,c)=>a+masteryFor(s,c),0)/5)}%</div></div>
+          </div>`).join('')}</div>
+      </div>
+      <div class="panel">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg>${esc(sel.name)} 的学情报告</h3>
+        <div class="master-grid">
+          ${CH_ORDER.map(c=>{
+            const m=masteryFor(sel,c), color=m>=80?'#16A34A':m>=60?'#D97706':'#DC2626';
+            return `<div class="m-cell">
+              <div class="m-ch" style="color:${CH[c].color}">${CH[c].num.replace('第','').replace('章','')} ${CH[c].name.slice(0,6)}</div>
+              <div class="m-val" style="color:${color}">${m}%</div>
+              <div class="m-bar"><i style="width:${m}%;background:${color}"></i></div>
+              <div class="m-note">${m>=80?'掌握良好':m>=60?'有待加强':'重点复习'}</div>
+            </div>`;
+          }).join('')}
+        </div>
+        <h3 style="margin-top:18px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.6"/></svg>错题记录（${sel.wrongs.length} 题）</h3>
+        <div class="wrong-list">
+          ${sel.wrongs.length? sel.wrongs.map(qid=>{
+            const q=QUIZ.find(x=>x.id===qid); if(!q) return '';
+            const c=CH[q.ch];
+            return `<div class="wrong-item"><span class="q-tag" style="background:${c.color}">${c.num}</span><span style="flex:1">${md(q.stem.slice(0,46))}${q.stem.length>46?'…':''}</span><button class="w-del" data-del="${qid}">✕</button></div>`;
+          }).join('') : '<div class="empty-tip">暂无错题记录。可在题库中点击"标记为错题"，或手动添加。</div>'}
+        </div>
+        <div class="stu-actions">
+          <button class="btn btn-soft" id="stu-addwrong">从题库选择错题</button>
+          <button class="btn btn-soft" id="stu-resetwrong">清空该生错题</button>
+        </div>
+      </div>
+    </div>`;
+  bindStudentActions(host);
+  // 事件
+  $$('[data-stu]', host).forEach(el=>el.addEventListener('click', ()=>{ stuState.sel=el.dataset.stu; renderStudents(); }));
+  $$('[data-del]', host).forEach(el=>el.addEventListener('click', ()=>{
+    const qid=el.dataset.del, s=stuState.list.find(x=>x.name===sel.name);
+    s.wrongs=s.wrongs.filter(w=>w!==qid); saveStudents(stuState.list); renderStudents(); toast('已移除错题记录');
+  }));
+}
+function bindStudentActions(host){
+  const drop=$('#stu-drop', host);
+  if(drop){
+    drop.addEventListener('click', ()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='.csv,.txt'; inp.onchange=()=>{ const f=inp.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>parseNames(String(r.result)); r.readAsText(f); }; inp.click(); });
+    drop.addEventListener('dragover', e=>{e.preventDefault(); drop.classList.add('drag');});
+    drop.addEventListener('dragleave', ()=>drop.classList.remove('drag'));
+    drop.addEventListener('drop', e=>{ e.preventDefault(); drop.classList.remove('drag'); const f=e.dataTransfer.files[0]; if(f){ const r=new FileReader(); r.onload=()=>parseNames(String(r.result)); r.readAsText(f); } });
+  }
+  const parse=$('#stu-parse', host);
+  if(parse) parse.addEventListener('click', ()=>{ const v=$('#stu-paste',host).value.trim(); if(v) parseNames(v); });
+  const sample=$('#stu-sample', host);
+  if(sample) sample.addEventListener('click', ()=>{ stuState.list=defaultStudents(); saveStudents(stuState.list); renderStudents(); toast('已载入示例数据'); });
+  const more=$('#stu-addmore', host);
+  if(more) more.addEventListener('click', ()=>{ const name=prompt('输入学生姓名（每行一个，可含学号）：',''); if(name&&name.trim()) parseNames(name); });
+  const clear=$('#stu-clear', host);
+  if(clear) clear.addEventListener('click', ()=>{ if(confirm('确认清空全部学生数据？此操作不可撤销。')){ stuState.list=[]; stuState.sel=null; saveStudents(stuState.list); renderStudents(); } });
+  const addw=$('#stu-addwrong', host);
+  if(addw) addWrongPicker(host);
+  const resetw=$('#stu-resetwrong', host);
+  if(resetw) resetw.addEventListener('click', ()=>{ const s=stuState.list.find(x=>x.name===stuState.sel); if(s){ s.wrongs=[]; saveStudents(stuState.list); renderStudents(); toast('已清空该生错题'); } });
+}
+function parseNames(text){
+  const names=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean).map(l=>l.split(/[,，\t]/)[0].trim()).filter(Boolean);
+  const existing=new Set(stuState.list.map(s=>s.name));
+  const added=[];
+  names.forEach(n=>{ if(!existing.has(n)){ stuState.list.push({name:n, wrongs:[], manual:{}}); existing.add(n); added.push(n); } });
+  saveStudents(stuState.list);
+  if(!stuState.sel && stuState.list.length) stuState.sel=stuState.list[0].name;
+  renderStudents();
+  toast(`已导入 ${added.length} 名学生${names.length-added.length?`，${names.length-added.length} 名已存在`:''}`);
+}
+function addWrongPicker(host){
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px';
+  const panel=document.createElement('div');
+  panel.style.cssText='background:#fff;border-radius:16px;max-width:640px;width:100%;max-height:76vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3)';
+  const head=document.createElement('div');
+  head.style.cssText='padding:16px 20px;border-bottom:1px solid var(--line);font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px';
+  head.textContent='选择要标记为错题的题目（可多选）';
+  const body=document.createElement('div');
+  body.style.cssText='overflow:auto;padding:14px 18px;flex:1';
+  body.innerHTML=QUIZ.map(q=>`<label style="display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-bottom:1px dashed #EEF2F9;font-size:13px;cursor:pointer"><input type="checkbox" value="${q.id}" style="margin-top:4px"><span><b style="color:${CH[q.ch].color}">${CH[q.ch].num} ${SECTIONS[q.sec].title}</b> · ${esc(q.stem.slice(0,60))}${q.stem.length>60?'…':''}</span></label>`).join('');
+  const foot=document.createElement('div');
+  foot.style.cssText='padding:14px 18px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end';
+  const ok=document.createElement('button'); ok.className='btn btn-solid'; ok.textContent='确定添加';
+  const cancel=document.createElement('button'); cancel.className='btn btn-soft'; cancel.textContent='取消';
+  foot.appendChild(cancel); foot.appendChild(ok);
+  panel.appendChild(head); panel.appendChild(body); panel.appendChild(foot); overlay.appendChild(panel);
+  document.body.appendChild(overlay);
+  const s=stuState.list.find(x=>x.name===stuState.sel);
+  cancel.onclick=()=>overlay.remove();
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+  ok.onclick=()=>{
+    const picked=$$('input:checked', body).map(i=>i.value);
+    picked.forEach(qid=>{ if(s && !s.wrongs.includes(qid)) s.wrongs.push(qid); });
+    saveStudents(stuState.list); overlay.remove(); renderStudents(); toast(`已添加 ${picked.length} 道错题`);
+  };
+}
+function addWrongGlobal(qid){
+  const s=stuState.list.find(x=>x.name===stuState.sel);
+  if(!s){ toast('请先在"学生学情"导入名单并选中学生'); location.hash='#/students'; return; }
+  if(!s.wrongs.includes(qid)){ s.wrongs.push(qid); saveStudents(stuState.list); }
+  toast(`已为 ${s.name} 标记错题（可到学生学情查看）`);
+}
+
+/* ================= 初始化 ================= */
+function init(){
+  document.addEventListener('click', e=>{
+    const a=e.target.closest('a[href^="#"]');
+    if(a && !e.defaultPrevented){
+      e.preventDefault();
+      if(location.hash===a.getAttribute('href')) router();
+      else location.hash = a.getAttribute('href');
+    }
+  });
+  router();
+  bindGraphControls();
+  document.body.addEventListener('click', e=>{
+    const gbox=e.target.closest('#graph-box');
+    // 图例等由 renderGraph 内部绑定
+  });
+}
+init();
+/*__JS__*/
+</script>
+</body>
+</html>

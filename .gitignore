@@ -1,0 +1,17 @@
+# 临时校验/自检产物，不纳入仓库
+_check.js
+_shots/
+*.log
+
+# 教材原文提取与本地工作脚本（版权与工作区产物，不上传）
+book_text.txt
+extract_pdf.py
+check_js.py
+smoke_*.py
+dbg_*.py
+count_*.py
+fix_*.py
+shot_*.py
+cdp_*.js
+test_*.js
+*_out.txt
